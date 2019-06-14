@@ -1,0 +1,26 @@
+{
+    "local": {
+        "projectInfo": {
+            "appName": "CarrierTrackingService",
+            "hostName": "CarrierTrackingService"
+        }
+    },
+    "QA": {
+        "projectInfo": {
+            "appName": "CarrierTrackingService",
+            "hostName": "QA-CarrierTrackingService"
+        }
+    },
+    "Q2": {
+        "projectInfo": {
+            "appName": "CarrierTrackingService",
+            "hostName": "Q2-CarrierTrackingService"
+        }
+    },
+    "PR": {
+        "projectInfo": {
+            "appName": "CarrierTrackingService",
+            "hostName": "CarrierTrackingService"
+        }
+    }
+}

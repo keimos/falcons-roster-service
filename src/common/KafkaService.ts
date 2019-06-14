@@ -1,0 +1,69 @@
+import { KafkaClient, Producer, Consumer, Offset } from 'kafka-node';
+import { KafkaFactory } from './KafkaFactory';
+import { MessageQueueService } from './MessageQueueService';
+
+import log from '../logging/Log';
+
+export class KafkaService extends MessageQueueService {
+
+    private localMode: boolean = false;
+
+    /**
+     * Create a new KafkaService that calls Kafka at the given host and writing to the given topic.
+     *
+     * @param host The Kafka host URL
+     * @param topic The Kafka topic to which this service will post objects.
+     */
+    constructor(private kafkaFactory: KafkaFactory, private host?: string) {
+        super();
+
+        // Log local mode
+        log.verbose(`Kafka host: ${host}`);
+        if (!(host)) {
+            log.warn('Kafka host must be specified. Kafka will not be called. Running in "local" mode...');
+            this.localMode = true;
+        }
+    }
+
+    public async readFromQueue(topicName: string, cb: any) {
+            const kafkaClient: KafkaClient = await this.kafkaFactory.createClient(this.host);
+            const kafkaConsumer: Consumer = await this.kafkaFactory.createConsumer(kafkaClient, topicName);
+
+            kafkaConsumer.on('message', function (message) {
+               cb(message);
+            });
+    }
+
+    public async postToQueue(topicName: string, stringifiedObjects: Array<string>): Promise<boolean> {
+        if (this.localMode) {
+            log.warn('Running in local mode. Not Sending events to Kafka!');
+            return null;
+        }
+        return await this.postToKafka(topicName, stringifiedObjects);
+    }
+
+    /**
+     * Given an array of JSON messages (stringified objects), send the objects to Kafka.
+     */
+    public postToKafka = async (topicName: string, messageJsons: Array<string>): Promise<boolean> => {
+
+        // Connect to Kafka
+        const kafkaClient: KafkaClient = await this.kafkaFactory.createClient(this.host);
+        const kafaProducer: Producer = this.kafkaFactory.createProducer(kafkaClient);
+
+        // Send the messages
+        return new Promise<boolean>((resolve, reject) => {
+            log.info(`Sending [${messageJsons.length}] objects to Kafka...`);
+            kafaProducer.send([{ topic: topicName, messages: messageJsons }], (err: Error, data: any) => {
+                if (err) {
+                    log.error(`An error occurred while sending messages to Kafka : ${err.message}`);
+                    reject(new Error(`An error occurred while sending messages to the event queue : ${err.message}`));
+                } else {
+                    log.info(`Kafka response : ${data}`);
+                    resolve(true);
+                }
+            });
+        });
+
+    }
+}

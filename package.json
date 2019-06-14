@@ -1,0 +1,97 @@
+{
+  "name": "comorderdetailsservice",
+  "version": "1.0.5",
+  "description": "A service to receive order detail events from COM and cache them in mongo.",
+  "main": "server.js",
+  "scripts": {
+    "deploy": "gcloud app deploy",
+    "start": "NODE_ENV=local profile=local PORT=8080 node ./dist/server.js --use_strict",
+    "test": "NODE_ENV=local profile=test nyc mocha -w --reporter spec --compilers ts:ts-node/register 'src/**/*.test.ts'",
+    "test:single": "NODE_ENV=local profile=test nyc --reporter=lcovonly mocha --reporter mocha-junit-reporter --exit --compilers ts:ts-node/register 'src/**/*.test.ts'",
+    "coverage": "nyc mocha --compilers ts:ts-node/register 'src/**/*.test.ts'",
+    "report": "nyc report",
+    "lint": "tslint -c tslint.json 'src/**/*.ts'",
+    "start:local": "concurrently --raw \"gulp watch\" \"NODE_ENV=local profile=local timeout=5000 PORT=8080 KafkaCluster=lpa839.homedepot.com:9092,lpa83a.homedepot.com:9092,lpa83b.homedepot.com:9092,lpa83c.homedepot.com:9092,lpa83d.homedepot.com:9092,lpa83e.homedepot.com:9092 MONGO_URI=mongodb://qars1db157adm1:carrierTrackingService!234@lnc66e7.homedepot.com:27017,lnc66e8.homedepot.com:27017,lnc66e9.homedepot.com:27017/qars1db157?replicaSet=qars1 MONGO_DB=qars1db157 TRACKING_SERVICE_API=http://TrackingService.apps.homedepot.com/api/v1/carrierevents nodemon ./dist/server.js --use_strict\"",
+    "start:QA": "NODE_ENV=QA profile=QA node ./dist/server.js --use_strict",
+    "start:Q2": "NODE_ENV=Q2 profile=Q2 node ./dist/server.js --use_strict",
+    "build:QA": "gulp build-qa",
+    "build:Q2": "gulp build-q2",
+    "build:PR": "gulp build-prod"
+  },
+  "engines": {},
+  "nyc": {
+    "include": [
+      "src/**/*.ts"
+    ],
+    "extension": [
+      ".ts",
+      ".tsx"
+    ],
+    "require": [
+      "ts-node/register"
+    ],
+    "reporter": [
+      "text-summary",
+      "html"
+    ],
+    "sourceMap": true,
+    "instrument": true
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.homedepot.com/CustomerDelivery/CarrierTrackingService.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/request": "^2.48.0",
+    "body-parser": "^1.18.3",
+    "crypto-js": "^3.1.9-1",
+    "express": "^4.16.3",
+    "express-http-context": "^1.0.4",
+    "gulp-typescript": "^5.0.0-alpha.3",
+    "http-status": "^1.2.0",
+    "kafka-node": "^4.1.3",
+    "moment": "^2.22.2",
+    "mongodb": "^3.1.8",
+    "morgan": "^1.9.0",
+    "newrelic": "^4.9.0",
+    "randomstring": "^1.1.5",
+    "request": "^2.88.0",
+    "typescript": "^3.1.1",
+    "uuid": "^3.3.2",
+    "winston": "^3.0.0",
+    "xml-js": "^1.6.11",
+    "xml2js": "^0.4.19"
+  },
+  "devDependencies": {
+    "@types/body-parser": "^1.17.0",
+    "@types/chai": "^4.1.4",
+    "@types/chai-http": "^3.0.5",
+    "@types/cls-hooked": "^4.2.1",
+    "@types/core-js": "^2.5.0",
+    "@types/crypto-js": "^3.1.43",
+    "@types/express": "^4.16.0",
+    "@types/http-status": "^0.2.30",
+    "@types/kafka-node": "^2.0.7",
+    "@types/mocha": "^5.2.5",
+    "@types/morgan": "^1.7.35",
+    "@types/randomstring": "^1.1.6",
+    "@types/sinon": "^5.0.1",
+    "@types/uuid": "^3.4.3",
+    "@types/winston": "^2.3.9",
+    "chai": "^4.1.2",
+    "chai-http": "^4.0.0",
+    "concurrently": "^3.6.1",
+    "gulp": "^3.9.1",
+    "gulp-bump": "^3.1.1",
+    "gulp-zip": "^4.2.0",
+    "mocha": "^5.2.0",
+    "mocha-junit-reporter": "^1.18.0",
+    "nodemon": "^1.18.3",
+    "nyc": "^12.0.2",
+    "run-sequence": "^2.2.1",
+    "sinon": "6.1.4",
+    "ts-node": "^7.0.1"
+  }
+}
