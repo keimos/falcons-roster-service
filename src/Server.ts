@@ -11,6 +11,7 @@ import log from './logging/Log';
 // import { MessageQueueService } from './common/MessageQueueService';
 // import { MongoService } from './common/MongoService';
 import { ComOrderEventsService } from './service/ComOrderEventsService';
+import { MongoRepo } from './repo/MongoRepo';
 
 // if (process.env.VCAP_APPLICATION) {
 //   const nodeName: any = process.env.VCAP_APPLICATION;

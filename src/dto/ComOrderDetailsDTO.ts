@@ -1,10 +1,11 @@
 export class ComOrderDetailsDTO {
+    public lastUpdatedTS: Date;
     public customerOrderNumber: string;
     public orderedDate: Date;
     public shipTo: LocationDTO;
     public lineItems: Array<LineItemDTO>;
-    public scac: string;
-    public trackingNumber: string;
+    public email: string;
+    public po: string;
 }
 
 export class LocationDTO {
@@ -27,6 +28,12 @@ export class LineItemDTO {
     public sku: number;
     public skuDescription: string;
     public omsID: string;
+    public quantity: number;
+    public expectedDeliveryDate: Date;
+    public comStatus: string;
+    public levelOfService: string;
+    public scac: string;
+    public trackingNumber: string;
 }
 
 export class CarrierDTO {
