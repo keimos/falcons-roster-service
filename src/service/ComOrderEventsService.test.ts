@@ -82,7 +82,7 @@ describe('Class: ComOrderEventsService', () => {
     
                 insertDocumentsStub.resolves(null);
     
-                const xml = readFileSync('./test/comXMLS/first.xml', 'utf8');
+                const xml = readFileSync('./test/comXMLs/first.xml', 'utf8');
     
                 comOrderEventsService.processEvent({value: xml})
             });
@@ -94,7 +94,7 @@ describe('Class: ComOrderEventsService', () => {
             });
             it('document to insert into mongo should be valid?', () => {
                 const comOrderDetailsList: Array<ComOrderDetailsDTO> = insertDocumentsStub.getCall(0).args[1];
-                const expectedJson: Array<ComOrderDetailsDTO> = JSON.parse(readFileSync('./test/comXMLS/first.json', 'utf8'));
+                const expectedJson: Array<ComOrderDetailsDTO> = JSON.parse(readFileSync('./test/comXMLs/first.json', 'utf8'));
                 expect(comOrderDetailsList).excluding('lastUpdatedTS').to.be.deep.eq(expectedJson);
             })
         });

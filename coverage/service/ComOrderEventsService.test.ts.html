@@ -332,7 +332,7 @@ describe('Class: ComOrderEventsService', () =&gt; {
     
                 insertDocumentsStub.resolves(null);
     
-                const xml = readFileSync('./test/comXMLS/first.xml', 'utf8');
+                const xml = readFileSync('./test/comXMLs/first.xml', 'utf8');
     
                 comOrderEventsService.processEvent({value: xml})
             });
