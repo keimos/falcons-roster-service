@@ -1,0 +1,26 @@
+{
+    "local": {
+        "projectInfo": {
+            "appName": "COMOrderDetailService",
+            "hostName": "COMOrderDetailService"
+        }
+    },
+    "QA": {
+        "projectInfo": {
+            "appName": "COMOrderDetailService",
+            "hostName": "QA-COMOrderDetailService"
+        }
+    },
+    "Q2": {
+        "projectInfo": {
+            "appName": "COMOrderDetailService",
+            "hostName": "Q2-COMOrderDetailService"
+        }
+    },
+    "PR": {
+        "projectInfo": {
+            "appName": "COMOrderDetailService",
+            "hostName": "COMOrderDetailService"
+        }
+    }
+}
