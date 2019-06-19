@@ -1,26 +1,26 @@
 {
     "local": {
         "projectInfo": {
-            "appName": "CarrierTrackingService",
-            "hostName": "CarrierTrackingService"
+            "appName": "COMOrderDetailService",
+            "hostName": "COMOrderDetailService"
         }
     },
     "QA": {
         "projectInfo": {
-            "appName": "CarrierTrackingService",
-            "hostName": "QA-CarrierTrackingService"
+            "appName": "COMOrderDetailService",
+            "hostName": "QA-COMOrderDetailService"
         }
     },
     "Q2": {
         "projectInfo": {
-            "appName": "CarrierTrackingService",
-            "hostName": "Q2-CarrierTrackingService"
+            "appName": "COMOrderDetailService",
+            "hostName": "Q2-COMOrderDetailService"
         }
     },
     "PR": {
         "projectInfo": {
-            "appName": "CarrierTrackingService",
-            "hostName": "CarrierTrackingService"
+            "appName": "COMOrderDetailService",
+            "hostName": "COMOrderDetailService"
         }
     }
 }
