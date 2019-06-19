@@ -1,0 +1,28 @@
+[
+    {
+        "lastUpdatedTS": "2019-06-19T15:23:40.323Z",
+        "customerOrderNumber": "WA66243949",
+        "orderedDate": "2019-06-13T10:08:44-04:00",
+        "email": "espressobytheway@gmail.com",
+        "po": "1234",
+        "shipTo": {
+            "addressLineOne": "5720 U.S.Highway 93",
+            "city": "Jerome",
+            "zip": "83338",
+            "state": "ID"
+        },
+        "lineItems": [
+            {
+                "skuDescription": "Lawn Tractor Cover",
+                "omsID": "202209479",
+                "sku": "1000592549",
+                "quantity": "1.00",
+                "expectedDeliveryDate": "2019-06-13T10:56:51-04:00",
+                "comStatus": "Included In Shipment",
+                "levelOfService": "Priority Ground Shipping",
+                "trackingNumber": "1Z5XX1170364915365",
+                "scac": "UPSN"
+            }
+        ]
+    }
+]

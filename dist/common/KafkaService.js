@@ -8,11 +8,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const MessageQueueService_1 = require("./MessageQueueService");
 const Log_1 = require("../logging/Log");
-class KafkaService extends MessageQueueService_1.MessageQueueService {
+class KafkaService {
     constructor(kafkaFactory, host) {
-        super();
         this.kafkaFactory = kafkaFactory;
         this.host = host;
         this.localMode = false;

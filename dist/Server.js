@@ -12,7 +12,13 @@ const ComOrderEventsService_1 = require("./service/ComOrderEventsService");
 const kafkaFactory = new KafkaFactory_1.KafkaFactory();
 const kafka = new KafkaService_1.KafkaService(kafkaFactory, process.env.KafkaCluster);
 const comOrderEventsService = new ComOrderEventsService_1.ComOrderEventsService(kafka);
-comOrderEventsService.loadEvents();
+const topicName = process.env.KafkaTopic;
+if (topicName) {
+    comOrderEventsService.loadEvents(topicName);
+}
+else {
+    throw 'Topic not defined, expected env variable "KafkaTopic"';
+}
 const app = new App_1.App();
 const port = getPort();
 app.express.listen(port, (err) => {

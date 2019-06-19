@@ -1,0 +1,746 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OrderList>
+    <Order Createuserid="admin" DocumentType="0001" DraftOrderFlag="N"
+        EnterpriseCode="HDUS" EntryType="Mobile Web" Lockid="6"
+        MaxOrderStatus="3350" MaxOrderStatusDesc="Included In Shipment"
+        MinOrderStatus="3350" MinOrderStatusDesc="Included In Shipment"
+        Modifyts="2019-06-13T10:56:52-04:00"
+        OrderDate="2019-06-13T10:08:44-04:00"
+        OrderHeaderKey="201906131008456437052927" OrderNo="Y49538241"
+        OrderType="" OriginalTotalAmount="42.39" SearchCriteria2=""
+        SellerOrganizationCode="8119" TaxExemptionCertificate="">
+        <Extn ExtnCreateUserID="ONLINE"
+            ExtnCustGoldenRecID="022A5319AF568A081T"
+            ExtnHostOrderReference="WA66243949"
+            ExtnHostOrderSystemIdentifier="WA66243949"
+            ExtnHostSrcProcess="9" ExtnHostUserID="COMAuthorization"
+            ExtnIsMultiStoreOrder="N" ExtnModifiedUserID="ONLINE"
+            ExtnModifySrcProcess="190"
+            ExtnOrderLevelExtendedTotal="42.39" ExtnOrderType="STH"
+            ExtnPMCFlag="N" ExtnPOCreateDate="2019-06-13T10:08:45-04:00"
+            ExtnProfileID="STH" ExtnRefundRering="false"
+            ExtnSVSOrderStatus="800"
+            ExtnSVSOrderStatusDesc="Sold. Balance due"
+            ExtnStatusEffectiveTs="2019-06-13T10:08:45-04:00" ExtnUCMType="C">
+            <HDOnlineHeaderList>
+                <HDOnlineHeader
+                    HDOnlineHeaderKey="201906131008456437053039"
+                    IsChangeOwner="Y" IsFulfillmentOwner="Y" PaymentProcessor="PS1.0"/>
+            </HDOnlineHeaderList>
+            <HDOrderStatusList>
+                <HDOrderStatus Createprogid="SterlingPCFCreateOrder"
+                    Createts="2019-06-13T10:08:45-04:00"
+                    Createuserid="admin"
+                    HDOrderStatusKey="201906131008456437053038"
+                    Lockid="0" Modifyprogid="SterlingPCFCreateOrder"
+                    Modifyts="2019-06-13T10:08:45-04:00"
+                    Modifyuserid="admin"
+                    OrderHeaderKey="201906131008456437052927"
+                    SrcModifyID="SYSCOM" StatusCode="800"
+                    StatusDescription="Sold. Balance due"
+                    StatusEffectiveTs="2019-06-13T10:08:45-04:00"
+                    StoreNumber="8119" UserAuditID="SYSCOM" isHistory="N"/>
+            </HDOrderStatusList>
+            <HDOrdAppParmTypeList/>
+            <HDPaymentStageInfoList>
+                <HDPaymentStageInfo CountryCode="US"
+                    Createprogid="SterlingPCFCreateOrder"
+                    Createts="2019-06-13T10:08:45-04:00"
+                    Createuserid="admin"
+                    HDPaymentStageInfoKey="201906131008456437053041"
+                    HostOrderLineReference="1" LineNumber="7827"
+                    LineType="SO" Lockid="1"
+                    Modifyprogid="HDCreateSTHPOServer"
+                    Modifyts="2019-06-13T10:56:52-04:00"
+                    Modifyuserid="HDCreateSTHPOServer"
+                    OrderHeaderKey="201906131008456437052927"
+                    PostalCode="83338" Quantity="1.00"
+                    RefundQuantity="0.00" Status="1" SuspendFlag="Y"
+                    TaxCity="Jerome" TaxCounty="JEROME" TaxFlag="Y"
+                    TaxState="ID" TimeStamp="2019-06-13T10:08:45-04:00"
+                    UnitNetRetail="39.99" isHistory="N"/>
+            </HDPaymentStageInfoList>
+            <HDOrdChangeList/>
+            <HDOrdChangeDescList/>
+            <HDChargeTxnAdditionalList>
+                <HDChargeTxnAdditional
+                    AuthIdentifier="25556227-6041-4984-b842-f2ab3bfa2757;3NR38869DF681320P"
+                    AuthUUID="25556227-6041-4984-b842-f2ab3bfa2757P0"
+                    CollectionDate="2019-06-13T10:10:37-04:00"
+                    Createprogid="HDProcessSVSTransactionServer"
+                    Createts="2019-06-13T10:10:37-04:00"
+                    Createuserid="HDProcessSVSTransactionServer"
+                    HDChargeTxnAdditionalKey="201906131010376437184134"
+                    InvoiceNo="175641374" Lockid="0"
+                    Modifyprogid="HDProcessSVSTransactionServer"
+                    Modifyts="2019-06-13T10:10:37-04:00"
+                    Modifyuserid="HDProcessSVSTransactionServer"
+                    OrderHeaderKey="201906131008456437052927"
+                    PaymentCreateTs="2019-06-13T10:10:37-04:00"
+                    PaymentIdentifier="PP;NA;NA;O-2T901901JC5667633;NA"
+                    PaymentLocation="8119" PaymentStatus="SUCCESS"
+                    TranType="AUTHORIZATION" isHistory="N"/>
+            </HDChargeTxnAdditionalList>
+            <HDSplOrdList/>
+            <HDCustDsgnCustOrdList/>
+            <HDWillCallList/>
+            <HDInvoiceList>
+                <HDInvoice InvoiceKey="201906131009206437086107"
+                    InvoiceNo="175641374"
+                    OrderHeaderKey="201906131008456437052927" Retry="N"
+                    Status="SUCCESS" StatusCode="7000" SuspendAuth="N"
+                    TotalAmount="42.39" TranType="AUTHORIZATION" UUID="25556227-6041-4984-b842-f2ab3bfa2757">
+                    <HDInvoiceLineList>
+                        <HDInvoiceLine Amount="42.39"
+                            HostOrderLineReference="1"
+                            InvoiceLineKey="201906131009206437086112"
+                            InvoiceNo="175641374"
+                            OrderHeaderKey="201906131008456437052927"
+                            OrderLineKey="201906131008456437052930" QuantityApplied="1.00"/>
+                    </HDInvoiceLineList>
+                </HDInvoice>
+            </HDInvoiceList>
+            <ExtnHDStorePaymentInfoList/>
+        </Extn>
+        <OrderHoldTypes/>
+        <OrderLineRelationships/>
+        <Awards/>
+        <Promotions/>
+        <OrderLines>
+            <OrderLine CarrierServiceCode="" ConditionVariable1="S"
+                CustomerLinePONo="" CustomerPONo="" DeliveryMethod="SHP"
+                FulfillmentType="STH" IsFirmPredefinedNode="Y"
+                ItemGroupCode="PROD" KitCode="" LineType="SO"
+                MaxLineStatus="3350"
+                MaxLineStatusDesc="Included In Shipment"
+                MinLineStatus="3350"
+                MinLineStatusDesc="Included In Shipment"
+                OrderLineKey="201906131008456437052930"
+                OrderedQty="1.00" OriginalOrderedQty="1.00"
+                PrimeLineNo="1" ReturnReason="" SCAC=""
+                ScacAndService="" ShipNode="MVNDR-60076833"
+                ShipToKey="201710091424125589369975"
+                Status="Included In Shipment" StatusQuantity="1.00" SubLineNo="1">
+                <Extn ExtnANSIShipMode="GA" ExtnBOAllocation="A"
+                    ExtnCancelQuantity="0.00" ExtnClass="34"
+                    ExtnCreateSrcProcess="9" ExtnCreateSrcReference="-1"
+                    ExtnCreatets="2019-06-13T10:08:45-04:00"
+                    ExtnCumPickedQuantity="0" ExtnDFCSourceFlag="N"
+                    ExtnDeliveryApprover="0" ExtnDeliveryPalletQty="0"
+                    ExtnDepartmentCode="28" ExtnFILineType="SO"
+                    ExtnHDUOMCode="80" ExtnHDUOMCodeDesc="EA"
+                    ExtnHostOrderLineReference="1"
+                    ExtnHostUserID="ONLINE"
+                    ExtnInventoryTrackCode="TRACK" ExtnIsPreBOSS="N"
+                    ExtnLastNotifySent="0"
+                    ExtnLineLevelExtendedTotal="42.39"
+                    ExtnMVendorNo="60076833" ExtnMilitaryFlag="N"
+                    ExtnModifySrcProcess="9" ExtnModifySrcReference="-1"
+                    ExtnMsgGeneratedTS="2019-06-13T10:08:45-04:00"
+                    ExtnNMMultilineFlag="N" ExtnNetUnitPrice="42.39"
+                    ExtnNetUnitPriceNoTax="39.99" ExtnOMSID="202209479"
+                    ExtnOrderCreateLocation="8119"
+                    ExtnOrderCreateLocationType="VIRTUAL"
+                    ExtnOrderLineType="STH"
+                    ExtnOriginalQtyOnQuote="0.00"
+                    ExtnPOCreateDate="2019-06-13T10:56:52-04:00"
+                    ExtnPONumber="37862470" ExtnPickCompleted="N"
+                    ExtnPickedQuantity="0.00"
+                    ExtnProductTypeCode="PRODUCT" ExtnProfileID="STH"
+                    ExtnReleaseType="S" ExtnReservationID="WA66243949_1"
+                    ExtnReturnQuantity="0.00" ExtnSKUCode="1000592549"
+                    ExtnSKUCodeDesc="Lawn Tractor Cover"
+                    ExtnSplOrderLineNumber="7827" ExtnSubClass="6"
+                    ExtnSystemReference="AURORA"
+                    ExtnSystemReferenceTS="2019-06-13T10:08:44-04:00"
+                    ExtnUOMConvQty="1.00" ExtnUPCCode="052963739107"
+                    ExtnUncancelledQty="0.00" ExtnVendorStockNumber="73910">
+                    <HDOrderlineAddnlList/>
+                    <HDOnlineProductList>
+                        <HDOnlineProduct CatalogOMSID="202209479"
+                            Createprogid="SterlingPCFCreateOrder"
+                            Createts="2019-06-13T10:08:45-04:00"
+                            Createuserid="admin" ETAType="DETA"
+                            ExpectedVndrShipDays="1"
+                            HDOnlineProductKey="201906131008456437053034"
+                            LevelOfServiceDesc="Priority Ground Shipping"
+                            Lockid="0"
+                            Modifyprogid="SterlingPCFCreateOrder"
+                            Modifyts="2019-06-13T10:08:45-04:00"
+                            Modifyuserid="admin"
+                            OrderLineKey="201906131008456437052930"
+                            ReturnWindow="90" ReturnableFlag="Y"
+                            WarrantyItem="N" isHistory="N"/>
+                    </HDOnlineProductList>
+                    <HDInstallAddnlInfoList/>
+                    <HDSplOrderInfoList/>
+                    <HDOnlineReturnInfoList/>
+                    <HDOrderLineAppParmTypeList/>
+                    <HDSurveyList/>
+                    <HDCostAuditList/>
+                    <HDLineTaxList>
+                        <HDLineTax Createprogid="SterlingPCFCreateOrder"
+                            Createts="2019-06-13T10:08:45-04:00"
+                            Createuserid="admin"
+                            HDLineTaxKey="201906131008456437053033"
+                            Lockid="0"
+                            Modifyprogid="SterlingPCFCreateOrder"
+                            Modifyts="2019-06-13T10:08:45-04:00"
+                            Modifyuserid="admin"
+                            OrderLineKey="201906131008456437052930"
+                            POSTaxCode="1" Tax="2.40" TaxCalcMethod="1"
+                            TaxName="Sales" isHistory="N"/>
+                    </HDLineTaxList>
+                    <HDRelatedEJKeysList/>
+                    <HDReturnPolicyList/>
+                    <HDLineChgHistList/>
+                    <HDTrackingInfoList/>
+                    <HDEventList>
+                        <HDEvent Createprogid="SterlingPCFCreateOrder"
+                            Createts="2019-06-13T10:08:45-04:00"
+                            Createuserid="admin" EventLocationNbr="8119"
+                            EventTrkCode="CO"
+                            EventTs="2019-06-13T10:08:45-04:00"
+                            EventUserAuditID="ONLINE"
+                            HDEventKey="201906131008456437053031"
+                            Lockid="0" MerQty="1.00"
+                            Modifyprogid="SterlingPCFCreateOrder"
+                            Modifyts="2019-06-13T10:08:45-04:00"
+                            Modifyuserid="admin"
+                            OrderLineKey="201906131008456437052930"
+                            Store="8119" isHistory="N"/>
+                        <HDEvent Createprogid="HDCreateSTHPOServer"
+                            Createts="2019-06-13T10:56:52-04:00"
+                            Createuserid="HDCreateSTHPOServer"
+                            EventTrkCode="MO"
+                            EventTs="2019-06-13T10:56:53-04:00"
+                            EventUserAuditID="SYSCOM"
+                            HDEventKey="201906131056536444033580"
+                            Lockid="0" MerQty="1.00"
+                            Modifyprogid="HDCreateSTHPOServer"
+                            Modifyts="2019-06-13T10:56:52-04:00"
+                            Modifyuserid="HDCreateSTHPOServer"
+                            OrderLineKey="201906131008456437052930"
+                            POLineReference="1" PONumber="37862470" isHistory="N"/>
+                    </HDEventList>
+                    <HDAppliedTransactionList>
+                        <HDAppliedTransaction
+                            Createprogid="SterlingPCFCreateOrder"
+                            Createts="2019-06-13T10:08:45-04:00"
+                            Createuserid="admin"
+                            DerivedTransactionType="ORDER_CREATE"
+                            HDAppliedTransactionKey="201906131008456437053029"
+                            HostOrderLineReference="1"
+                            HostOrderReference="WA66243949"
+                            HostUserID="ONLINE"
+                            InventoryTrackCode="TRACK" Lockid="0"
+                            Modifyprogid="SterlingPCFCreateOrder"
+                            Modifyts="2019-06-13T10:08:45-04:00"
+                            Modifyuserid="admin"
+                            OrderLineKey="201906131008456437052930"
+                            SVSRemEntriesReqd="Y"
+                            SystemReference="AURORA"
+                            SystemReferenceTS="2019-06-13T10:08:44-04:00"
+                            TransactionType="ADD_LINE" isHistory="N"/>
+                    </HDAppliedTransactionList>
+                    <HDLineStatusList/>
+                </Extn>
+                <Item ItemDesc="Lawn Tractor Cover" ItemID="881563"
+                    ItemShortDesc="Lawn Tractor Cover" ItemWeight="2.55"
+                    ItemWeightUOM="LB" ManufacturerItem="73910"
+                    ManufacturerName="Classic Accessories"
+                    ProductClass="GOOD" UPCCode="" UnitCost="39.99" UnitOfMeasure="EA"/>
+                <LinePriceInfo ListPrice="0.00"
+                    PricingQtyConversionFactor="0.00" RetailPrice="0.00"
+                    TaxableFlag="Y" UnitPrice="39.99"/>
+                <OrderHoldTypes>
+                    <OrderHoldType HoldType="REMORSE_HOLD"
+                        LastHoldTypeDate="2019-06-13T10:08:45-04:00"
+                        Modifyuserid="HDRemorseHoldResolveAgent"
+                        OrderAuditKey="201906131055596443771364"
+                        OrderHeaderKey="201906131008456437052927"
+                        ReasonText="Time Completed" Status="1300"
+                        StatusDescription="Resolved"
+                        TransactionId="ORDER_CHANGE" TransactionName="Change Order"/>
+                </OrderHoldTypes>
+                <OrderLineReservations/>
+                <OrderDates>
+                    <OrderDate DateTypeId="EstimatedEndDate" ExpectedDate="2019-06-18T00:00:00-04:00"/>
+                    <OrderDate DateTypeId="EstimatedStartDate" ExpectedDate="2019-06-18T00:00:00-04:00"/>
+                    <OrderDate DateTypeId="ShipByDate" ExpectedDate="2019-06-14T10:56:52-04:00"/>
+                </OrderDates>
+                <PersonInfoShipTo AddressLine1="5720 U.S.Highway 93"
+                    AddressLine2="" AddressLine3="" AddressLine4=""
+                    AddressLine5="" Beeper="" City="Jerome" Company=""
+                    Country="US" DayPhone="2083241017"
+                    EMailID="espressobytheway@gmail.com"
+                    FirstName="Larry" JobTitle="" LastName="Collins"
+                    MiddleName="" MobilePhone="2083241017" OtherPhone=""
+                    PersonID="" PersonInfoKey="201710091424125589369975"
+                    State="ID" Suffix="" TaxGeoCode="02" Title="" ZipCode="83338">
+                    <Extn ExtnCounty="JEROME" ExtnMilitaryFlag="N" ExtnTaxRate="0"/>
+                </PersonInfoShipTo>
+                <ChildOrderLineRelationships/>
+                <ParentOrderLineRelationships/>
+                <AdditionalAddresses NumberOfAdditionalAddresses="0"/>
+                <WorkOrders/>
+                <Instructions NumberOfInstructions="0"/>
+                <ItemDetails ItemID="881563">
+                    <PrimaryInformation IsHazmat="N" TaxableFlag="N"/>
+                    <Extn ExtnClass="34" ExtnDFCSourceFlag="N"
+                        ExtnDepartment="28" ExtnPackageQuantity="1" ExtnSubClass="6"/>
+                </ItemDetails>
+                <ServiceAssociations/>
+                <ProductAssociations/>
+                <Schedules>
+                    <Schedule BatchNo=""
+                        ExpectedDeliveryDate="2019-06-13T10:56:51-04:00"
+                        ExpectedShipmentDate="2019-06-13T10:56:51-04:00"
+                        LotNumber=""
+                        OrderHeaderKey="201906131008456437052927"
+                        OrderLineKey="201906131008456437052930"
+                        OrderLineScheduleKey="201906131044565144031143"
+                        ProductAvailabilityDate="2019-06-13T00:00:00-04:00"
+                        Quantity="1.00" RevisionNo="" ScheduleNo="3"
+                        ShipNode="MVNDR-60076833" TagNumber="">
+                        <ScheduleTranQuantity Quantity="1.0" TransactionalUOM="EA"/>
+                    </Schedule>
+                </Schedules>
+                <LineOverallTotals Charges="0.00" Discount="0.00"
+                    ExtendedPrice="39.99" LineCost="39.99"
+                    LineTotal="42.39" LineTotalWithoutTax="39.99"
+                    ManualDiscountPercentage="0.00" OptionPrice="0.00"
+                    PercentProfitMargin="0.00" PricingQty="1.00"
+                    ShippingBaseCharge="0.00" ShippingCharges="0.00"
+                    ShippingDiscount="0.00" ShippingTotal="0.00"
+                    Tax="2.40" UnitPrice="39.99"/>
+                <LineCharges/>
+                <LineTaxes>
+                    <LineTax ChargeCategory="" ChargeName=""
+                        ChargeNameKey="" InvoicedTax="0.00"
+                        Reference1="" Reference2="" Reference3=""
+                        RemainingTax="2.40" Tax="2.40" TaxName="Sales"
+                        TaxPercentage="0.00" TaxableFlag="N">
+                        <Extn ExtnExtendedTaxPerLine="2.40"/>
+                    </LineTax>
+                </LineTaxes>
+                <OrderStatuses>
+                    <OrderStatus
+                        OrderHeaderKey="201906131008456437052927"
+                        OrderLineKey="201906131008456437052930"
+                        OrderLineScheduleKey="201906131044565144031143"
+                        OrderReleaseKey="201906131056516444031127"
+                        OrderReleaseStatusKey="201906131026565244032354"
+                        PipelineKey="20160818170550914343"
+                        ShipNode="MVNDR-60076833" Status="3350"
+                        StatusDate="2019-06-13T10:56:52-04:00"
+                        StatusDescription="Included In Shipment"
+                        StatusQty="1.00" TotalQuantity="1.00">
+                        <Details
+                            ExpectedDeliveryDate="2019-06-13T10:56:51-04:00"
+                            ExpectedShipmentDate="2019-06-13T10:56:51-04:00" TagNumber=""/>
+                        <OrderStatusTranQuantity StatusQty="1.00"
+                            TotalQuantity="1.00" TransactionalUOM="EA"/>
+                    </OrderStatus>
+                </OrderStatuses>
+                <OrderLineTranQuantity FillQuantity="0.00"
+                    InvoicedQuantity="0.00" OpenQty="0.00"
+                    OrderedQty="1.00" OriginalOrderedQty="1.00"
+                    ReceivedQty="0.00" RemainingQty="0.00"
+                    SettledQuantity="0.00" ShippedQuantity="0.00"
+                    SplitQty="0.00" StatusQuantity="1.00"
+                    TranDiscrepancyQty="0.00" TransactionalUOM="EA"/>
+            </OrderLine>
+        </OrderLines>
+        <PersonInfoBillTo AddressLine1="5720 U.S.Highway 93"
+            AddressLine2="" AddressLine3="" AddressLine4=""
+            AddressLine5="" AddressLine6="" AlternateEmailID=""
+            Beeper="" City="Jerome" Company="" Country="US" DayFaxNo=""
+            DayPhone="2083241017" Department=""
+            EMailID="espressobytheway@gmail.com" EveningFaxNo=""
+            EveningPhone="" FirstName="Larry" JobTitle=""
+            LastName="Collins" MiddleName="" MobilePhone="2083241017"
+            OtherPhone="" PersonID=""
+            PersonInfoKey="201710091424125589369890" State="ID"
+            Suffix="" Title="" ZipCode="83338">
+            <Extn ExtnMilitaryFlag="N"/>
+        </PersonInfoBillTo>
+        <PersonInfoShipTo AddressLine1="5720 U.S.Highway 93"
+            AddressLine2="" AddressLine3="" AddressLine4=""
+            AddressLine5="" Beeper="" City="Jerome" Company=""
+            Country="US" DayPhone="2083241017"
+            EMailID="espressobytheway@gmail.com" FirstName="Larry"
+            JobTitle="" LastName="Collins" MiddleName=""
+            MobilePhone="2083241017" OtherPhone="" PersonID=""
+            PersonInfoKey="201710091424125589369890" State="ID"
+            Suffix="" Title="" ZipCode="83338">
+            <Extn ExtnMilitaryFlag="N"/>
+        </PersonInfoShipTo>
+        <PaymentMethods>
+            <PaymentMethod BillToKey="" CheckNo="" CheckReference=""
+                CreditCardExpDate="06/2020" CreditCardName="PP"
+                CreditCardNo="O-2T901901JC5667633" CreditCardType="PP"
+                CustomerPONo="" DeferredPLCCCode=""
+                DisplayCreditCardNo="7633" DisplayCustomerAccountNo=""
+                DisplayPaymentReference1="" DisplaySvcNo="7633"
+                FirstName="Larry Collins" FundsAvailable="0.00"
+                GetFundsAvailableUserExitInvoked="N"
+                LastName="Larry Collins" MaxChargeLimit="42.39"
+                PaymentKey="201906131024084537052961"
+                PaymentPayerID="WQJ5CBRWSJZ8Y" PaymentReference1=""
+                PaymentReference2="" PaymentReference3="Larry Collins"
+                PaymentReference9="PP;NA;NA;O-2T901901JC5667633;NA"
+                PaymentSuspendAuth="N" PaymentType="PP" PromoEndDate=""
+                PromoStartDate="" RemainingAuthAmount="42.39"
+                SvcNo="O-2T901901JC5667633" TotalAuthorized="42.39"
+                TotalAuthorizedAmount="42.39" TotalCharged="0.00"
+                TotalRefundedAmount="0.00" UnlimitedCharges="Y" UsageType=""/>
+        </PaymentMethods>
+        <ChargeTransactionDetails>
+            <ChargeTransactionDetail
+                AuthorizationID="25556227-6041-4984-b842-f2ab3bfa2757"
+                ChargeTransactionKey="201906131010376437184124"
+                ChargeType="AUTHORIZATION"
+                CollectionDate="2019-06-13T10:10:37-04:00"
+                CreditAmount="0.00" OpenAuthorizedAmount="42.39"
+                PaymentKey="201906131024084537052961"
+                RequestAmount="42.39" SettledAmount="0.00" Status="CLOSED">
+                <CreditCardTransactions>
+                    <CreditCardTransaction AuthCode="3NR38869DF681320P"
+                        AuthTime="2019-06-13T14:10:37-04:00"
+                        AuthUUID="25556227-6041-4984-b842-f2ab3bfa2757P0"
+                        DepositCollectedAmount="" EJDate=""
+                        EJRegister="" EJSeqNo="" EJStore=""
+                        FailureReasonCode="" FailureReasonText=""
+                        FailureType="" InvoiceNo="175641374"
+                        IsExpired="" IsVoid="" OrigEJDate=""
+                        OrigEJRegister="" OrigEJSeqNo="" OrigEJStore=""
+                        POSTransID="" PaymentApproveUserAuditId=""
+                        PaymentCreateTs="2019-06-13T10:10:37-04:00"
+                        PaymentCreateUserId="" PaymentLocation="8119"
+                        PaymentReasonCode="" PaymentSeqNo=""
+                        PaymentStatus="SUCCESS"
+                        PaymentUserDefReasonDesc=""
+                        Reference1="25556227-6041-4984-b842-f2ab3bfa2757;3NR38869DF681320P"
+                        TranReturnCode="" TranType="AUTHORIZATION"/>
+                </CreditCardTransactions>
+            </ChargeTransactionDetail>
+        </ChargeTransactionDetails>
+        <Notes NumberOfNotes="0"/>
+        <ProductServiceAssocs/>
+        <AdditionalAddresses NumberOfAdditionalAddresses="0"/>
+        <Instructions NumberOfInstructions="1">
+            <Instruction Action="" Createprogid="SterlingPCFCreateOrder"
+                Createts="2019-06-13T10:08:45-04:00"
+                Createuserid="admin"
+                InstructionDetailKey="201906131066084537053036"
+                InstructionText="ONLINE ORDER" InstructionType="CustRef"
+                InstructionURL="" InstructionUsage="" Lockid="0"
+                Modifyprogid="SterlingPCFCreateOrder"
+                Modifyts="2019-06-13T10:08:45-04:00"
+                Modifyuserid="admin"
+                ReferenceKey="201906131008456437052927" SequenceNo="1"
+                TableName="YFS_ORDER_HEADER" isHistory="N">
+                <Extn/>
+            </Instruction>
+        </Instructions>
+        <OverallTotals GrandCharges="0.00" GrandDiscount="0.00"
+            GrandShippingBaseCharge="0.00" GrandShippingCharges="0.00"
+            GrandShippingDiscount="0.00" GrandShippingTotal="0.00"
+            GrandTax="2.40" GrandTotal="42.39" HdrCharges="0.00"
+            HdrDiscount="0.00" HdrShippingBaseCharge="0.00"
+            HdrShippingCharges="0.00" HdrShippingDiscount="0.00"
+            HdrShippingTotal="0.00" HdrTax="0.00" HdrTotal="0.00"
+            LineSubTotal="39.99" ManualDiscountPercentage="0.00" PercentProfitMargin="0.00">
+            <Extn ExtnReturnTotal="0.0"/>
+        </OverallTotals>
+    </Order>
+    <Order Createuserid="admin" DocumentType="0005" DraftOrderFlag="N"
+        EnterpriseCode="HDUS" EntryType="Mobile Web" Lockid="6"
+        MaxOrderStatus="3350" MaxOrderStatusDesc="Included In Shipment"
+        MinOrderStatus="3350" MinOrderStatusDesc="Included In Shipment"
+        Modifyts="2019-06-13T10:56:52-04:00"
+        OrderDate="2019-06-13T10:56:52-04:00"
+        OrderHeaderKey="201906131008456437052927" OrderNo="526314433"
+        OrderType="" OriginalTotalAmount="42.39" SearchCriteria2=""
+        SellerOrganizationCode="8119"
+        ShipmentPipelineKey="20160818065708912015" TaxExemptionCertificate="">
+        <Extn ExtnCreateUserID="ONLINE"
+            ExtnCustGoldenRecID="022A5319AF568A081T"
+            ExtnHostOrderReference="WA66243949"
+            ExtnHostOrderSystemIdentifier="WA66243949"
+            ExtnHostSrcProcess="9" ExtnHostUserID="COMAuthorization"
+            ExtnIsMultiStoreOrder="N" ExtnMVendorNo="60076833"
+            ExtnModifiedUserID="ONLINE" ExtnModifySrcProcess="190"
+            ExtnOrderType="STH" ExtnPMCFlag="N"
+            ExtnPOCreateDate="2019-06-13T10:56:52-04:00"
+            ExtnPONumber="37862470" ExtnProfileID="STH"
+            ExtnSVSOrderStatus="581"
+            ExtnSVSOrderStatusDesc="Vendor ordered"
+            ExtnStatusEffectiveTs="2019-06-13T10:56:53-04:00"
+            ExtnTransmissionTypeCode="1" ExtnUCMType="C" ExtnVendorName="S/O CLASSIC ACCESSORIES">
+            <HDOrderStatusList>
+                <HDOrderStatus Createprogid="HDCreateSTHPOServer"
+                    Createts="2019-06-13T10:56:52-04:00"
+                    Createuserid="HDCreateSTHPOServer"
+                    HDSthOrderStatusKey="201906131056536444033540"
+                    Lockid="0" Modifyprogid="HDCreateSTHPOServer"
+                    Modifyts="2019-06-13T10:56:52-04:00"
+                    Modifyuserid="HDCreateSTHPOServer"
+                    ShipmentKey="201906131056526444032267"
+                    SrcModifyID="SYSCOM" StatusCode="581"
+                    StatusDescription="Vendor ordered"
+                    StatusEffectiveTs="2019-06-13T10:56:53-04:00"
+                    UserAuditID="SYSCOM" isHistory="N"/>
+            </HDOrderStatusList>
+            <HDSplOrdList>
+                <HDSplOrd Createprogid="HDCreateSTHShipmentServer"
+                    Createts="2019-06-13T10:56:52-04:00"
+                    Createuserid="HDCreateSTHShipmentServer"
+                    HDSthSplOrdKey="201906131056526444032268"
+                    HostOrderReference="WA66243949" Lockid="0"
+                    Modifyprogid="HDCreateSTHShipmentServer"
+                    Modifyts="2019-06-13T10:56:52-04:00"
+                    Modifyuserid="HDCreateSTHShipmentServer"
+                    ShipmentKey="201906131056526444032267"
+                    SoCreateTs="2019-06-13T10:56:52-04:00"
+                    SplOrdDeliveryLocIndicator="C"
+                    SplOrdExpectedArrivalDate="2019-06-18T00:00:00-04:00"
+                    SplOrdIsDirectShip="Y" SplOrdLineNumber="7827"
+                    SplOrdMVendorRefNumber="73910"
+                    SplOrdQuoteLeadTime="5" isHistory="N"/>
+            </HDSplOrdList>
+        </Extn>
+        <OrderHoldTypes/>
+        <OrderLineRelationships/>
+        <Awards/>
+        <Promotions/>
+        <OrderLines>
+            <OrderLine CarrierServiceCode="" ConditionVariable1="S"
+                CustomerLinePONo="" CustomerPONo="" DeliveryMethod="SHP"
+                FulfillmentType="STH" IsFirmPredefinedNode="Y"
+                ItemGroupCode="PROD" KitCode="" LineType="SO"
+                MaxLineStatus="3350"
+                MaxLineStatusDesc="Included In Shipment"
+                MinLineStatus="3350"
+                MinLineStatusDesc="Included In Shipment"
+                OrderLineKey="201906131008456437052930"
+                OrderedQty="1.00" OriginalOrderedQty="1.00"
+                PrimeLineNo="1" ReleaseNo="1"
+                ReqShipDate="2019-06-18T00:00:00-04:00" ReturnReason=""
+                SCAC="" ScacAndService="" ShipNode="MVNDR-60076833"
+                ShipToKey="201710091424125589369975"
+                Status="Included In Shipment" StatusQuantity="1.00" SubLineNo="1">
+                <Extn ExtnANSIShipMode="GA" ExtnBOAllocation="A"
+                    ExtnClass="34" ExtnCreateSrcProcess="9"
+                    ExtnCreateSrcReference="-1"
+                    ExtnCreatets="2019-06-13T10:08:45-04:00"
+                    ExtnCumPickedQuantity="0" ExtnDFCSourceFlag="N"
+                    ExtnDeliveryApprover="0" ExtnDeliveryPalletQty="0"
+                    ExtnDepartmentCode="28" ExtnFILineType="SO"
+                    ExtnHDUOMCode="80" ExtnHDUOMCodeDesc="EA"
+                    ExtnHostOrderLineReference="1"
+                    ExtnHostUserID="ONLINE"
+                    ExtnInventoryTrackCode="TRACK" ExtnIsPreBOSS="N"
+                    ExtnLastNotifySent="0" ExtnMVendorNo="60076833"
+                    ExtnMilitaryFlag="N" ExtnModifySrcProcess="9"
+                    ExtnModifySrcReference="-1"
+                    ExtnMsgGeneratedTS="2019-06-13T10:08:45-04:00"
+                    ExtnNMMultilineFlag="N" ExtnNetUnitPrice="42.39"
+                    ExtnNetUnitPriceNoTax="39.99" ExtnOMSID="202209479"
+                    ExtnOrderCreateLocation="8119"
+                    ExtnOrderCreateLocationType="VIRTUAL"
+                    ExtnOrderLineType="STH"
+                    ExtnOriginalQtyOnQuote="0.00"
+                    ExtnPOCreateDate="2019-06-13T10:56:52-04:00"
+                    ExtnPOLineReference="1" ExtnPONumber="37862470"
+                    ExtnPickCompleted="N" ExtnProductTypeCode="PRODUCT"
+                    ExtnProfileID="STH" ExtnReleaseType="S"
+                    ExtnReservationID="WA66243949_1"
+                    ExtnSKUCode="1000592549"
+                    ExtnSKUCodeDesc="Lawn Tractor Cover"
+                    ExtnSplOrderLineNumber="7827" ExtnSubClass="6"
+                    ExtnSystemReference="AURORA"
+                    ExtnSystemReferenceTS="2019-06-13T10:08:44-04:00"
+                    ExtnUOMConvQty="1.00" ExtnUPCCode="052963739107"
+                    ExtnUncancelledQty="0.00" ExtnUnitCost="34.8" ExtnVendorStockNumber="73910"/>
+                <Item ItemDesc="Lawn Tractor Cover" ItemID="881563"
+                    ItemShortDesc="Lawn Tractor Cover" ItemWeight="2.55"
+                    ItemWeightUOM="LB" ManufacturerItem="73910"
+                    ManufacturerName="Classic Accessories"
+                    ProductClass="GOOD" UPCCode="" UnitCost="34.8" UnitOfMeasure="EA"/>
+                <LinePriceInfo ListPrice="0.00"
+                    PricingQtyConversionFactor="0.00" RetailPrice="0.00"
+                    TaxableFlag="Y" UnitPrice="39.99"/>
+                <OrderHoldTypes>
+                    <OrderHoldType HoldType="REMORSE_HOLD"
+                        LastHoldTypeDate="2019-06-13T10:08:45-04:00"
+                        Modifyuserid="HDRemorseHoldResolveAgent"
+                        OrderAuditKey="201906131055596443771364"
+                        OrderHeaderKey="201906131008456437052927"
+                        ReasonText="Time Completed" Status="1300"
+                        StatusDescription="Resolved"
+                        TransactionId="ORDER_CHANGE" TransactionName="Change Order"/>
+                </OrderHoldTypes>
+                <OrderLineReservations/>
+                <OrderDates>
+                    <OrderDate DateTypeId="EstimatedEndDate" ExpectedDate="2019-06-18T00:00:00-04:00"/>
+                    <OrderDate DateTypeId="EstimatedStartDate" ExpectedDate="2019-06-18T00:00:00-04:00"/>
+                    <OrderDate DateTypeId="ShipByDate" ExpectedDate="2019-06-14T10:56:52-04:00"/>
+                </OrderDates>
+                <PersonInfoShipTo AddressLine1="5720 U.S.Highway 93"
+                    AddressLine2="" AddressLine3="" AddressLine4=""
+                    AddressLine5="" Beeper="" City="Jerome" Company=""
+                    Country="US" DayPhone="2083241017"
+                    EMailID="espressobytheway@gmail.com"
+                    FirstName="Larry" JobTitle="" LastName="Collins"
+                    MiddleName="" MobilePhone="2083241017" OtherPhone=""
+                    PersonID="" PersonInfoKey="201710091424125589369975"
+                    State="ID" Suffix="" TaxGeoCode="02" Title="" ZipCode="83338">
+                    <Extn ExtnCounty="JEROME" ExtnMilitaryFlag="N" ExtnTaxRate="0"/>
+                </PersonInfoShipTo>
+                <ChildOrderLineRelationships/>
+                <ParentOrderLineRelationships/>
+                <AdditionalAddresses NumberOfAdditionalAddresses="0"/>
+                <WorkOrders/>
+                <Instructions NumberOfInstructions="0"/>
+                <ItemDetails ItemID="881563">
+                    <PrimaryInformation IsHazmat="N" TaxableFlag="N"/>
+                    <Extn ExtnClass="34" ExtnDFCSourceFlag="N"
+                        ExtnDepartment="28" ExtnPackageQuantity="1" ExtnSubClass="6"/>
+                </ItemDetails>
+                <ServiceAssociations/>
+                <ProductAssociations/>
+                <Schedules>
+                    <Schedule BatchNo=""
+                        ExpectedDeliveryDate="2019-06-13T10:56:51-04:00"
+                        ExpectedShipmentDate="2019-06-13T10:56:51-04:00"
+                        LotNumber=""
+                        OrderHeaderKey="201906131008456437052927"
+                        OrderLineKey="201906131008456437052930"
+                        OrderLineScheduleKey="201906131044565144031143"
+                        ProductAvailabilityDate="2019-06-13T00:00:00-04:00"
+                        Quantity="1.00" RevisionNo="" ScheduleNo="3"
+                        ShipNode="MVNDR-60076833" TagNumber="">
+                        <ScheduleTranQuantity Quantity="1.0" TransactionalUOM="EA"/>
+                    </Schedule>
+                </Schedules>
+                <LineOverallTotals Charges="0.00" Discount="0.00"
+                    ExtendedPrice="39.99" LineCost="39.99"
+                    LineTotal="42.39" LineTotalWithoutTax="39.99"
+                    ManualDiscountPercentage="0.00" OptionPrice="0.00"
+                    PercentProfitMargin="0.00" PricingQty="1.00"
+                    ShippingBaseCharge="0.00" ShippingCharges="0.00"
+                    ShippingDiscount="0.00" ShippingTotal="0.00"
+                    Tax="2.40" UnitPrice="39.99"/>
+                <LineCharges/>
+                <LineTaxes>
+                    <LineTax ChargeCategory="" ChargeName=""
+                        ChargeNameKey="" InvoicedTax="0.00"
+                        Reference1="" Reference2="" Reference3=""
+                        RemainingTax="2.40" Tax="2.40" TaxName="Sales"
+                        TaxPercentage="0.00" TaxableFlag="N">
+                        <Extn ExtnExtendedTaxPerLine="2.40"/>
+                    </LineTax>
+                </LineTaxes>
+                <OrderStatuses>
+                    <OrderStatus
+                        OrderHeaderKey="201906131008456437052927"
+                        OrderLineKey="201906131008456437052930"
+                        OrderLineScheduleKey="201906131044565144031143"
+                        OrderReleaseKey="201906131056516444031127"
+                        OrderReleaseStatusKey="201906131026565244032354"
+                        PipelineKey="20160818170550914343"
+                        ShipNode="MVNDR-60076833" Status="3350"
+                        StatusDate="2019-06-13T10:56:52-04:00"
+                        StatusDescription="Included In Shipment"
+                        StatusQty="1.00" TotalQuantity="1.00">
+                        <Details
+                            ExpectedDeliveryDate="2019-06-13T10:56:51-04:00"
+                            ExpectedShipmentDate="2019-06-13T10:56:51-04:00" TagNumber=""/>
+                        <OrderStatusTranQuantity StatusQty="1.00"
+                            TotalQuantity="1.00" TransactionalUOM="EA"/>
+                    </OrderStatus>
+                </OrderStatuses>
+                <OrderLineTranQuantity FillQuantity="0.00"
+                    InvoicedQuantity="0.00" OpenQty="0.00"
+                    OrderedQty="1.00" OriginalOrderedQty="1.00"
+                    ReceivedQty="0.00" RemainingQty="0.00"
+                    SettledQuantity="0.00" ShippedQuantity="0.00"
+                    SplitQty="0.00" StatusQuantity="1.00"
+                    TranDiscrepancyQty="0.00" TransactionalUOM="EA"/>
+            </OrderLine>
+        </OrderLines>
+        <PersonInfoBillTo AddressLine1="5720 U.S.Highway 93"
+            AddressLine2="" AddressLine3="" AddressLine4=""
+            AddressLine5="" AddressLine6="" AlternateEmailID=""
+            Beeper="" City="Jerome" Company="" Country="US" DayFaxNo=""
+            DayPhone="2083241017" Department=""
+            EMailID="espressobytheway@gmail.com" EveningFaxNo=""
+            EveningPhone="" FirstName="Larry" JobTitle=""
+            LastName="Collins" MiddleName="" MobilePhone="2083241017"
+            OtherPhone="" PersonID=""
+            PersonInfoKey="201710091424125589369890" State="ID"
+            Suffix="" Title="" ZipCode="83338">
+            <Extn ExtnMilitaryFlag="N"/>
+        </PersonInfoBillTo>
+        <PaymentMethods>
+            <PaymentMethod BillToKey="" CheckNo="" CheckReference=""
+                CreditCardExpDate="06/2020" CreditCardName="PP"
+                CreditCardNo="O-2T901901JC5667633" CreditCardType="PP"
+                CustomerPONo="" DisplayCreditCardNo="7633"
+                DisplayCustomerAccountNo="" DisplayPaymentReference1=""
+                DisplaySvcNo="7633" FirstName="Larry Collins"
+                FundsAvailable="0.00"
+                GetFundsAvailableUserExitInvoked="N"
+                LastName="Larry Collins" MaxChargeLimit="42.39"
+                PaymentKey="201906131024084537052961"
+                PaymentReference1="" PaymentReference2=""
+                PaymentReference3="Larry Collins"
+                PaymentReference9="PP;NA;NA;O-2T901901JC5667633;NA"
+                PaymentType="PP" SvcNo="O-2T901901JC5667633"
+                TotalAuthorized="42.39" TotalCharged="0.00"
+                TotalRefundedAmount="0.00" UnlimitedCharges="Y"/>
+        </PaymentMethods>
+        <ChargeTransactionDetails>
+            <ChargeTransactionDetail
+                AuthorizationID="25556227-6041-4984-b842-f2ab3bfa2757"
+                ChargeTransactionKey="201906131010376437184124"
+                ChargeType="AUTHORIZATION"
+                CollectionDate="2019-06-13T10:10:37-04:00"
+                CreditAmount="0.00" OpenAuthorizedAmount="42.39"
+                PaymentKey="201906131024084537052961"
+                RequestAmount="42.39" SettledAmount="0.00" Status="CLOSED">
+                <CreditCardTransactions>
+                    <CreditCardTransaction AuthCode="3NR38869DF681320P"
+                        AuthTime="2019-06-13T14:10:37-04:00"
+                        Reference1="25556227-6041-4984-b842-f2ab3bfa2757;3NR38869DF681320P" TranReturnCode=""/>
+                </CreditCardTransactions>
+            </ChargeTransactionDetail>
+        </ChargeTransactionDetails>
+        <Notes NumberOfNotes="0"/>
+        <ProductServiceAssocs/>
+        <AdditionalAddresses NumberOfAdditionalAddresses="0"/>
+        <OverallTotals GrandCharges="0.00" GrandDiscount="0.00"
+            GrandShippingBaseCharge="0.00" GrandShippingCharges="0.00"
+            GrandShippingDiscount="0.00" GrandShippingTotal="0.00"
+            GrandTax="2.40" GrandTotal="42.39" HdrCharges="0.00"
+            HdrDiscount="0.00" HdrShippingBaseCharge="0.00"
+            HdrShippingCharges="0.00" HdrShippingDiscount="0.00"
+            HdrShippingTotal="0.00" HdrTax="0.00" HdrTotal="0.00"
+            LineSubTotal="39.99" ManualDiscountPercentage="0.00" PercentProfitMargin="0.00"/>
+        <PersonInfoShipTo AddressLine1="5720 U.S.Highway 93"
+            AddressLine2="" AddressLine3="" AddressLine4=""
+            AddressLine5="" Beeper="" City="Jerome" Company=""
+            Country="US" DayPhone="2083241017"
+            EMailID="espressobytheway@gmail.com" FirstName="Larry"
+            JobTitle="" LastName="Collins" MiddleName=""
+            MobilePhone="2083241017" OtherPhone="" PersonID=""
+            PersonInfoKey="201710091424125589369975" State="ID"
+            Suffix="" TaxGeoCode="02" Title="" ZipCode="83338">
+            <Extn ExtnCounty="JEROME" ExtnMilitaryFlag="N" ExtnTaxRate="0"/>
+        </PersonInfoShipTo>
+    </Order>
+    <InboxList/>
+    <HDCustNotificationInfoList/>
+</OrderList>

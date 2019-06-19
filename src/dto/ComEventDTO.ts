@@ -1,22 +1,23 @@
-export interface ComEventDTO {
+// created useing npm i maketypes
+export class ComEventDTO {
     _id: string;
-    _declaration: Declaration;
+    _declaration?: Declaration;
     OrderList?: (OrderListEntity)[] | null;
   }
-  export interface Declaration {
+  export class Declaration {
     _attributes: Attributes;
   }
-  export interface Attributes {
+  export class Attributes {
     version: string;
     encoding: string;
   }
-  export interface OrderListEntity {
+  export class OrderListEntity {
     Order?: (OrderEntity)[] | null;
     InboxList?: (HDOnlineHeaderListEntityOrHDOrdChangeListEntityOrHDOrdChangeDescListEntityOrHDSplOrdListEntityOrHDCustDsgnCustOrdListEntityOrHDWillCallListEntityOrHDInvoiceListEntityOrExtnHDStorePaymentInfoListEntityOrOrderHoldTypesEntityOrOrderLineRelationshipsEntityOrAwardsEntityOrPromotionsEntityOrHDOrderlineAddnlListEntityOrHDOnlineProductListEntityOrHDInstallAddnlInfoListEntityOrHDOnlineReturnInfoListEntityOrHDOrderLineAppParmTypeListEntityOrHDSurveyListEntityOrHDCostAuditListEntityOrHDRelatedEJKeysListEntityOrHDReturnPolicyListEntityOrHDLineChgHistListEntityOrHDTrackingInfoListEntityOrOrderLineReservationsEntityOrOrderDatesEntityOrChildOrderLineRelationshipsEntityOrParentOrderLineRelationshipsEntityOrWorkOrdersEntityOrServiceAssociationsEntityOrProductAssociationsEntityOrHDLineTaxListEntityOrLineChargesEntityOrProductServiceAssocsEntityOrHDOrdAppParmTypeListEntityOrHDPaymentStageInfoListEntityOrHDChargeTxnAdditionalListEntityOrHDPaymentMethodAddlListEntityOrHDStorePaymentInfoListEntityOrHDEventListEntityOrHDAppliedTransactionListEntityOrHDLineStatusListEntityOrExtnEntityOrLineTaxesEntityOrPaymentMethodsEntityOrChargeTransactionDetailsEntityOrInboxListEntityOrHDNotificationEventListEntity)[] | null;
     HDCustNotificationInfoList?: (HDCustNotificationInfoListEntity)[] | null;
   }
-  export interface OrderEntity {
-    _attributes: Attributes1;
+  export class OrderEntity {
+    _attributes?: Attributes1;
     Extn?: (ExtnEntity)[] | null;
     OrderHoldTypes?: (HDOnlineHeaderListEntityOrHDOrdChangeListEntityOrHDOrdChangeDescListEntityOrHDSplOrdListEntityOrHDCustDsgnCustOrdListEntityOrHDWillCallListEntityOrHDInvoiceListEntityOrExtnHDStorePaymentInfoListEntityOrOrderHoldTypesEntityOrOrderLineRelationshipsEntityOrAwardsEntityOrPromotionsEntityOrHDOrderlineAddnlListEntityOrHDOnlineProductListEntityOrHDInstallAddnlInfoListEntityOrHDOnlineReturnInfoListEntityOrHDOrderLineAppParmTypeListEntityOrHDSurveyListEntityOrHDCostAuditListEntityOrHDRelatedEJKeysListEntityOrHDReturnPolicyListEntityOrHDLineChgHistListEntityOrHDTrackingInfoListEntityOrOrderLineReservationsEntityOrOrderDatesEntityOrChildOrderLineRelationshipsEntityOrParentOrderLineRelationshipsEntityOrWorkOrdersEntityOrServiceAssociationsEntityOrProductAssociationsEntityOrHDLineTaxListEntityOrLineChargesEntityOrProductServiceAssocsEntityOrHDOrdAppParmTypeListEntityOrHDPaymentStageInfoListEntityOrHDChargeTxnAdditionalListEntityOrHDPaymentMethodAddlListEntityOrHDStorePaymentInfoListEntityOrHDEventListEntityOrHDAppliedTransactionListEntityOrHDLineStatusListEntityOrExtnEntityOrLineTaxesEntityOrPaymentMethodsEntityOrChargeTransactionDetailsEntityOrInboxListEntityOrHDNotificationEventListEntity)[] | null;
     OrderLineRelationships?: (HDOnlineHeaderListEntityOrHDOrdChangeListEntityOrHDOrdChangeDescListEntityOrHDSplOrdListEntityOrHDCustDsgnCustOrdListEntityOrHDWillCallListEntityOrHDInvoiceListEntityOrExtnHDStorePaymentInfoListEntityOrOrderHoldTypesEntityOrOrderLineRelationshipsEntityOrAwardsEntityOrPromotionsEntityOrHDOrderlineAddnlListEntityOrHDOnlineProductListEntityOrHDInstallAddnlInfoListEntityOrHDOnlineReturnInfoListEntityOrHDOrderLineAppParmTypeListEntityOrHDSurveyListEntityOrHDCostAuditListEntityOrHDRelatedEJKeysListEntityOrHDReturnPolicyListEntityOrHDLineChgHistListEntityOrHDTrackingInfoListEntityOrOrderLineReservationsEntityOrOrderDatesEntityOrChildOrderLineRelationshipsEntityOrParentOrderLineRelationshipsEntityOrWorkOrdersEntityOrServiceAssociationsEntityOrProductAssociationsEntityOrHDLineTaxListEntityOrLineChargesEntityOrProductServiceAssocsEntityOrHDOrdAppParmTypeListEntityOrHDPaymentStageInfoListEntityOrHDChargeTxnAdditionalListEntityOrHDPaymentMethodAddlListEntityOrHDStorePaymentInfoListEntityOrHDEventListEntityOrHDAppliedTransactionListEntityOrHDLineStatusListEntityOrExtnEntityOrLineTaxesEntityOrPaymentMethodsEntityOrChargeTransactionDetailsEntityOrInboxListEntityOrHDNotificationEventListEntity)[] | null;
@@ -33,30 +34,30 @@ export interface ComEventDTO {
     Instructions?: (InstructionsEntity)[] | null;
     OverallTotals?: (OverallTotalsEntity)[] | null;
   }
-  export interface Attributes1 {
-    Createuserid: string;
-    DocumentType: string;
-    DraftOrderFlag: string;
-    EnterpriseCode: string;
-    EntryType: string;
-    Lockid: string;
-    MaxOrderStatus: string;
-    MaxOrderStatusDesc: string;
+  export class Attributes1 {
+    Createuserid?: string;
+    DocumentType?: string;
+    DraftOrderFlag?: string;
+    EnterpriseCode?: string;
+    EntryType?: string;
+    Lockid?: string;
+    MaxOrderStatus?: string;
+    MaxOrderStatusDesc?: string;
     MessageId?: string | null;
-    MinOrderStatus: string;
-    MinOrderStatusDesc: string;
-    Modifyts: string;
-    OrderDate: string;
-    OrderHeaderKey: string;
-    OrderNo: string;
-    OrderType: string;
-    OriginalTotalAmount: string;
-    SearchCriteria2: string;
-    SellerOrganizationCode: string;
-    TaxExemptionCertificate: string;
+    MinOrderStatus?: string;
+    MinOrderStatusDesc?: string;
+    Modifyts?: string;
+    OrderDate?: string;
+    OrderHeaderKey?: string;
+    OrderNo?: string;
+    OrderType?: string;
+    OriginalTotalAmount?: string;
+    SearchCriteria2?: string;
+    SellerOrganizationCode?: string;
+    TaxExemptionCertificate?: string;
     BuyerOrganizationCode?: string | null;
   }
-  export interface ExtnEntity {
+  export class ExtnEntity {
     _attributes: Attributes2;
     HDOnlineHeaderList?: (HDOnlineHeaderListEntityOrHDOrdChangeListEntityOrHDOrdChangeDescListEntityOrHDSplOrdListEntityOrHDCustDsgnCustOrdListEntityOrHDWillCallListEntityOrHDInvoiceListEntityOrExtnHDStorePaymentInfoListEntityOrOrderHoldTypesEntityOrOrderLineRelationshipsEntityOrAwardsEntityOrPromotionsEntityOrHDOrderlineAddnlListEntityOrHDOnlineProductListEntityOrHDInstallAddnlInfoListEntityOrHDOnlineReturnInfoListEntityOrHDOrderLineAppParmTypeListEntityOrHDSurveyListEntityOrHDCostAuditListEntityOrHDRelatedEJKeysListEntityOrHDReturnPolicyListEntityOrHDLineChgHistListEntityOrHDTrackingInfoListEntityOrOrderLineReservationsEntityOrOrderDatesEntityOrChildOrderLineRelationshipsEntityOrParentOrderLineRelationshipsEntityOrWorkOrdersEntityOrServiceAssociationsEntityOrProductAssociationsEntityOrHDLineTaxListEntityOrLineChargesEntityOrProductServiceAssocsEntityOrHDOrdAppParmTypeListEntityOrHDPaymentStageInfoListEntityOrHDChargeTxnAdditionalListEntityOrHDPaymentMethodAddlListEntityOrHDStorePaymentInfoListEntityOrHDEventListEntityOrHDAppliedTransactionListEntityOrHDLineStatusListEntityOrExtnEntityOrLineTaxesEntityOrPaymentMethodsEntityOrChargeTransactionDetailsEntityOrInboxListEntityOrHDNotificationEventListEntity)[] | null;
     HDOrderStatusList?: (HDOrderStatusListEntity)[] | null;
@@ -73,7 +74,7 @@ export interface ComEventDTO {
     HDPaymentMethodAddlList?: (HDOnlineHeaderListEntityOrHDOrdChangeListEntityOrHDOrdChangeDescListEntityOrHDSplOrdListEntityOrHDCustDsgnCustOrdListEntityOrHDWillCallListEntityOrHDInvoiceListEntityOrExtnHDStorePaymentInfoListEntityOrOrderHoldTypesEntityOrOrderLineRelationshipsEntityOrAwardsEntityOrPromotionsEntityOrHDOrderlineAddnlListEntityOrHDOnlineProductListEntityOrHDInstallAddnlInfoListEntityOrHDOnlineReturnInfoListEntityOrHDOrderLineAppParmTypeListEntityOrHDSurveyListEntityOrHDCostAuditListEntityOrHDRelatedEJKeysListEntityOrHDReturnPolicyListEntityOrHDLineChgHistListEntityOrHDTrackingInfoListEntityOrOrderLineReservationsEntityOrOrderDatesEntityOrChildOrderLineRelationshipsEntityOrParentOrderLineRelationshipsEntityOrWorkOrdersEntityOrServiceAssociationsEntityOrProductAssociationsEntityOrHDLineTaxListEntityOrLineChargesEntityOrProductServiceAssocsEntityOrHDOrdAppParmTypeListEntityOrHDPaymentStageInfoListEntityOrHDChargeTxnAdditionalListEntityOrHDPaymentMethodAddlListEntityOrHDStorePaymentInfoListEntityOrHDEventListEntityOrHDAppliedTransactionListEntityOrHDLineStatusListEntityOrExtnEntityOrLineTaxesEntityOrPaymentMethodsEntityOrChargeTransactionDetailsEntityOrInboxListEntityOrHDNotificationEventListEntity)[] | null;
     HDStorePaymentInfoList?: (HDOnlineHeaderListEntityOrHDOrdChangeListEntityOrHDOrdChangeDescListEntityOrHDSplOrdListEntityOrHDCustDsgnCustOrdListEntityOrHDWillCallListEntityOrHDInvoiceListEntityOrExtnHDStorePaymentInfoListEntityOrOrderHoldTypesEntityOrOrderLineRelationshipsEntityOrAwardsEntityOrPromotionsEntityOrHDOrderlineAddnlListEntityOrHDOnlineProductListEntityOrHDInstallAddnlInfoListEntityOrHDOnlineReturnInfoListEntityOrHDOrderLineAppParmTypeListEntityOrHDSurveyListEntityOrHDCostAuditListEntityOrHDRelatedEJKeysListEntityOrHDReturnPolicyListEntityOrHDLineChgHistListEntityOrHDTrackingInfoListEntityOrOrderLineReservationsEntityOrOrderDatesEntityOrChildOrderLineRelationshipsEntityOrParentOrderLineRelationshipsEntityOrWorkOrdersEntityOrServiceAssociationsEntityOrProductAssociationsEntityOrHDLineTaxListEntityOrLineChargesEntityOrProductServiceAssocsEntityOrHDOrdAppParmTypeListEntityOrHDPaymentStageInfoListEntityOrHDChargeTxnAdditionalListEntityOrHDPaymentMethodAddlListEntityOrHDStorePaymentInfoListEntityOrHDEventListEntityOrHDAppliedTransactionListEntityOrHDLineStatusListEntityOrExtnEntityOrLineTaxesEntityOrPaymentMethodsEntityOrChargeTransactionDetailsEntityOrInboxListEntityOrHDNotificationEventListEntity)[] | null;
   }
-  export interface Attributes2 {
+  export class Attributes2 {
     ExtnClientExternalOrderReference?: string | null;
     ExtnClientExternalSrcProcess?: string | null;
     ExtnClientExternalSrcReference?: string | null;
@@ -89,19 +90,19 @@ export interface ComEventDTO {
     ExtnModifiedUserID?: string | null;
     ExtnOrderLevelExtendedTotal?: string | null;
     ExtnOrderType?: string | null;
-    ExtnPMCFlag: string;
-    ExtnPOCreateDate: string;
+    ExtnPMCFlag?: string;
+    ExtnPOCreateDate?: string;
     ExtnPriceProgramTier?: string | null;
     ExtnProfileID?: string | null;
     ExtnRefundRering?: string | null;
     ExtnRevisedUserID?: string | null;
-    ExtnSVSOrderStatus: string;
-    ExtnSVSOrderStatusDesc: string;
+    ExtnSVSOrderStatus?: string;
+    ExtnSVSOrderStatusDesc?: string;
     ExtnSVSOrderVersion?: string | null;
     ExtnSVSPublishTimeStamp?: string | null;
     ExtnSalesTaxRate?: string | null;
     ExtnSrcRef?: string | null;
-    ExtnStatusEffectiveTs: string;
+    ExtnStatusEffectiveTs?: string;
     ExtnTaxExemptTypeCode?: string | null;
     ExtnUCMID?: string | null;
     ExtnUserDeptNbr?: string | null;
@@ -113,17 +114,17 @@ export interface ComEventDTO {
     ExtnTransmissionTypeCode?: string | null;
     ExtnVendorName?: string | null;
   }
-  export interface HDOnlineHeaderListEntityOrHDOrdChangeListEntityOrHDOrdChangeDescListEntityOrHDSplOrdListEntityOrHDCustDsgnCustOrdListEntityOrHDWillCallListEntityOrHDInvoiceListEntityOrExtnHDStorePaymentInfoListEntityOrOrderHoldTypesEntityOrOrderLineRelationshipsEntityOrAwardsEntityOrPromotionsEntityOrHDOrderlineAddnlListEntityOrHDOnlineProductListEntityOrHDInstallAddnlInfoListEntityOrHDOnlineReturnInfoListEntityOrHDOrderLineAppParmTypeListEntityOrHDSurveyListEntityOrHDCostAuditListEntityOrHDRelatedEJKeysListEntityOrHDReturnPolicyListEntityOrHDLineChgHistListEntityOrHDTrackingInfoListEntityOrOrderLineReservationsEntityOrOrderDatesEntityOrChildOrderLineRelationshipsEntityOrParentOrderLineRelationshipsEntityOrWorkOrdersEntityOrServiceAssociationsEntityOrProductAssociationsEntityOrHDLineTaxListEntityOrLineChargesEntityOrProductServiceAssocsEntityOrHDOrdAppParmTypeListEntityOrHDPaymentStageInfoListEntityOrHDChargeTxnAdditionalListEntityOrHDPaymentMethodAddlListEntityOrHDStorePaymentInfoListEntityOrHDEventListEntityOrHDAppliedTransactionListEntityOrHDLineStatusListEntityOrExtnEntityOrLineTaxesEntityOrPaymentMethodsEntityOrChargeTransactionDetailsEntityOrInboxListEntityOrHDNotificationEventListEntity {
-    HDOnlineProduct;
-    HDTrackingInfo;
+  export class HDOnlineHeaderListEntityOrHDOrdChangeListEntityOrHDOrdChangeDescListEntityOrHDSplOrdListEntityOrHDCustDsgnCustOrdListEntityOrHDWillCallListEntityOrHDInvoiceListEntityOrExtnHDStorePaymentInfoListEntityOrOrderHoldTypesEntityOrOrderLineRelationshipsEntityOrAwardsEntityOrPromotionsEntityOrHDOrderlineAddnlListEntityOrHDOnlineProductListEntityOrHDInstallAddnlInfoListEntityOrHDOnlineReturnInfoListEntityOrHDOrderLineAppParmTypeListEntityOrHDSurveyListEntityOrHDCostAuditListEntityOrHDRelatedEJKeysListEntityOrHDReturnPolicyListEntityOrHDLineChgHistListEntityOrHDTrackingInfoListEntityOrOrderLineReservationsEntityOrOrderDatesEntityOrChildOrderLineRelationshipsEntityOrParentOrderLineRelationshipsEntityOrWorkOrdersEntityOrServiceAssociationsEntityOrProductAssociationsEntityOrHDLineTaxListEntityOrLineChargesEntityOrProductServiceAssocsEntityOrHDOrdAppParmTypeListEntityOrHDPaymentStageInfoListEntityOrHDChargeTxnAdditionalListEntityOrHDPaymentMethodAddlListEntityOrHDStorePaymentInfoListEntityOrHDEventListEntityOrHDAppliedTransactionListEntityOrHDLineStatusListEntityOrExtnEntityOrLineTaxesEntityOrPaymentMethodsEntityOrChargeTransactionDetailsEntityOrInboxListEntityOrHDNotificationEventListEntity {
+    HDOnlineProduct?;
+    HDTrackingInfo?;
   }
-  export interface HDOrderStatusListEntity {
+  export class HDOrderStatusListEntity {
     HDOrderStatus?: (HDOrderStatusEntity)[] | null;
   }
-  export interface HDOrderStatusEntity {
+  export class HDOrderStatusEntity {
     _attributes: Attributes3;
   }
-  export interface Attributes3 {
+  export class Attributes3 {
     Createprogid: string;
     Createts: string;
     Createuserid: string;
@@ -142,13 +143,13 @@ export interface ComEventDTO {
     UserAuditID: string;
     isHistory: string;
   }
-  export interface HDOrdAppParmTypeListEntity {
+  export class HDOrdAppParmTypeListEntity {
     HDOrdAppParmType?: (HDOrdAppParmTypeEntity)[] | null;
   }
-  export interface HDOrdAppParmTypeEntity {
+  export class HDOrdAppParmTypeEntity {
     _attributes: Attributes4;
   }
-  export interface Attributes4 {
+  export class Attributes4 {
     Code: string;
     Createprogid: string;
     Createts: string;
@@ -164,13 +165,13 @@ export interface ComEventDTO {
     Value: string;
     isHistory: string;
   }
-  export interface HDPaymentStageInfoListEntity {
+  export class HDPaymentStageInfoListEntity {
     HDPaymentStageInfo?: (HDPaymentStageInfoEntity)[] | null;
   }
-  export interface HDPaymentStageInfoEntity {
+  export class HDPaymentStageInfoEntity {
     _attributes: Attributes5;
   }
-  export interface Attributes5 {
+  export class Attributes5 {
     CountryCode: string;
     Createprogid: string;
     Createts: string;
@@ -199,13 +200,13 @@ export interface ComEventDTO {
     UnitNetRetail: string;
     isHistory: string;
   }
-  export interface HDChargeTxnAdditionalListEntity {
+  export class HDChargeTxnAdditionalListEntity {
     HDChargeTxnAdditional?: (HDChargeTxnAdditionalEntity)[] | null;
   }
-  export interface HDChargeTxnAdditionalEntity {
+  export class HDChargeTxnAdditionalEntity {
     _attributes: Attributes6;
   }
-  export interface Attributes6 {
+  export class Attributes6 {
     CollectionDate: string;
     ConcatenatedEJKey: string;
     Createprogid: string;
@@ -228,13 +229,13 @@ export interface ComEventDTO {
     PaymentSeqNo: string;
     isHistory: string;
   }
-  export interface HDSplOrdListEntity {
+  export class HDSplOrdListEntity {
     HDSplOrd?: (HDSplOrdEntity)[] | null;
   }
-  export interface HDSplOrdEntity {
+  export class HDSplOrdEntity {
     _attributes: Attributes7;
   }
-  export interface Attributes7 {
+  export class Attributes7 {
     AllowCoupon: string;
     Createprogid: string;
     Createts: string;
@@ -261,10 +262,10 @@ export interface ComEventDTO {
     SplOrderRelatedNumber: string;
     isHistory: string;
   }
-  export interface OrderLinesEntity {
+  export class OrderLinesEntity {
     OrderLine?: (OrderLineEntity)[] | null;
   }
-  export interface OrderLineEntity {
+  export class OrderLineEntity {
     _attributes: Attributes8;
     Extn?: (ExtnEntity1)[] | null;
     Item?: (ItemEntity)[] | null;
@@ -288,37 +289,37 @@ export interface ComEventDTO {
     OrderStatuses?: (OrderStatusesEntity)[] | null;
     OrderLineTranQuantity?: (OrderLineTranQuantityEntity)[] | null;
   }
-  export interface Attributes8 {
-    CarrierServiceCode: string;
-    ConditionVariable1: string;
-    CustomerLinePONo: string;
-    CustomerPONo: string;
-    DeliveryMethod: string;
-    FulfillmentType: string;
-    IsFirmPredefinedNode: string;
-    ItemGroupCode: string;
-    KitCode: string;
-    LineType: string;
-    MaxLineStatus: string;
-    MaxLineStatusDesc: string;
-    MinLineStatus: string;
-    MinLineStatusDesc: string;
-    OrderLineKey: string;
-    OrderedQty: number;
-    OriginalOrderedQty: string;
-    PrimeLineNo: string;
-    ReturnReason: string;
-    SCAC: string;
-    ScacAndService: string;
-    ShipNode: string;
-    ShipToKey: string;
-    Status: string;
-    StatusQuantity: string;
-    SubLineNo: string;
+  export class Attributes8 {
+    CarrierServiceCode?: string;
+    ConditionVariable1?: string;
+    CustomerLinePONo?: string;
+    CustomerPONo?: string;
+    DeliveryMethod?: string;
+    FulfillmentType?: string;
+    IsFirmPredefinedNode?: string;
+    ItemGroupCode?: string;
+    KitCode?: string;
+    LineType?: string;
+    MaxLineStatus?: string;
+    MaxLineStatusDesc?: string;
+    MinLineStatus?: string;
+    MinLineStatusDesc?: string;
+    OrderLineKey?: string;
+    OrderedQty?: number;
+    OriginalOrderedQty?: string;
+    PrimeLineNo?: string;
+    ReturnReason?: string;
+    SCAC?: string;
+    ScacAndService?: string;
+    ShipNode?: string;
+    ShipToKey?: string;
+    Status?: string;
+    StatusQuantity?: string;
+    SubLineNo?: string;
     DerivedFromOrderLineKey?: string | null;
     ReqShipDate?: string | null;
   }
-  export interface ExtnEntity1 {
+  export class ExtnEntity1 {
     _attributes: Attributes9;
     HDOrderlineAddnlList?: (HDOnlineHeaderListEntityOrHDOrdChangeListEntityOrHDOrdChangeDescListEntityOrHDSplOrdListEntityOrHDCustDsgnCustOrdListEntityOrHDWillCallListEntityOrHDInvoiceListEntityOrExtnHDStorePaymentInfoListEntityOrOrderHoldTypesEntityOrOrderLineRelationshipsEntityOrAwardsEntityOrPromotionsEntityOrHDOrderlineAddnlListEntityOrHDOnlineProductListEntityOrHDInstallAddnlInfoListEntityOrHDOnlineReturnInfoListEntityOrHDOrderLineAppParmTypeListEntityOrHDSurveyListEntityOrHDCostAuditListEntityOrHDRelatedEJKeysListEntityOrHDReturnPolicyListEntityOrHDLineChgHistListEntityOrHDTrackingInfoListEntityOrOrderLineReservationsEntityOrOrderDatesEntityOrChildOrderLineRelationshipsEntityOrParentOrderLineRelationshipsEntityOrWorkOrdersEntityOrServiceAssociationsEntityOrProductAssociationsEntityOrHDLineTaxListEntityOrLineChargesEntityOrProductServiceAssocsEntityOrHDOrdAppParmTypeListEntityOrHDPaymentStageInfoListEntityOrHDChargeTxnAdditionalListEntityOrHDPaymentMethodAddlListEntityOrHDStorePaymentInfoListEntityOrHDEventListEntityOrHDAppliedTransactionListEntityOrHDLineStatusListEntityOrExtnEntityOrLineTaxesEntityOrPaymentMethodsEntityOrChargeTransactionDetailsEntityOrInboxListEntityOrHDNotificationEventListEntity)[] | null;
     HDOnlineProductList?: (HDOnlineHeaderListEntityOrHDOrdChangeListEntityOrHDOrdChangeDescListEntityOrHDSplOrdListEntityOrHDCustDsgnCustOrdListEntityOrHDWillCallListEntityOrHDInvoiceListEntityOrExtnHDStorePaymentInfoListEntityOrOrderHoldTypesEntityOrOrderLineRelationshipsEntityOrAwardsEntityOrPromotionsEntityOrHDOrderlineAddnlListEntityOrHDOnlineProductListEntityOrHDInstallAddnlInfoListEntityOrHDOnlineReturnInfoListEntityOrHDOrderLineAppParmTypeListEntityOrHDSurveyListEntityOrHDCostAuditListEntityOrHDRelatedEJKeysListEntityOrHDReturnPolicyListEntityOrHDLineChgHistListEntityOrHDTrackingInfoListEntityOrOrderLineReservationsEntityOrOrderDatesEntityOrChildOrderLineRelationshipsEntityOrParentOrderLineRelationshipsEntityOrWorkOrdersEntityOrServiceAssociationsEntityOrProductAssociationsEntityOrHDLineTaxListEntityOrLineChargesEntityOrProductServiceAssocsEntityOrHDOrdAppParmTypeListEntityOrHDPaymentStageInfoListEntityOrHDChargeTxnAdditionalListEntityOrHDPaymentMethodAddlListEntityOrHDStorePaymentInfoListEntityOrHDEventListEntityOrHDAppliedTransactionListEntityOrHDLineStatusListEntityOrExtnEntityOrLineTaxesEntityOrPaymentMethodsEntityOrChargeTransactionDetailsEntityOrInboxListEntityOrHDNotificationEventListEntity)[] | null;
@@ -337,41 +338,41 @@ export interface ComEventDTO {
     HDAppliedTransactionList?: (HDAppliedTransactionListEntity)[] | null;
     HDLineStatusList?: (HDLineStatusListEntity)[] | null;
   }
-  export interface Attributes9 {
+  export class Attributes9 {
     ExtnCancelQuantity?: string | null;
     ExtnCancelReasonCode?: string | null;
     ExtnClass?: string | null;
     ExtnCreateSrcProcess?: string | null;
     ExtnCreateSrcReference?: string | null;
-    ExtnCreatets: string;
-    ExtnCumPickedQuantity: string;
+    ExtnCreatets?: string;
+    ExtnCumPickedQuantity?: string;
     ExtnDFCSourceFlag?: string | null;
-    ExtnDeliveryApprover: string;
-    ExtnDeliveryPalletQty: string;
-    ExtnDepartmentCode: string;
+    ExtnDeliveryApprover?: string;
+    ExtnDeliveryPalletQty?: string;
+    ExtnDepartmentCode?: string;
     ExtnFILineType?: string | null;
-    ExtnHDUOMCode: string;
-    ExtnHDUOMCodeDesc: string;
+    ExtnHDUOMCode?: string;
+    ExtnHDUOMCodeDesc?: string;
     ExtnHazmatCode?: string | null;
-    ExtnHostOrderLineReference: string;
+    ExtnHostOrderLineReference?: string;
     ExtnHostUserID?: string | null;
     ExtnInventoryTrackCode?: string | null;
     ExtnIsPreBOSS?: string | null;
-    ExtnLastNotifySent: string;
+    ExtnLastNotifySent?: string;
     ExtnLineLevelExtendedTotal?: string | null;
-    ExtnMVendorNo: string;
-    ExtnMilitaryFlag: string;
+    ExtnMVendorNo?: string;
+    ExtnMilitaryFlag?: string;
     ExtnModifySrcProcess?: string | null;
     ExtnModifySrcReference?: string | null;
-    ExtnMsgGeneratedTS: string;
-    ExtnNMMultilineFlag: string;
+    ExtnMsgGeneratedTS?: string;
+    ExtnNMMultilineFlag?: string;
     ExtnNetUnitPrice?: string | null;
     ExtnNetUnitPriceNoTax?: string | null;
     ExtnOrderCreateLocation?: string | null;
     ExtnOrderCreateLocationType?: string | null;
     ExtnOrderLineType?: string | null;
-    ExtnOriginalQtyOnQuote: string;
-    ExtnPOCreateDate: string;
+    ExtnOriginalQtyOnQuote?: string;
+    ExtnPOCreateDate?: string;
     ExtnPONumber?: string | null;
     ExtnPickCompleted?: string | null;
     ExtnPickedQuantity?: string | null;
@@ -382,29 +383,29 @@ export interface ComEventDTO {
     ExtnReturnQuantity?: string | null;
     ExtnRoundingDeferred?: string | null;
     ExtnSKUCode: number;
-    ExtnSKUCodeDesc: string;
-    ExtnSellingLocation: string;
-    ExtnSplOrderLineNumber: string;
+    ExtnSKUCodeDesc?: string;
+    ExtnSellingLocation?: string;
+    ExtnSplOrderLineNumber?: string;
     ExtnSubClass?: string | null;
     ExtnSystemReference?: string | null;
     ExtnTenderQuantity?: string | null;
     ExtnUOMConvQty?: string | null;
-    ExtnUncancelledQty: string;
-    ExtnVendorStockNumber: string;
+    ExtnUncancelledQty?: string;
+    ExtnVendorStockNumber?: string;
     ExtnWillCallLineNum?: string | null;
     ExtnCancelReqSent?: string | null;
     ExtnPOLineReference?: string | null;
     ExtnPOTrnsMonTriggered?: string | null;
     ExtnUnitCost?: string | null;
-    ExtnOMSID?: string | null;
+    ExtnOMSID: string | null;
   }
-  export interface HDSplOrderInfoListEntity {
+  export class HDSplOrderInfoListEntity {
     HDSplOrderInfo?: (HDSplOrderInfoEntity)[] | null;
   }
-  export interface HDSplOrderInfoEntity {
+  export class HDSplOrderInfoEntity {
     _attributes: Attributes10;
   }
-  export interface Attributes10 {
+  export class Attributes10 {
     Createprogid: string;
     Createts: string;
     Createuserid: string;
@@ -419,13 +420,13 @@ export interface ComEventDTO {
     ReturnPolicyID: string;
     isHistory: string;
   }
-  export interface HDLineTaxListEntity {
+  export class HDLineTaxListEntity {
     HDLineTax?: (HDLineTaxEntity)[] | null;
   }
-  export interface HDLineTaxEntity {
+  export class HDLineTaxEntity {
     _attributes: Attributes11;
   }
-  export interface Attributes11 {
+  export class Attributes11 {
     CreateTimeStamp: string;
     Createprogid: string;
     Createts: string;
@@ -446,13 +447,13 @@ export interface ComEventDTO {
     TaxRate: string;
     isHistory: string;
   }
-  export interface HDEventListEntity {
+  export class HDEventListEntity {
     HDEvent?: (HDEventEntity)[] | null;
   }
-  export interface HDEventEntity {
+  export class HDEventEntity {
     _attributes: Attributes12;
   }
-  export interface Attributes12 {
+  export class Attributes12 {
     Createprogid: string;
     Createts: string;
     Createuserid: string;
@@ -471,13 +472,13 @@ export interface ComEventDTO {
     POSTransID?: string | null;
     EventRsnCode?: string | null;
   }
-  export interface HDAppliedTransactionListEntity {
+  export class HDAppliedTransactionListEntity {
     HDAppliedTransaction?: (HDAppliedTransactionEntity)[] | null;
   }
-  export interface HDAppliedTransactionEntity {
+  export class HDAppliedTransactionEntity {
     _attributes: Attributes13;
   }
-  export interface Attributes13 {
+  export class Attributes13 {
     CancelReasonCode: string;
     Createprogid: string;
     Createts: string;
@@ -501,13 +502,13 @@ export interface ComEventDTO {
     TenderQuantity: string;
     isHistory: string;
   }
-  export interface HDLineStatusListEntity {
+  export class HDLineStatusListEntity {
     HDLineStatus?: (HDLineStatusEntity)[] | null;
   }
-  export interface HDLineStatusEntity {
+  export class HDLineStatusEntity {
     _attributes: Attributes14;
   }
-  export interface Attributes14 {
+  export class Attributes14 {
     Createprogid: string;
     Createts: string;
     Createuserid: string;
@@ -525,39 +526,39 @@ export interface ComEventDTO {
     UserAuditID: string;
     isHistory: string;
   }
-  export interface ItemEntity {
+  export class ItemEntity {
     _attributes: Attributes15;
   }
-  export interface Attributes15 {
-    ItemDesc: string;
-    ItemID: string;
-    ItemShortDesc: string;
-    ItemWeight: string;
-    ItemWeightUOM: string;
-    ManufacturerItem: string;
-    ManufacturerName: string;
-    ProductClass: string;
-    UPCCode: string;
-    UnitCost: string;
-    UnitOfMeasure: string;
+  export class Attributes15 {
+    ItemDesc?: string;
+    ItemID?: string;
+    ItemShortDesc?: string;
+    ItemWeight?: string;
+    ItemWeightUOM?: string;
+    ManufacturerItem?: string;
+    ManufacturerName?: string;
+    ProductClass?: string;
+    UPCCode?: string;
+    UnitCost?: string;
+    UnitOfMeasure?: string;
   }
-  export interface LinePriceInfoEntity {
+  export class LinePriceInfoEntity {
     _attributes: Attributes16;
   }
-  export interface Attributes16 {
+  export class Attributes16 {
     ListPrice: string;
     PricingQtyConversionFactor: string;
     RetailPrice: string;
     TaxableFlag: string;
     UnitPrice: string;
   }
-  export interface OrderHoldTypesEntity {
+  export class OrderHoldTypesEntity {
     OrderHoldType?: (OrderHoldTypeEntity)[] | null;
   }
-  export interface OrderHoldTypeEntity {
+  export class OrderHoldTypeEntity {
     _attributes: Attributes17;
   }
-  export interface Attributes17 {
+  export class Attributes17 {
     HoldType: string;
     LastHoldTypeDate: string;
     Modifyuserid: string;
@@ -569,39 +570,39 @@ export interface ComEventDTO {
     TransactionId: string;
     TransactionName: string;
   }
-  export interface PersonInfoShipToEntity1 {
+  export class PersonInfoShipToEntity1 {
     _attributes: Attributes18;
     Extn?: (ExtnEntity2)[] | null;
   }
-  export interface Attributes18 {
-    AddressLine1: string;
-    AddressLine2: string;
-    AddressLine3: string;
-    AddressLine4: string;
-    AddressLine5: string;
-    Beeper: string;
-    City: string;
-    Company: string;
-    Country: string;
-    DayPhone: string;
-    EMailID: string;
-    FirstName: string;
-    JobTitle: string;
-    LastName: string;
-    MiddleName: string;
-    MobilePhone: string;
-    OtherPhone: string;
-    PersonID: string;
-    PersonInfoKey: string;
-    State: string;
-    Suffix: string;
-    Title: string;
-    ZipCode: string;
+  export class Attributes18 {
+    AddressLine1?: string;
+    AddressLine2?: string;
+    AddressLine3?: string;
+    AddressLine4?: string;
+    AddressLine5?: string;
+    Beeper?: string;
+    City?: string;
+    Company?: string;
+    Country?: string;
+    DayPhone?: string;
+    EMailID?: string;
+    FirstName?: string;
+    JobTitle?: string;
+    LastName?: string;
+    MiddleName?: string;
+    MobilePhone?: string;
+    OtherPhone?: string;
+    PersonID?: string;
+    PersonInfoKey?: string;
+    State?: string;
+    Suffix?: string;
+    Title?: string;
+    ZipCode?: string;
   }
-  export interface ExtnEntity2 {
+  export class ExtnEntity2 {
     _attributes: Attributes19;
   }
-  export interface Attributes19 {
+  export class Attributes19 {
     AddressType: string;
     ExtnCounty: string;
     ExtnHostOrderLineReference: string;
@@ -611,24 +612,24 @@ export interface ComEventDTO {
     ExtnTaxRate: string;
     OrderHeaderKey: string;
   }
-  export interface AdditionalAddressesEntity {
+  export class AdditionalAddressesEntity {
     _attributes: Attributes20;
   }
-  export interface Attributes20 {
+  export class Attributes20 {
     NumberOfAdditionalAddresses: string;
   }
-  export interface InstructionsEntity1 {
+  export class InstructionsEntity1 {
     _attributes: Attributes21;
     Instruction?: (InstructionEntity)[] | null;
   }
-  export interface Attributes21 {
+  export class Attributes21 {
     NumberOfInstructions: string;
   }
-  export interface InstructionEntity {
+  export class InstructionEntity {
     _attributes: Attributes22;
     Extn?: (HDOnlineHeaderListEntityOrHDOrdChangeListEntityOrHDOrdChangeDescListEntityOrHDSplOrdListEntityOrHDCustDsgnCustOrdListEntityOrHDWillCallListEntityOrHDInvoiceListEntityOrExtnHDStorePaymentInfoListEntityOrOrderHoldTypesEntityOrOrderLineRelationshipsEntityOrAwardsEntityOrPromotionsEntityOrHDOrderlineAddnlListEntityOrHDOnlineProductListEntityOrHDInstallAddnlInfoListEntityOrHDOnlineReturnInfoListEntityOrHDOrderLineAppParmTypeListEntityOrHDSurveyListEntityOrHDCostAuditListEntityOrHDRelatedEJKeysListEntityOrHDReturnPolicyListEntityOrHDLineChgHistListEntityOrHDTrackingInfoListEntityOrOrderLineReservationsEntityOrOrderDatesEntityOrChildOrderLineRelationshipsEntityOrParentOrderLineRelationshipsEntityOrWorkOrdersEntityOrServiceAssociationsEntityOrProductAssociationsEntityOrHDLineTaxListEntityOrLineChargesEntityOrProductServiceAssocsEntityOrHDOrdAppParmTypeListEntityOrHDPaymentStageInfoListEntityOrHDChargeTxnAdditionalListEntityOrHDPaymentMethodAddlListEntityOrHDStorePaymentInfoListEntityOrHDEventListEntityOrHDAppliedTransactionListEntityOrHDLineStatusListEntityOrExtnEntityOrLineTaxesEntityOrPaymentMethodsEntityOrChargeTransactionDetailsEntityOrInboxListEntityOrHDNotificationEventListEntity)[] | null;
   }
-  export interface Attributes22 {
+  export class Attributes22 {
     Action: string;
     Createprogid: string;
     Createts: string;
@@ -647,39 +648,39 @@ export interface ComEventDTO {
     TableName: string;
     isHistory: string;
   }
-  export interface ItemDetailsEntity {
+  export class ItemDetailsEntity {
     _attributes: Attributes23;
     PrimaryInformation?: (PrimaryInformationEntity)[] | null;
     Extn?: (ExtnEntity3)[] | null;
   }
-  export interface Attributes23 {
+  export class Attributes23 {
     ItemID: string;
   }
-  export interface PrimaryInformationEntity {
+  export class PrimaryInformationEntity {
     _attributes: Attributes24;
   }
-  export interface Attributes24 {
+  export class Attributes24 {
     IsHazmat: string;
     TaxableFlag: string;
   }
-  export interface ExtnEntity3 {
+  export class ExtnEntity3 {
     _attributes: Attributes25;
   }
-  export interface Attributes25 {
+  export class Attributes25 {
     ExtnClass: string;
     ExtnDFCSourceFlag?: string | null;
     ExtnDepartment: string;
     ExtnPackageQuantity?: string | null;
     ExtnSubClass: string;
   }
-  export interface SchedulesEntity {
+  export class SchedulesEntity {
     Schedule?: (ScheduleEntity)[] | null;
   }
-  export interface ScheduleEntity {
+  export class ScheduleEntity {
     _attributes: Attributes26;
     ScheduleTranQuantity?: (ScheduleTranQuantityEntity)[] | null;
   }
-  export interface Attributes26 {
+  export class Attributes26 {
     BatchNo: string;
     ExpectedDeliveryDate: string;
     ExpectedShipmentDate: string;
@@ -693,17 +694,17 @@ export interface ComEventDTO {
     ShipNode: string;
     TagNumber: string;
   }
-  export interface ScheduleTranQuantityEntity {
+  export class ScheduleTranQuantityEntity {
     _attributes: Attributes27;
   }
-  export interface Attributes27 {
+  export class Attributes27 {
     Quantity: string;
     TransactionalUOM: string;
   }
-  export interface LineOverallTotalsEntity {
+  export class LineOverallTotalsEntity {
     _attributes: Attributes28;
   }
-  export interface Attributes28 {
+  export class Attributes28 {
     Charges: string;
     Discount: string;
     ExtendedPrice: string;
@@ -721,14 +722,14 @@ export interface ComEventDTO {
     Tax: string;
     UnitPrice: string;
   }
-  export interface LineChargesEntity {
+  export class LineChargesEntity {
     LineCharge?: (LineChargeEntity)[] | null;
   }
-  export interface LineChargeEntity {
+  export class LineChargeEntity {
     _attributes: Attributes29;
     Extn?: (ExtnEntity4)[] | null;
   }
-  export interface Attributes29 {
+  export class Attributes29 {
     ChargeAmount: string;
     ChargeCategory: string;
     ChargeName: string;
@@ -745,10 +746,10 @@ export interface ComEventDTO {
     RemainingChargePerLine: string;
     RemainingChargePerUnit: string;
   }
-  export interface ExtnEntity4 {
+  export class ExtnEntity4 {
     _attributes: Attributes30;
   }
-  export interface Attributes30 {
+  export class Attributes30 {
     ExtnApprvrUserID: string;
     ExtnComputedChargePerUnit: string;
     ExtnCouponID: string;
@@ -765,14 +766,14 @@ export interface ComEventDTO {
     ExtnReasonText: string;
     ExtnSlsPromoCpntID: string;
   }
-  export interface LineTaxesEntity {
+  export class LineTaxesEntity {
     LineTax?: (LineTaxEntity)[] | null;
   }
-  export interface LineTaxEntity {
+  export class LineTaxEntity {
     _attributes: Attributes31;
     Extn?: (ExtnEntity5)[] | null;
   }
-  export interface Attributes31 {
+  export class Attributes31 {
     ChargeCategory: string;
     ChargeName: string;
     ChargeNameKey: string;
@@ -786,53 +787,53 @@ export interface ComEventDTO {
     TaxPercentage: string;
     TaxableFlag: string;
   }
-  export interface ExtnEntity5 {
+  export class ExtnEntity5 {
     _attributes: Attributes32;
   }
-  export interface Attributes32 {
+  export class Attributes32 {
     ExtnExtendedTaxPerLine: string;
   }
-  export interface OrderStatusesEntity {
+  export class OrderStatusesEntity {
     OrderStatus?: (OrderStatusEntity)[] | null;
   }
-  export interface OrderStatusEntity {
+  export class OrderStatusEntity {
     _attributes: Attributes33;
     Details?: (DetailsEntity)[] | null;
     OrderStatusTranQuantity?: (OrderStatusTranQuantityEntity)[] | null;
   }
-  export interface Attributes33 {
-    OrderHeaderKey: string;
-    OrderLineKey: string;
-    OrderLineScheduleKey: string;
-    OrderReleaseStatusKey: string;
-    PipelineKey: string;
-    ShipNode: string;
-    Status: string;
-    StatusDate: string;
+  export class Attributes33 {
+    OrderHeaderKey?: string;
+    OrderLineKey?: string;
+    OrderLineScheduleKey?: string;
+    OrderReleaseStatusKey?: string;
+    PipelineKey?: string;
+    ShipNode?: string;
+    Status?: string;
+    StatusDate?: string;
     StatusDescription: string;
-    StatusQty: string;
-    TotalQuantity: string;
+    StatusQty?: string;
+    TotalQuantity?: string;
   }
-  export interface DetailsEntity {
+  export class DetailsEntity {
     _attributes: Attributes34;
   }
-  export interface Attributes34 {
+  export class Attributes34 {
     ExpectedDeliveryDate: string;
-    ExpectedShipmentDate: string;
-    TagNumber: string;
+    ExpectedShipmentDate?: string;
+    TagNumber?: string;
   }
-  export interface OrderStatusTranQuantityEntity {
+  export class OrderStatusTranQuantityEntity {
     _attributes: Attributes35;
   }
-  export interface Attributes35 {
+  export class Attributes35 {
     StatusQty: string;
     TotalQuantity: string;
     TransactionalUOM: string;
   }
-  export interface OrderLineTranQuantityEntity {
+  export class OrderLineTranQuantityEntity {
     _attributes: Attributes36;
   }
-  export interface Attributes36 {
+  export class Attributes36 {
     FillQuantity: string;
     InvoicedQuantity: string;
     OpenQty: string;
@@ -847,61 +848,61 @@ export interface ComEventDTO {
     TranDiscrepancyQty: string;
     TransactionalUOM: string;
   }
-  export interface PersonInfoBillToEntity {
+  export class PersonInfoBillToEntity {
     _attributes: Attributes37;
     Extn?: (ExtnEntity6)[] | null;
   }
-  export interface Attributes37 {
-    AddressLine1: string;
-    AddressLine2: string;
-    AddressLine3: string;
-    AddressLine4: string;
-    AddressLine5: string;
-    AddressLine6: string;
-    AlternateEmailID: string;
-    Beeper: string;
-    City: string;
-    Company: string;
-    Country: string;
-    DayFaxNo: string;
-    DayPhone: string;
-    Department: string;
-    EMailID: string;
-    EveningFaxNo: string;
-    EveningPhone: string;
-    FirstName: string;
-    JobTitle: string;
-    LastName: string;
-    MiddleName: string;
-    MobilePhone: string;
-    OtherPhone: string;
-    PersonID: string;
-    PersonInfoKey: string;
-    State: string;
-    Suffix: string;
-    Title: string;
-    ZipCode: string;
+  export class Attributes37 {
+    AddressLine1?: string;
+    AddressLine2?: string;
+    AddressLine3?: string;
+    AddressLine4?: string;
+    AddressLine5?: string;
+    AddressLine6?: string;
+    AlternateEmailID?: string;
+    Beeper?: string;
+    City?: string;
+    Company?: string;
+    Country?: string;
+    DayFaxNo?: string;
+    DayPhone?: string;
+    Department?: string;
+    EMailID?: string;
+    EveningFaxNo?: string;
+    EveningPhone?: string;
+    FirstName?: string;
+    JobTitle?: string;
+    LastName?: string;
+    MiddleName?: string;
+    MobilePhone?: string;
+    OtherPhone?: string;
+    PersonID?: string;
+    PersonInfoKey?: string;
+    State?: string;
+    Suffix?: string;
+    Title?: string;
+    ZipCode?: string;
     Latitude?: string | null;
     Longitude?: string | null;
   }
-  export interface ExtnEntity6 {
+  export class ExtnEntity6 {
     _attributes: Attributes38;
   }
-  export interface Attributes38 {
+  export class Attributes38 {
     AddressType?: string | null;
     ExtnCounty?: string | null;
     ExtnHostOrderLineReference?: string | null;
     ExtnMilitaryFlag: string;
     OrderHeaderKey?: string | null;
   }
-  export interface PersonInfoShipToEntity {
+  export class PersonInfoShipToEntity {
     _attributes: Attributes18;
     Extn?: (ExtnEntity7)[] | null;
   }
-  export interface ExtnEntity7 {
+  export class ExtnEntity7 {
     _attributes: Attributes39;
   }
-  export interface Attributes39 {
+  export class Attributes39 {
     ExtnMilitaryFlag: string;
     AddressType?: string | null;
     ExtnCounty?: string | null;
@@ -911,13 +912,13 @@ export interface ComEventDTO {
     ExtnTaxRate?: string | null;
     OrderHeaderKey?: string | null;
   }
-  export interface PaymentMethodsEntity {
+  export class PaymentMethodsEntity {
     PaymentMethod?: (PaymentMethodEntity)[] | null;
   }
-  export interface PaymentMethodEntity {
+  export class PaymentMethodEntity {
     _attributes: Attributes40;
   }
-  export interface Attributes40 {
+  export class Attributes40 {
     BillToKey: string;
     CheckNo: string;
     CheckReference: string;
@@ -944,14 +945,14 @@ export interface ComEventDTO {
     TotalRefundedAmount: string;
     UnlimitedCharges: string;
   }
-  export interface ChargeTransactionDetailsEntity {
+  export class ChargeTransactionDetailsEntity {
     ChargeTransactionDetail?: (ChargeTransactionDetailEntity)[] | null;
   }
-  export interface ChargeTransactionDetailEntity {
+  export class ChargeTransactionDetailEntity {
     _attributes: Attributes41;
     CreditCardTransactions?: (CreditCardTransactionsEntity)[] | null;
   }
-  export interface Attributes41 {
+  export class Attributes41 {
     AuthorizationID: string;
     ChargeTransactionKey: string;
     ChargeType: string;
@@ -963,13 +964,13 @@ export interface ComEventDTO {
     SettledAmount: string;
     Status: string;
   }
-  export interface CreditCardTransactionsEntity {
+  export class CreditCardTransactionsEntity {
     CreditCardTransaction?: (CreditCardTransactionEntity)[] | null;
   }
-  export interface CreditCardTransactionEntity {
+  export class CreditCardTransactionEntity {
     _attributes: Attributes42;
   }
-  export interface Attributes42 {
+  export class Attributes42 {
     AuthCode: string;
     AuthTime: string;
     DepositCollectedAmount: string;
@@ -993,24 +994,24 @@ export interface ComEventDTO {
     TranReturnCode: string;
     TranType: string;
   }
-  export interface NotesEntity {
+  export class NotesEntity {
     _attributes: Attributes43;
   }
-  export interface Attributes43 {
+  export class Attributes43 {
     NumberOfNotes: string;
   }
-  export interface InstructionsEntity {
+  export class InstructionsEntity {
     _attributes: Attributes21;
     Instruction?: (InstructionEntity1)[] | null;
   }
-  export interface InstructionEntity1 {
+  export class InstructionEntity1 {
     _attributes: Attributes22;
     Extn?: (ExtnEntity8)[] | null;
   }
-  export interface ExtnEntity8 {
+  export class ExtnEntity8 {
     _attributes?: Attributes44 | null;
   }
-  export interface Attributes44 {
+  export class Attributes44 {
     ExtnCrtModID?: string | null;
     ExtnFulfillingStore?: string | null;
     ExtnIsTicklerBin: string;
@@ -1021,11 +1022,11 @@ export interface ComEventDTO {
     ExtnCloseUserID?: string | null;
     ExtnFollowUpDate?: string | null;
   }
-  export interface OverallTotalsEntity {
+  export class OverallTotalsEntity {
     _attributes: Attributes45;
     Extn?: (ExtnEntity9)[] | null;
   }
-  export interface Attributes45 {
+  export class Attributes45 {
     GrandCharges: string;
     GrandDiscount: string;
     GrandShippingBaseCharge: string;
@@ -1046,20 +1047,20 @@ export interface ComEventDTO {
     ManualDiscountPercentage: string;
     PercentProfitMargin: string;
   }
-  export interface ExtnEntity9 {
+  export class ExtnEntity9 {
     _attributes: Attributes46;
   }
-  export interface Attributes46 {
+  export class Attributes46 {
     ExtnReturnTotal: string;
   }
-  export interface HDCustNotificationInfoListEntity {
+  export class HDCustNotificationInfoListEntity {
     HDCustNotificationInfo?: (HDCustNotificationInfoEntity)[] | null;
   }
-  export interface HDCustNotificationInfoEntity {
+  export class HDCustNotificationInfoEntity {
     _attributes: Attributes47;
     HDNotificationEventList?: (HDOnlineHeaderListEntityOrHDOrdChangeListEntityOrHDOrdChangeDescListEntityOrHDSplOrdListEntityOrHDCustDsgnCustOrdListEntityOrHDWillCallListEntityOrHDInvoiceListEntityOrExtnHDStorePaymentInfoListEntityOrOrderHoldTypesEntityOrOrderLineRelationshipsEntityOrAwardsEntityOrPromotionsEntityOrHDOrderlineAddnlListEntityOrHDOnlineProductListEntityOrHDInstallAddnlInfoListEntityOrHDOnlineReturnInfoListEntityOrHDOrderLineAppParmTypeListEntityOrHDSurveyListEntityOrHDCostAuditListEntityOrHDRelatedEJKeysListEntityOrHDReturnPolicyListEntityOrHDLineChgHistListEntityOrHDTrackingInfoListEntityOrOrderLineReservationsEntityOrOrderDatesEntityOrChildOrderLineRelationshipsEntityOrParentOrderLineRelationshipsEntityOrWorkOrdersEntityOrServiceAssociationsEntityOrProductAssociationsEntityOrHDLineTaxListEntityOrLineChargesEntityOrProductServiceAssocsEntityOrHDOrdAppParmTypeListEntityOrHDPaymentStageInfoListEntityOrHDChargeTxnAdditionalListEntityOrHDPaymentMethodAddlListEntityOrHDStorePaymentInfoListEntityOrHDEventListEntityOrHDAppliedTransactionListEntityOrHDLineStatusListEntityOrExtnEntityOrLineTaxesEntityOrPaymentMethodsEntityOrChargeTransactionDetailsEntityOrInboxListEntityOrHDNotificationEventListEntity)[] | null;
   }
-  export interface Attributes47 {
+  export class Attributes47 {
     AdhocTriggerFlag: string;
     HostOrderRef: string;
     NotificationKey: string;

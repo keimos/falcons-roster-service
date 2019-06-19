@@ -1,10 +1,9 @@
 import { KafkaClient, Producer, Consumer, Offset } from 'kafka-node';
 import { KafkaFactory } from './KafkaFactory';
-import { MessageQueueService } from './MessageQueueService';
 
 import log from '../logging/Log';
 
-export class KafkaService extends MessageQueueService {
+export class KafkaService {
 
     private localMode: boolean = false;
 
@@ -15,7 +14,7 @@ export class KafkaService extends MessageQueueService {
      * @param topic The Kafka topic to which this service will post objects.
      */
     constructor(private kafkaFactory: KafkaFactory, private host?: string) {
-        super();
+        // super();
 
         // Log local mode
         log.verbose(`Kafka host: ${host}`);

@@ -32,7 +32,12 @@ const kafkaFactory: KafkaFactory = new KafkaFactory();
 const kafka: KafkaService = new KafkaService(kafkaFactory, process.env.KafkaCluster);
 const comOrderEventsService: ComOrderEventsService = new ComOrderEventsService(kafka);
 
-comOrderEventsService.loadEvents();
+const topicName: string = process.env.KafkaTopic;
+if (topicName) {
+  comOrderEventsService.loadEvents(topicName);
+} else {
+  throw 'Topic not defined, expected env variable "KafkaTopic"';
+}
 
 // Create/launch the application
 const app: App = new App();

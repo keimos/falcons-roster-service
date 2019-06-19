@@ -1,15 +1,15 @@
 ---
 applications:
-- name: Stage-COMOrderDetailService
+- name: QA-COMOrderDetailService
   command: NODE_ENV=QA profile=QA node ./dist/Server.js --use_strict
   memory: 528M
   instances: 2
   disk_quota: 1G
-  route: QA-TrackingService
+  route: QA-COMOrderDetailService
   env:
     LifeCycle: qa
-    KafkaCluster: lpa839.homedepot.com:9092,lpa83a.homedepot.com:9092,lpa83b.homedepot.com:9092,lpa83c.homedepot.com:9092,lpa83d.homedepot.com:9092,lpa83e.homedepot.com:9092
-    KafkaTopic: COMOrderRecallPublish
+    KafkaCluster: com-kafka-qa.com.homedepot.com:9092
+    KafkaTopic: COMOrderRecallPublish-QA
     MONGO_URI: U2FsdGVkX19Q4eW7vNgxYklXBOGSljJd6oh02e3LBWPEWlWG2keS6vd4WBGZQQAhJl2XkBpUX2VT5z4ifcgMTe4vMnQQSFWdHK0EmYM4m2zeNtijPAn94iuGWtT3gqFlzpP5EgBAQvjCZchoMp6wnfKdA6oQ11bya8epK7IEh47rIesJ5Pjj4M3iRcPRGeNsQCJfHWwqQUCNxbg/DjsuW7JnN2ShUlXmlsebd5nQbSuK48TGNV6Mi0lRNFGV07c/
     MONGO_DB: qars1db157
     MONGO_ENCRYPTED: true
@@ -20,9 +20,11 @@ applications:
   memory: 128M
   instances: 2
   disk_quota: 1G
-  route: Q2-TrackingService
+  route: Q2-COMOrderDetailService
   env:
     LifeCycle: qa
+    KafkaCluster: com-kafka-qa.com.homedepot.com:9092
+    KafkaTopic: COMOrderRecallPublish-Q2
     MONGO_URI: U2FsdGVkX19Q4eW7vNgxYklXBOGSljJd6oh02e3LBWPEWlWG2keS6vd4WBGZQQAhJl2XkBpUX2VT5z4ifcgMTe4vMnQQSFWdHK0EmYM4m2zeNtijPAn94iuGWtT3gqFlzpP5EgBAQvjCZchoMp6wnfKdA6oQ11bya8epK7IEh47rIesJ5Pjj4M3iRcPRGeNsQCJfHWwqQUCNxbg/DjsuW7JnN2ShUlXmlsebd5nQbSuK48TGNV6Mi0lRNFGV07c/
     MONGO_DB: qars1db157
     MONGO_ENCRYPTED: true
@@ -34,6 +36,8 @@ applications:
   instances: 2
   disk_quota: 256M
   env:
+    KafkaCluster: lpa839.homedepot.com:9092,lpa83a.homedepot.com:9092,lpa83b.homedepot.com:9092,lpa83c.homedepot.com:9092,lpa83d.homedepot.com:9092,lpa83e.homedepot.com:9092
+    KafkaTopic: COMOrderRecallPublish
     MONGO_URI: U2FsdGVkX19K4bD2Xkz0ZkTOykEzGiV67HRqblfN1wMMWQsyqnQsLcONzfZfaWtqBEboZXGTs1/T8Ayx3Gku5+ll3kkyhfyoxWPzd5G4AIh3SqdepL44+SW1EA2VoGevXRIycfGEfMdHMbGF7wdUVFjNGqTuZr+TMqdj0k7egVYsuUalOMHY5qIynkWxCispOwq7SgRKh9WPvcYt3oDCN4P3psa2XbcnpouT+qnwa4935aWdMei4Pnx+x2sZKvrw
     MONGO_DB: prrs1db83
     MONGO_ENCRYPTED: true

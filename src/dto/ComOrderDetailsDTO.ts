@@ -1,7 +1,7 @@
 export class ComOrderDetailsDTO {
-    public lastUpdatedTS: Date;
+    public lastUpdatedTS: string;
     public customerOrderNumber: string;
-    public orderedDate: Date;
+    public orderedDate: string;
     public shipTo: LocationDTO;
     public lineItems: Array<LineItemDTO>;
     public email: string;
@@ -29,7 +29,7 @@ export class LineItemDTO {
     public skuDescription: string;
     public omsID: string;
     public quantity: number;
-    public expectedDeliveryDate: Date;
+    public expectedDeliveryDate: string;
     public comStatus: string;
     public levelOfService: string;
     public scac: string;
