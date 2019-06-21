@@ -70,7 +70,7 @@ export class MongoRepo {
     });
   }
 
-  public async readDocuments(collectionName: string, customerOrderNumber: string, carrierTrackingNumber: string): Promise<any> {
+  public async readDocuments(query: any, sort: any, table: string): Promise<any> {
 
 
     if (!this.dataBase) {
@@ -78,37 +78,7 @@ export class MongoRepo {
     }
 
     return new Promise<any>((resolve, reject) => {
-
-      const collection: Collection = this.dataBase.collection(collectionName);
-      let query: any;
-
-      if (customerOrderNumber && carrierTrackingNumber) {
-        query = { $and: [{ "externalSystemIds.customerOrderNumber": customerOrderNumber }, { "externalSystemIds.carrierTrackingNumber": carrierTrackingNumber }] };
-      } else if (customerOrderNumber) {
-        query = { "externalSystemIds.customerOrderNumber": customerOrderNumber };
-      } else if (carrierTrackingNumber) {
-        query = { "externalSystemIds.carrierTrackingNumber": carrierTrackingNumber };
-      }
-      const cursor: Cursor = collection.find(query);
-      cursor.toArray(async function (err: Error, result: Array<any>) {
-        if (err) reject(err);
-        console.log(`results: ${result.length}`);
-        await cursor.close();
-        resolve(result);
-      });
-    });
-  }
-
-
-  public async getEvents(query: any, sort: any): Promise<any> {
-
-
-    if (!this.dataBase) {
-      this.dataBase = await this.getConnection();
-    }
-
-    return new Promise<any>((resolve, reject) => {
-      const collection: Collection = this.dataBase.collection("trackingEvents");
+      const collection: Collection = this.dataBase.collection(table);
       const cursor: Cursor = collection.find(query, { sort: sort });
 
 
