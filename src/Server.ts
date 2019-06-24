@@ -36,12 +36,12 @@ const comOrderEventsService: ComOrderEventsService = new ComOrderEventsService(k
 const comOrderDetailService: ComOrderDetailService = new ComOrderDetailService(new MongoRepo())
 const comOrderDetailController: COMOrderDetailController = new COMOrderDetailController(comOrderDetailService);
 
-// const topicName: string = process.env.KafkaTopic;
-// if (topicName) {
-//   comOrderEventsService.loadEvents(topicName);
-// } else {
-//   throw 'Topic not defined, expected env variable "KafkaTopic"';
-// }
+const topicName: string = process.env.KafkaTopic;
+if (topicName) {
+  comOrderEventsService.loadEvents(topicName);
+} else {
+  throw 'Topic not defined, expected env variable "KafkaTopic"';
+}
 
 // Create/launch the application
 const app: App = new App(comOrderDetailController);
