@@ -12,6 +12,8 @@ import log from './logging/Log';
 // import { MongoService } from './common/MongoService';
 import { ComOrderEventsService } from './service/ComOrderEventsService';
 import { MongoRepo } from './repo/MongoRepo';
+import { COMOrderDetailController } from './controller/ComOrderDetailController';
+import { ComOrderDetailService } from './service/ComOrderDetailService';
 
 // if (process.env.VCAP_APPLICATION) {
 //   const nodeName: any = process.env.VCAP_APPLICATION;
@@ -31,16 +33,18 @@ import { MongoRepo } from './repo/MongoRepo';
 const kafkaFactory: KafkaFactory = new KafkaFactory();
 const kafka: KafkaService = new KafkaService(kafkaFactory, process.env.KafkaCluster);
 const comOrderEventsService: ComOrderEventsService = new ComOrderEventsService(kafka);
+const comOrderDetailService: ComOrderDetailService = new ComOrderDetailService(new MongoRepo())
+const comOrderDetailController: COMOrderDetailController = new COMOrderDetailController(comOrderDetailService);
 
-const topicName: string = process.env.KafkaTopic;
-if (topicName) {
-  comOrderEventsService.loadEvents(topicName);
-} else {
-  throw 'Topic not defined, expected env variable "KafkaTopic"';
-}
+// const topicName: string = process.env.KafkaTopic;
+// if (topicName) {
+//   comOrderEventsService.loadEvents(topicName);
+// } else {
+//   throw 'Topic not defined, expected env variable "KafkaTopic"';
+// }
 
 // Create/launch the application
-const app: App = new App();
+const app: App = new App(comOrderDetailController);
 
 // Launch the application
 const port: number = getPort();

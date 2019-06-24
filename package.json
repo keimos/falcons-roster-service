@@ -11,7 +11,7 @@
     "coverage": "nyc mocha --compilers ts:ts-node/register 'src/**/*.test.ts'",
     "report": "nyc report",
     "lint": "tslint -c tslint.json 'src/**/*.ts'",
-    "start:local": "concurrently --raw \"gulp watch\" \"NODE_ENV=local profile=local timeout=5000 PORT=8080 KafkaTopic=COMOrderRecallPublish KafkaCluster=lpa839.homedepot.com:9092,lpa83a.homedepot.com:9092,lpa83b.homedepot.com:9092,lpa83c.homedepot.com:9092,lpa83d.homedepot.com:9092,lpa83e.homedepot.com:9092 MONGO_URI=mongodb://qars1db157adm1:carrierTrackingService!234@lnc66e7.homedepot.com:27017,lnc66e8.homedepot.com:27017,lnc66e9.homedepot.com:27017/qars1db157?replicaSet=qars1 MONGO_DB=qars1db157 TRACKING_SERVICE_API=http://TrackingService.apps.homedepot.com/api/v1/carrierevents nodemon ./dist/server.js --use_strict\"",
+    "start:local": "concurrently --raw \"gulp watch\" \"NODE_ENV=local profile=local timeout=5000 PORT=8080 KafkaTopic=COMOrderRecallPublish KafkaCluster=lpa839.homedepot.com:9092,lpa83a.homedepot.com:9092,lpa83b.homedepot.com:9092,lpa83c.homedepot.com:9092,lpa83d.homedepot.com:9092,lpa83e.homedepot.com:9092 MONGO_ENCRYPTED=true MONGO_URI=U2FsdGVkX19K4bD2Xkz0ZkTOykEzGiV67HRqblfN1wMMWQsyqnQsLcONzfZfaWtqBEboZXGTs1/T8Ayx3Gku5+ll3kkyhfyoxWPzd5G4AIh3SqdepL44+SW1EA2VoGevXRIycfGEfMdHMbGF7wdUVFjNGqTuZr+TMqdj0k7egVYsuUalOMHY5qIynkWxCispOwq7SgRKh9WPvcYt3oDCN4P3psa2XbcnpouT+qnwa4935aWdMei4Pnx+x2sZKvrw MONGO_DB=prrs1db83 TRACKING_SERVICE_API=http://TrackingService.apps.homedepot.com/api/v1/carrierevents nodemon ./dist/server.js --use_strict\"",
     "start:QA": "NODE_ENV=QA profile=QA node ./dist/server.js --use_strict",
     "start:Q2": "NODE_ENV=Q2 profile=Q2 node ./dist/server.js --use_strict",
     "build:QA": "gulp build-qa",

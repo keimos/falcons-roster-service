@@ -2,6 +2,7 @@ import * as bodyParser from 'body-parser';
 import * as express from 'express';
 
 import serviceLog from './logging/ServiceLog';
+import { COMOrderDetailController } from './controller/ComOrderDetailController';
 
 /**
  * Main application class. Initializes routes and controllers.
@@ -14,7 +15,7 @@ export class App {
     /**
      * Construct and initialize the application.
      */
-    constructor() {
+    constructor(private comOrderDetailController: COMOrderDetailController) {
         this.express = express();
         this.express.use(bodyParser({ limit: '50000mb' }));
         this.express.use(bodyParser.json());
@@ -28,6 +29,6 @@ export class App {
      */
     public initRoutes = () => {
         // ## Add new routes and controllers here ##
-        // this.express.use('/api/', this.conveyEventController.router);
+        this.express.use('/api/', this.comOrderDetailController.router);
     }
 }
