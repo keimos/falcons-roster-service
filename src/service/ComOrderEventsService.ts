@@ -20,7 +20,7 @@ export class ComOrderEventsService {
         const jsonEvent = convert.xml2json(message.value, { compact: true, spaces: 4, alwaysArray: true });
         const eventObj = JSON.parse(jsonEvent);
 
-        // logEvents(message.value, jsonEvent, eventObj);
+        logEvents(message.value, jsonEvent, eventObj);
         
         try {
             const comOrderDetails: Array<ComOrderDetailsDTO> = ComOrderEventTranslator.translate(eventObj);
@@ -39,9 +39,11 @@ export class ComOrderEventsService {
 }
 
 function logEvents(xml: string, json: string, obj: any) {
-    MongoRepo.getInstance().insertDocuments('rawlog_ComOrderDetails', [obj], (() => {
+    if (process.env.logToDB || process.env.logToDB === 'true') {
+        MongoRepo.getInstance().insertDocuments('rawlog_ComOrderDetails', [obj], (() => {
         // console.log('saved log into mongo');
-    }));
+        }));
+    }
     // console.log('')
     // console.log('*************XMLBODY***********');
     // console.log(xml);
