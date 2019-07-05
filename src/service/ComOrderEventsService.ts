@@ -44,7 +44,7 @@ function logEvents(xml: string, json: string, comObj: any) {
             obj: comObj,
             lastUpdatedTS: new Date()
         }
-        MongoRepo.getInstance().insertDocuments('rawlog_ComOrderDetails_2', [obj], (() => {
+        MongoRepo.getInstance().insertDocuments('newRawlog_ComOrderDetails', [obj], (() => {
         // console.log('saved log into mongo');
         }));
     }
