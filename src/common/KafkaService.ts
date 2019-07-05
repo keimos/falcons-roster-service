@@ -1,4 +1,4 @@
-import { KafkaClient, Producer, Consumer, Offset } from 'kafka-node';
+import { KafkaClient, Producer, Consumer, Offset, ConsumerGroup } from 'kafka-node';
 import { KafkaFactory } from './KafkaFactory';
 
 import log from '../logging/Log';
@@ -25,10 +25,9 @@ export class KafkaService {
     }
 
     public async readFromQueue(topicName: string, cb: any) {
-            const kafkaClient: KafkaClient = await this.kafkaFactory.createClient(this.host);
-            const kafkaConsumer: Consumer = await this.kafkaFactory.createConsumer(kafkaClient, topicName);
+        const kc: ConsumerGroup = await this.kafkaFactory.createConsumerGroup(this.host, topicName);
 
-            kafkaConsumer.on('message', function (message) {
+            kc.on('message', function (message) {
                cb(message);
             });
     }

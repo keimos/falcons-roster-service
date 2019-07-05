@@ -1,5 +1,5 @@
 
-import { KafkaClient, Producer, Consumer, Offset } from 'kafka-node';
+import { KafkaClient, Producer, Consumer, Offset, ConsumerGroup } from 'kafka-node';
 
 import log from '../logging/Log';
 
@@ -62,27 +62,11 @@ export class KafkaFactory {
      *
      * @param kafkaClient
      */
-    public async createConsumer(kafkaClient: KafkaClient, topicName: string): Promise<Consumer> {
-        const offset = await this.getOffset(kafkaClient, topicName);
-        var consumer = new Consumer(
-            kafkaClient,
-            [
-                { topic: topicName, offset: offset}
-            ],
-            {
-                fromOffset: true
-            }
-        );
+    public async createConsumerGroup(host: string, topicName: string): Promise<ConsumerGroup> {
+        var consumer = new ConsumerGroup(
+            { kafkaHost: host, groupId: 'OrderDetailService', protocol: ['roundrobin']},
+            topicName
+        );  
         return consumer;
-    }
-
-    public getOffset(kafkaClient: KafkaClient, topicName: string): Promise<number> {
-        return new Promise<number>((resolve, reject) => {
-            const offset = new Offset(kafkaClient);
-            offset.fetchEarliestOffsets([topicName], function (error, offsets) {
-                console.log(offsets[topicName][0]);
-                resolve(offsets[topicName][0])
-            });
-        });
     }
 }

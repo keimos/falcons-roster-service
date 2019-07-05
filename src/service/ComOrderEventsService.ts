@@ -38,9 +38,13 @@ export class ComOrderEventsService {
     }
 }
 
-function logEvents(xml: string, json: string, obj: any) {
+function logEvents(xml: string, json: string, comObj: any) {
     if (process.env.logToDB || process.env.logToDB === 'true') {
-        MongoRepo.getInstance().insertDocuments('rawlog_ComOrderDetails', [obj], (() => {
+        const obj = {
+            obj: comObj,
+            lastUpdatedTS: new Date()
+        }
+        MongoRepo.getInstance().insertDocuments('rawlog_ComOrderDetails_2', [obj], (() => {
         // console.log('saved log into mongo');
         }));
     }
