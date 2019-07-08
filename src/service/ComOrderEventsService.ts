@@ -8,8 +8,6 @@ import { ComOrderEventTranslator } from "../translator/ComOrderEventTranslator";
 import { NewRelicMetricLogger } from "../logging/NewRelicMetricLogger";
 var convert = require('xml-js');
 
-var newrelic = require('newrelic');
-
 export class ComOrderEventsService {
     private newrelic: NewRelicMetricLogger;
     constructor(private kafkaService: KafkaService) {
