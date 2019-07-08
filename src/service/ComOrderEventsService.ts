@@ -5,10 +5,15 @@ import { ComEventDTO } from "../dto/ComEventDTO";
 
 import { get } from "lodash";
 import { ComOrderEventTranslator } from "../translator/ComOrderEventTranslator";
+import { NewRelicMetricLogger } from "../logging/NewRelicMetricLogger";
 var convert = require('xml-js');
 
+var newrelic = require('newrelic');
+
 export class ComOrderEventsService {
+    private newrelic: NewRelicMetricLogger;
     constructor(private kafkaService: KafkaService) {
+        this.newrelic = new NewRelicMetricLogger();
     }
 
     public loadEvents(topic: string) {
@@ -17,6 +22,9 @@ export class ComOrderEventsService {
 
 
     public processEvent(message: any) {
+        if(this.newrelic.cloud) {
+            this.newrelic.newrelic.startBackgroundTransaction('processEvent', 'processEvent', this.processEvent);
+        }
         const jsonEvent = convert.xml2json(message.value, { compact: true, spaces: 4, alwaysArray: true });
         const eventObj = JSON.parse(jsonEvent);
 
