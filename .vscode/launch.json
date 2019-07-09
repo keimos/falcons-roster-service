@@ -13,8 +13,8 @@
                 "NODE_ENV": "local",
                 "profile": "local",
                 "PORT": "8080",
-                "KafkaCluster": "com-kafka-qa.com.homedepot.com:9092",
-                "KafkaTopic": "TrackingUpdateToCOM-QA"
+                "KafkaCluster": "lpa839.homedepot.com:9092,lpa83a.homedepot.com:9092,lpa83b.homedepot.com:9092,lpa83c.homedepot.com:9092,lpa83d.homedepot.com:9092,lpa83e.homedepot.com:9092",
+                "KafkaTopic": "COMOrderRecallPublish"
             },
             "runtimeArgs": [
                 "--use_strict"

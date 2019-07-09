@@ -18,7 +18,7 @@ describe('Class: ComOrderDetailService', () => {
     describe('Function: getOrderDetailByCustomerOrderNumber', () => {
         describe('Given a customerOrderNumber, when the function is invoked, then it', () => {
             let readDocumentsStub: SinonStub;
-            let orderDetail;
+            let orderDetail: any;
             const expectedObj = [{customerOrderNumber: '123'}];
             before(async () => {
                 const mongoRepo: MongoRepo = new MongoRepo();
