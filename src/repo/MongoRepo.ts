@@ -25,7 +25,7 @@ export class MongoRepo {
     });
   }
 
-  public static instance;
+  public static instance: any;
 
   public static getInstance() {
     if (MongoRepo.instance) {

@@ -45,6 +45,7 @@
   "license": "ISC",
   "dependencies": {
     "@types/lodash": "^4.14.134",
+    "@types/mongodb": "^3.1.28",
     "@types/request": "^2.48.0",
     "body-parser": "^1.18.3",
     "crypto-js": "^3.1.9-1",

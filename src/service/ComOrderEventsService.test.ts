@@ -34,7 +34,7 @@ describe('Class: ComOrderEventsService', () => {
             translateStub.returns(mockComOrderDetails);
             insertDocumentsStub.resolves(null);
 
-            comOrderEventsService.processEvent({value: "<xml></xml>"})
+            comOrderEventsService.processEvent({value: "<xml></xml>"}, comOrderEventsService)
         });
         after(() => {
             translateStub.restore();
@@ -65,7 +65,7 @@ describe('Class: ComOrderEventsService', () => {
     
                 const xml = readFileSync('./test/comXMLs/noTracking.xml', 'utf8');
     
-                comOrderEventsService.processEvent({value: xml})
+                comOrderEventsService.processEvent({value: xml}, comOrderEventsService)
             });
             after(() => {
                 insertDocumentsStub.restore();
@@ -84,7 +84,7 @@ describe('Class: ComOrderEventsService', () => {
     
                 const xml = readFileSync('./test/comXMLs/first.xml', 'utf8');
     
-                comOrderEventsService.processEvent({value: xml})
+                comOrderEventsService.processEvent({value: xml}, comOrderEventsService)
             });
             after(() => {
                 insertDocumentsStub.restore();
