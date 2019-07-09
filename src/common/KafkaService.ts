@@ -2,6 +2,7 @@ import { KafkaClient, Producer, Consumer, Offset, ConsumerGroup } from 'kafka-no
 import { KafkaFactory } from './KafkaFactory';
 
 import log from '../logging/Log';
+const vcapApplication: any = process.env.VCAP_APPLICATION;
 
 export class KafkaService {
 
@@ -28,7 +29,15 @@ export class KafkaService {
         const kc: ConsumerGroup = await this.kafkaFactory.createConsumerGroup(this.host, topicName);
             const myCbClass = cbClass;
             kc.on('message', function (message) {
-                myCbClass.processEvent(message, cbClass);
+                if (vcapApplication) {
+                    const newrelic = require('newrelic');
+                    newrelic.startBackgroundTransaction('processEvent', 'processEvent', async function() {
+                        await myCbClass.processEvent(message, cbClass);
+                        newrelic.endTransaction();
+                    });
+                } else {
+                    myCbClass.processEvent(message, cbClass);
+                }
             });
     }
 
