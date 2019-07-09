@@ -26,9 +26,9 @@ export class KafkaService {
 
     public async readFromQueue(topicName: string, cbClass: any) {
         const kc: ConsumerGroup = await this.kafkaFactory.createConsumerGroup(this.host, topicName);
-
+            const myCbClass = cbClass;
             kc.on('message', function (message) {
-               cbClass.processEvent(message);
+                myCbClass.processEvent(message, cbClass);
             });
     }
 

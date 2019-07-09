@@ -8,10 +8,16 @@ import { ComOrderEventTranslator } from "../translator/ComOrderEventTranslator";
 import { NewRelicMetricLogger } from "../logging/NewRelicMetricLogger";
 var convert = require('xml-js');
 
+const vcapApplication: any = process.env.VCAP_APPLICATION;
+
 export class ComOrderEventsService {
-    private newrelic: NewRelicMetricLogger;
+    private cloud = false;
+    public newrelic: any;
     constructor(private kafkaService: KafkaService) {
-        this.newrelic = new NewRelicMetricLogger();
+        if (vcapApplication) {
+            this.newrelic = require('newrelic');
+            this.cloud = true;
+        }
     }
 
     public loadEvents(topic: string) {
@@ -19,9 +25,12 @@ export class ComOrderEventsService {
     }
 
 
-    public processEvent(message: any) {
-        if(this.newrelic.cloud) {
-            this.newrelic.newrelic.startBackgroundTransaction('processEvent', 'processEvent', this.processEvent);
+    public processEvent(message: any, self: any) {
+        let newrelic: any;
+        if(vcapApplication) {
+            newrelic = require('newrelic');
+            newrelic.getTransaction()
+            newrelic.startBackgroundTransaction('processEvent', 'processEvent', this);
         }
         const jsonEvent = convert.xml2json(message.value, { compact: true, spaces: 4, alwaysArray: true });
         const eventObj = JSON.parse(jsonEvent);
@@ -40,6 +49,9 @@ export class ComOrderEventsService {
             }
         } catch (err) {
             console.log(err);
+        }
+        if(vcapApplication) {
+            newrelic.endTransaction()
         }
     }
 }
