@@ -24,11 +24,11 @@ export class KafkaService {
         }
     }
 
-    public async readFromQueue(topicName: string, cb: any) {
+    public async readFromQueue(topicName: string, cbClass: any) {
         const kc: ConsumerGroup = await this.kafkaFactory.createConsumerGroup(this.host, topicName);
 
             kc.on('message', function (message) {
-               cb(message);
+               cbClass.processEvent(message);
             });
     }
 
