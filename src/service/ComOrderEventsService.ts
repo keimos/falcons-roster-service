@@ -7,6 +7,8 @@ import { get } from "lodash";
 import { ComOrderEventTranslator } from "../translator/ComOrderEventTranslator";
 var convert = require('xml-js');
 
+import { NewRelicMetricLogger } from '../logging/NewRelicMetricLogger';
+
 
 export class ComOrderEventsService {
     constructor(private kafkaService: KafkaService) {
@@ -18,6 +20,8 @@ export class ComOrderEventsService {
 
 
     public async processEvent(message: any, self: any) {
+        const newrelic: NewRelicMetricLogger = new NewRelicMetricLogger();
+        newrelic.logMetric('ComEvent', 1);
         const jsonEvent = convert.xml2json(message.value, { compact: true, spaces: 4, alwaysArray: true });
         const eventObj = JSON.parse(jsonEvent);
 
@@ -27,11 +31,13 @@ export class ComOrderEventsService {
             const comOrderDetails: Array<ComOrderDetailsDTO> = ComOrderEventTranslator.translate(eventObj);
             if (comOrderDetails.length > 0) {
                 // console.log(comOrderDetails);
+                newrelic.logMetric('ASN', 1);
                 MongoRepo.getInstance().insertDocuments('ComOrderDetails', comOrderDetails, (() => {
                     // console.log('saved into mongo');
                 }));
             } else {
                 // console.log('nothing to save');
+                newrelic.logMetric('Other', 1);
             }
         } catch (err) {
             console.log(err);
