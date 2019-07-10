@@ -37,6 +37,7 @@ export class ComOrderEventsService {
                 }));
             } else {
                 // console.log('nothing to save');
+                newrelic.logMetric('Other', 1);
             }
         } catch (err) {
             console.log(err);
