@@ -35,7 +35,7 @@ applications:
 - name: COMOrderDetailService-$VERSION
   command: NODE_ENV=local profile=PR node ./dist/Server.js --use_strict
   memory: 256M
-  instances: 2
+  instances: 4
   disk_quota: 256M
   env:
     KafkaCluster: lpa839.homedepot.com:9092,lpa83a.homedepot.com:9092,lpa83b.homedepot.com:9092,lpa83c.homedepot.com:9092,lpa83d.homedepot.com:9092,lpa83e.homedepot.com:9092

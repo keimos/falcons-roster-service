@@ -26,13 +26,14 @@ export class COMOrderDetailController {
 
     private getOrderDetails = async (req: Request, res: Response, next: NextFunction) => {
         const customerOrderNumber = req.query.customerOrderNumber;
+        const trackingNumber = req.query.trackingNumber;
         try {
-            if (customerOrderNumber){
-                const orderDetail = await this.comOrderDetailService.getOrderDetailByCustomerOrderNumber(customerOrderNumber);
+            if (customerOrderNumber || trackingNumber) {
+                const orderDetail = await this.comOrderDetailService.getOrderDetailByCustomerOrderNumberAndTrackingNumber(customerOrderNumber, trackingNumber);
                 res.status(OK);
                 this.returnResponse(orderDetail, res, next);
-            }else{
-                const err: SystemError = new SystemError(ErrorCode.INVALID_REQUEST, 'customerOrderNumber', 'can not be null');
+            } else{
+                const err: SystemError = new SystemError(ErrorCode.INVALID_REQUEST, 'query', 'must provide at least 1 query param (customerOrderNumber or trackingNumber)');
                 throw err;
             }
         } catch (err) {
