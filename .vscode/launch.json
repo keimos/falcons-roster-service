@@ -14,7 +14,9 @@
                 "profile": "local",
                 "PORT": "8080",
                 "KafkaCluster": "lpa839.homedepot.com:9092,lpa83a.homedepot.com:9092,lpa83b.homedepot.com:9092,lpa83c.homedepot.com:9092,lpa83d.homedepot.com:9092,lpa83e.homedepot.com:9092",
-                "KafkaTopic": "COMOrderRecallPublish"
+                "KafkaTopic": "COMOrderRecallPublish",
+                "MONGO_URI": "U2FsdGVkX19K4bD2Xkz0ZkTOykEzGiV67HRqblfN1wMMWQsyqnQsLcONzfZfaWtqBEboZXGTs1/T8Ayx3Gku5+ll3kkyhfyoxWPzd5G4AIh3SqdepL44+SW1EA2VoGevXRIycfGEfMdHMbGF7wdUVFjNGqTuZr+TMqdj0k7egVYsuUalOMHY5qIynkWxCispOwq7SgRKh9WPvcYt3oDCN4P3psa2XbcnpouT+qnwa4935aWdMei4Pnx+x2sZKvrw",
+                "MONGO_ENCRYPTED": "true"
             },
             "runtimeArgs": [
                 "--use_strict"

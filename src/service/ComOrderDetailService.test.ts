@@ -9,35 +9,88 @@ import { before } from 'mocha';
 import { match, SinonSpy, spy, SinonStub, stub } from 'sinon';
 import { ComOrderDetailService } from './ComOrderDetailService';
 import { MongoRepo } from '../repo/MongoRepo';
+import { read } from 'fs';
 
 
 const expect = chai.expect;
 chai.use(chaiExclude);
 
 describe('Class: ComOrderDetailService', () => {
-    describe('Function: getOrderDetailByCustomerOrderNumber', () => {
-        describe('Given a customerOrderNumber, when the function is invoked, then it', () => {
+    describe('Function: getOrderDetailByCustomerOrderNumberAndTrackingNumber', () => {
+        describe('Given a customerOrderNumber and Tracking Number, when the function is invoked, then it', () => {
             let readDocumentsStub: SinonStub;
             let orderDetail: any;
-            const expectedObj = [{customerOrderNumber: '123'}];
+            const expectedDbObj = [{customerOrderNumber: '123', trackingNumber: '9Z34HER'}];
             before(async () => {
                 const mongoRepo: MongoRepo = new MongoRepo();
                 readDocumentsStub = stub(mongoRepo, 'readDocuments')
-                readDocumentsStub.resolves(expectedObj);
+                readDocumentsStub.resolves(expectedDbObj);
                 const comOrderDetailService: ComOrderDetailService = new ComOrderDetailService(mongoRepo);
 
-                orderDetail = await comOrderDetailService.getOrderDetailByCustomerOrderNumber('123');
-            })
+                orderDetail = await comOrderDetailService.getOrderDetailByCustomerOrderNumberAndTrackingNumber('123', '9Z34HER');
+            });
+            after(() => {
+                readDocumentsStub.restore();
+            });
             it('should call mongoService', () => {
                 expect(readDocumentsStub.calledOnce).to.be.true;
             });
+            it('should query with both customerOrderNumber and trackingNumber', () => {
+                expect(readDocumentsStub.getCall(0).args[0]).to.be.deep.eq({"customerOrderNumber": '123', "lineItems.trackingNumber": '9Z34HER'});
+            });
+            it('should return object from mongo', () => {
+                expect(orderDetail).to.be.eq(expectedDbObj)
+            });
+        });
+        describe('Given only a customerOrderNumber, when the function is invoked, then it', () => {
+            let readDocumentsStub: SinonStub;
+            let orderDetail: any;
+            const expectedDbObj = [{customerOrderNumber: '123', trackingNumber: '9Z34HER'}];
+            before(async () => {
+                const mongoRepo: MongoRepo = new MongoRepo();
+                readDocumentsStub = stub(mongoRepo, 'readDocuments')
+                readDocumentsStub.resolves(expectedDbObj);
+                const comOrderDetailService: ComOrderDetailService = new ComOrderDetailService(mongoRepo);
+
+                orderDetail = await comOrderDetailService.getOrderDetailByCustomerOrderNumberAndTrackingNumber('123', null);
+            });
+            after(() => {
+                readDocumentsStub.restore();
+            });
+            it('should call mongoService', () => {
+                expect(readDocumentsStub.calledOnce).to.be.true;
+            });
+            it('should query with only customerOrderNumber', () => {
+                expect(readDocumentsStub.getCall(0).args[0]).to.be.deep.eq({"customerOrderNumber": '123'});
+            });
             it('should return object from mongo', () => [
-                expect(orderDetail).to.be.eq(expectedObj)
+                expect(orderDetail).to.be.eq(expectedDbObj)
             ])
         });
-        // describe('Given a null customerOrderNumber, when the function is invoked, then it', () => {
-        //     it('should not call mongoService');
-        //     it('should return null');
-        // });
+        describe('Given only a trackingOrderNumber, when the function is invoked, then it', () => {
+            let readDocumentsStub: SinonStub;
+            let orderDetail: any;
+            const expectedDbObj = [{customerOrderNumber: '123', trackingNumber: '9Z34HER'}];
+            before(async () => {
+                const mongoRepo: MongoRepo = new MongoRepo();
+                readDocumentsStub = stub(mongoRepo, 'readDocuments')
+                readDocumentsStub.resolves(expectedDbObj);
+                const comOrderDetailService: ComOrderDetailService = new ComOrderDetailService(mongoRepo);
+
+                orderDetail = await comOrderDetailService.getOrderDetailByCustomerOrderNumberAndTrackingNumber(null, '9Z34HER');
+            });
+            after(() => {
+                readDocumentsStub.restore();
+            });
+            it('should call mongoService', () => {
+                expect(readDocumentsStub.calledOnce).to.be.true;
+            });
+            it('should query with only trackingNumber', () => {
+                expect(readDocumentsStub.getCall(0).args[0]).to.be.deep.eq({"lineItems.trackingNumber": '9Z34HER'});
+            });
+            it('should return object from mongo', () => [
+                expect(orderDetail).to.be.eq(expectedDbObj)
+            ])
+        });
     });
 });
