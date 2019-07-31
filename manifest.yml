@@ -13,6 +13,8 @@ applications:
     MONGO_URI: U2FsdGVkX19Q4eW7vNgxYklXBOGSljJd6oh02e3LBWPEWlWG2keS6vd4WBGZQQAhJl2XkBpUX2VT5z4ifcgMTe4vMnQQSFWdHK0EmYM4m2zeNtijPAn94iuGWtT3gqFlzpP5EgBAQvjCZchoMp6wnfKdA6oQ11bya8epK7IEh47rIesJ5Pjj4M3iRcPRGeNsQCJfHWwqQUCNxbg/DjsuW7JnN2ShUlXmlsebd5nQbSuK48TGNV6Mi0lRNFGV07c/
     MONGO_DB: qars1db157
     MONGO_ENCRYPTED: true
+    OVQ_URL: http://order-visibility-query-q2.apps-np.homedepot.com/v0/query
+    OVQ_Token: 'Basic Q09NT3JkZXI6T1Y='
   buildpack: https://github.com/cloudfoundry/nodejs-buildpack
 
 - name: Q2-COMOrderDetailService
@@ -30,6 +32,8 @@ applications:
     MONGO_ENCRYPTED: true
     NewRelicKey: d7d3c39d9cbef680f0c2eb0c8dd080d7f499de78
     NewRelicProxy: http://thd-svr-proxy-qa.homedepot.com:7070
+    OVQ_URL: http://order-visibility-query-q2.apps-np.homedepot.com/v0/query
+    OVQ_Token: 'Basic Q09NT3JkZXI6T1Y='
   buildpack: https://github.com/cloudfoundry/nodejs-buildpack
 
 - name: COMOrderDetailService-$VERSION

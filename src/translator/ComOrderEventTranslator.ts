@@ -2,6 +2,7 @@ import { ComEventDTO } from "../dto/ComEventDTO";
 import { ComOrderDetailsDTO, LocationDTO, LineItemDTO } from "../dto/ComOrderDetailsDTO";
 
 import { get } from "lodash";
+import { OvqOrderListDTO, OvqOrderDTO } from "../dto/ComOvqDTO";
 
 export class ComOrderEventTranslator {
     
@@ -73,5 +74,56 @@ export class ComOrderEventTranslator {
         }
     
         return list;
+    }
+
+    public translate(orders: OvqOrderListDTO): ComOrderDetailsDTO {
+        const comOrderDetail: ComOrderDetailsDTO = new ComOrderDetailsDTO();
+        for (const order of orders.Order) {
+            if (order.DocumentType === '0005') {
+                comOrderDetail.orderedDate = order.OrderDate;
+                comOrderDetail.lastUpdatedTS = (new Date()).toISOString();
+                comOrderDetail.customerOrderNumber = order.OvqOrderExtn.ExtnHostOrderReference;
+                comOrderDetail.email = order.OvqPersonInfoBillTo.EMailID;
+                comOrderDetail.po = order.OvqOrderExtn.ExtnPONumber;
+
+                comOrderDetail.shipTo = new LocationDTO();
+                comOrderDetail.shipTo.addressLineOne = order.OvqPersonInfoShipTo.AddressLine1;
+                comOrderDetail.shipTo.addressLineTwo;
+                comOrderDetail.shipTo.city = order.OvqPersonInfoShipTo.City;
+                comOrderDetail.shipTo.state = order.OvqPersonInfoShipTo.State;
+                comOrderDetail.shipTo.zip = order.OvqPersonInfoShipTo.ZipCode;
+
+                comOrderDetail.lineItems = new Array();
+                for (const orderLine of order.OrderLines.OrderLine) {
+                    const lineItem = new LineItemDTO();
+                    lineItem.id;
+                    lineItem.lineItemId;
+                    lineItem.sku = Number.parseInt(orderLine.Extn.ExtnSKUCode);
+                    lineItem.skuDescription = orderLine.Item.ItemDesc;
+                    lineItem.omsID = orderLine.Extn.ExtnOMSID;
+                    lineItem.quantity = Number.parseInt(orderLine.OrderedQty);
+                    if (orderLine.Extn.HDSplOrdList) {
+                        lineItem.expectedDeliveryDate = orderLine.Extn.HDSplOrdList[0].SplOrdExpectedArrivalDate;
+                    }
+                    if (orderLine.OrderStatuses) {
+                        lineItem.comStatus = orderLine.OrderStatuses[0].StatusDescription;
+                    }
+                    if (orderLine.Extn.HDTrackingInfoList.HDTrackingInfo && orderLine.Extn.HDTrackingInfoList.HDTrackingInfo[0].TrackingType === "LastMile") {
+                        lineItem.levelOfService = orderLine.Extn.HDTrackingInfoList.HDTrackingInfo[0].LevelOfService;
+                    }
+                    if (orderLine.Extn.HDTrackingInfoList.HDTrackingInfo) {
+                        lineItem.scac = orderLine.Extn.HDTrackingInfoList.HDTrackingInfo[0].SCAC;
+                    }
+                    if (orderLine.Extn.HDTrackingInfoList.HDTrackingInfo && orderLine.Extn.HDTrackingInfoList.HDTrackingInfo[0].TrackingType === "LastMile") {
+                        lineItem.trackingNumber = orderLine.Extn.HDTrackingInfoList.HDTrackingInfo[0].TrackingNumber;
+                    }
+                    comOrderDetail.lineItems.push(lineItem)
+                }
+
+                break;
+            } 
+            
+        }
+        return comOrderDetail;
     }
 }
