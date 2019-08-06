@@ -16,7 +16,7 @@ export class ComOrderEventsService {
 
     public loadEvents(topic: string) {
         this.kafkaService.readFromQueue(topic, this);
-    }
+    }   
 
 
     public async processEvent(message: any, self: any) {

@@ -10,6 +10,7 @@ import { SystemError } from '../error/SystemError'
 import { ComEventDTO, OrderEntity, OrderLineEntity, OrderLinesEntity, Attributes8, ItemEntity, Attributes15, ExtnEntity1, Attributes9, OrderStatusesEntity, OrderStatusEntity, Attributes33, DetailsEntity, Attributes34, OrderListEntity } from '../dto/ComEventDTO';
 import { ComOrderDetailsDTO } from '../dto/ComOrderDetailsDTO';
 import { ComOrderEventTranslator } from './ComOrderEventTranslator';
+import { OvqOrderListDTO, OvqOrderDTO, OvqOrderLinesDTO, OvqOrderLineDTO, OvqOrderLineExtnDTO, OvqItemDTO, OrderStatus, OvqPersonInfoBillToDTO, OvqPersonInfoShipToDTO, OvqOrderExtnDTO, OvqHDTrackingInfoListDTO, OvqHDTrackingInfoDTO, HDSplOrd } from '../dto/ComOvqDTO';
 
 const expect = chai.expect;
 
@@ -17,61 +18,61 @@ const expect = chai.expect;
  * ComOrderEventTranslator tests
  */
 describe('Class: ComOrderEventTranslator', () => {
-
+    
     //
-    describe('function: translate', () => {
-
+    describe('function: translate COM Event', () => {
+        
         before(() => {
         });
         after(() => {
         })
-
+        
         describe('Given an event with null orderList, when the function is called, then it', () => {
-
+            
             let comEvent: ComEventDTO = {_id: '0'};
-
+            
             let comOrderDetails: Array<ComOrderDetailsDTO>;
             // Prepare / Call
             before(() => {
                 comOrderDetails = ComOrderEventTranslator.translate(comEvent);
             });
-
+            
             // Assert
             it('should return an empty list', () => {
                 expect(comOrderDetails.length).to.be.eq(0);
             });
         });
         describe('Given an event with empty orderList, when the function is called, then it', () => {
-
+            
             let comEvent: ComEventDTO = {_id: '0', OrderList: []};
-
+            
             let comOrderDetails: Array<ComOrderDetailsDTO>;
             // Prepare / Call
             before(() => {
                 comOrderDetails = ComOrderEventTranslator.translate(comEvent);
             });
-
+            
             // Assert
             it('should return an empty list', () => {
                 expect(comOrderDetails.length).to.be.eq(0);
             });
         });
-
+        
         describe('Given an event with empty orders, when the function is called, then it', () => {
             let comEvent: ComEventDTO = {_id: '0', OrderList: [{Order: []}]};
-
+            
             let comOrderDetails: Array<ComOrderDetailsDTO>;
             // Prepare / Call
             before(() => {
                 comOrderDetails = ComOrderEventTranslator.translate(comEvent);
             });
-
+            
             // Assert
             it('should return an empty list', () => {
                 expect(comOrderDetails.length).to.be.eq(0);
             });
         });
-
+        
         describe('Given a STH event with one order with tracking details, when the function is called, then it', () => {
             const eventMeta = {
                 orders: [
@@ -89,14 +90,14 @@ describe('Class: ComOrderEventTranslator', () => {
                     }
                 ]
             }
-
+            
             let comOrderDetails: Array<ComOrderDetailsDTO>;
             // Prepare / Call
             before(() => {
                 let comEvent: ComEventDTO = createMockEvent(eventMeta);
                 comOrderDetails = ComOrderEventTranslator.translate(comEvent);
             });
-
+            
             // Assert
             it('should return a list of one', () => {
                 expect(comOrderDetails.length).to.be.eq(1);
@@ -136,6 +137,110 @@ describe('Class: ComOrderEventTranslator', () => {
                 expect(comOrderDetails[0].po).to.be.eq('123');
             });
         });
+    });
+    describe('function: translate OVQ response', () => {
+        let ovqDetails = new OvqOrderListDTO();
+        const customerOrderNumber = "W1239579";
+        const orderDate = "2019-06-03T04:07:00-04:00";
+        const emailAddress = "emailaaaa@homedepot.com";
+        const poNumber = "01630219";
+        const itemDescription = "CARPET";
+        const quantity = "5.00";
+        const expectedDeliveryDate = "2019-06-05T03:28:09-04:00";
+        const status = "Scheduled";
+        const scac = "UPSC";
+        const levelOfService = "Basic";
+        const trackingNumber = "50000005000018";
+
+        
+        before(() => {
+            let ovqOrderDTO = new OvqOrderDTO();
+            let billInfo = new OvqPersonInfoBillToDTO();
+            let shipInfo = new OvqPersonInfoShipToDTO();
+            let extnReference = new OvqOrderExtnDTO();
+            let extn = new OvqOrderLineExtnDTO();
+            let item = new OvqItemDTO();
+            let orderStatus = new OrderStatus();
+            let orderLines = new OvqOrderLinesDTO();
+            let orderLine = new OvqOrderLineDTO;
+            
+            billInfo.EMailID = emailAddress
+            shipInfo.AddressLine1 = "1234 test street"
+            shipInfo.City = "Atlanta"
+            shipInfo.State = "GA"
+            shipInfo.ZipCode = "23937"
+            extnReference.ExtnHostOrderReference = customerOrderNumber            
+            extnReference.ExtnPONumber = poNumber           
+            
+            extn.ExtnOMSID = '204798123'
+            extn.ExtnSKUCode = '1000018123'
+            let trackingInfo = new OvqHDTrackingInfoDTO()
+            trackingInfo.TrackingNumber = trackingNumber
+            trackingInfo.LevelOfService = levelOfService
+            trackingInfo.TrackingType = "LastMile"
+            trackingInfo.SCAC = scac
+            const trackingList = new OvqHDTrackingInfoListDTO();
+            trackingList.HDTrackingInfo = [trackingInfo]
+            extn.HDTrackingInfoList = trackingList
+
+            let splOrdList = new HDSplOrd();
+            splOrdList.SplOrdExpectedArrivalDate = expectedDeliveryDate
+            extn.HDSplOrdList = [splOrdList]
+
+            item.ItemDesc = itemDescription;
+            item.UnitCost = "152.00";
+            orderStatus.StatusDate = "2019-06-03T03:28:09-04:00"
+            orderStatus.StatusDescription = status
+            
+            orderLine.Extn = extn;
+            orderLine.Item = item;
+            orderLine.OrderStatuses = [orderStatus]
+            orderLine.OrderedQty = quantity
+            orderLine.ShipNode = "MVNDR-60085653"
+            
+            orderLines.OrderLine = [orderLine];
+
+            ovqOrderDTO.DocumentType = "0005"
+            ovqOrderDTO.OrderDate = orderDate
+            ovqOrderDTO.OvqPersonInfoBillTo = billInfo
+            ovqOrderDTO.OvqPersonInfoShipTo = shipInfo
+            ovqOrderDTO.OvqOrderExtn = extnReference
+            ovqOrderDTO.OrderLines = orderLines
+            ovqDetails.Order = [ovqOrderDTO];
+        });
+        describe('Given an OVQ Order dto, when the function is invoked, then it ',() => {
+            let comTranslator = new ComOrderEventTranslator();
+            let response: ComOrderDetailsDTO;
+            before(() => {
+                 response = comTranslator.translate(ovqDetails)
+            })
+            it('should translate order attributes', () => {
+                expect(response).to.not.be.null
+                expect(response.lastUpdatedTS).to.not.be.null
+                expect(response.customerOrderNumber).to.eq(customerOrderNumber)
+                expect(response.orderedDate).to.eq(orderDate)
+                expect(response.email).to.eq(emailAddress)
+                expect(response.po).to.eq(poNumber)
+            });
+            it('should translate line items', () => {
+                expect(response.lineItems.length).to.eq(1)
+                expect(response.lineItems[0].skuDescription).to.eq(itemDescription)
+                expect(response.lineItems[0].quantity).to.eq(Number.parseInt(quantity))
+                expect(response.lineItems[0].comStatus).to.be.eq(status)
+                expect(response.lineItems[0].expectedDeliveryDate).to.eq(expectedDeliveryDate)
+                expect(response.lineItems[0].levelOfService).to.eq(levelOfService)
+                expect(response.lineItems[0].scac).to.eq(scac)
+                expect(response.lineItems[0].trackingNumber).to.eq(trackingNumber)
+            });
+            
+            it('should translate shipTo', () => {
+                expect(response.shipTo).to.not.be.null
+                expect(response.shipTo.addressLineOne).to.eq(ovqDetails.Order[0].OvqPersonInfoShipTo.AddressLine1)
+                expect(response.shipTo.city).to.eq(ovqDetails.Order[0].OvqPersonInfoShipTo.City)
+                expect(response.shipTo.zip).to.eq(ovqDetails.Order[0].OvqPersonInfoShipTo.ZipCode)
+                expect(response.shipTo.state).to.eq(ovqDetails.Order[0].OvqPersonInfoShipTo.State)
+            });
+        })
     });
 
 });
