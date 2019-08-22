@@ -34,6 +34,7 @@ export class LineItemDTO {
     public levelOfService: string;
     public scac: string;
     public trackingNumber: string;
+    public trackingType: string;
 }
 
 export class CarrierDTO {
