@@ -1,4 +1,4 @@
-import { ComEventDTO } from "../dto/ComEventDTO";
+ import { ComEventDTO } from "../dto/ComEventDTO";
 import { ComOrderDetailsDTO, LocationDTO, LineItemDTO } from "../dto/ComOrderDetailsDTO";
 
 import { get } from "lodash";
@@ -53,6 +53,7 @@ export class ComOrderEventTranslator {
     
                     if (orderLine.Extn[0].HDTrackingInfoList && orderLine.Extn[0].HDTrackingInfoList[0].HDTrackingInfo) {
                         lineItem.trackingNumber = orderLine.Extn[0].HDTrackingInfoList[0].HDTrackingInfo[0]._attributes.TrackingNumber;
+                        lineItem.trackingType = orderLine.Extn[0].HDTrackingInfoList[0].HDTrackingInfo[0]._attributes.TrackingType;
                         lineItem.scac = orderLine.Extn[0].HDTrackingInfoList[0].HDTrackingInfo[0]._attributes.SCAC;
                     }
     
@@ -113,8 +114,6 @@ export class ComOrderEventTranslator {
                     }
                     if (orderLine.Extn.HDTrackingInfoList.HDTrackingInfo) {
                         lineItem.scac = orderLine.Extn.HDTrackingInfoList.HDTrackingInfo[0].SCAC;
-                    }
-                    if (orderLine.Extn.HDTrackingInfoList.HDTrackingInfo && orderLine.Extn.HDTrackingInfoList.HDTrackingInfo[0].TrackingType === "LastMile") {
                         lineItem.trackingNumber = orderLine.Extn.HDTrackingInfoList.HDTrackingInfo[0].TrackingNumber;
                     }
                     comOrderDetail.lineItems.push(lineItem)
