@@ -84,6 +84,7 @@ describe('Class: ComOrderEventTranslator', () => {
                                 qty: 1,
                                 deliveryType: "SHP",
                                 trackingNumber: "123-456",
+                                trackingType: "LastMile",
                                 comStatus: "shipped"
                             }
                         ]
@@ -129,6 +130,7 @@ describe('Class: ComOrderEventTranslator', () => {
                 expect(lineItem.levelOfService).to.be.eq('basic');
                 expect(lineItem.scac).to.be.eq('ACME');
                 expect(lineItem.trackingNumber).to.be.eq('123-456');
+                expect(lineItem.trackingType).to.be.eq('LastMile');
             });
             it('should contain email', () => {
                 expect(comOrderDetails[0].email).to.be.eq('dummyEmail@fake.com');
@@ -331,6 +333,7 @@ function createOrderLines(lineItemsAtr: any) : Array<OrderLinesEntity>  {
             {
                 _attributes: {
                     TrackingNumber: lineItemsAtr[0].trackingNumber,
+                    TrackingType: lineItemsAtr[0].trackingType,
                     SCAC: "ACME"
                 }
             }

@@ -206,7 +206,8 @@
                             Modifyuserid="HDProcessOrderUpdatesServer"
                             OrderLineKey="201906110049316163580235"
                             SCAC="UPSN"
-                            TrackingNumber="1Z5XX1170364915365" isHistory="N"/>
+                            TrackingNumber="1Z5XX1170364915365" isHistory="N" 
+                            TrackingType="LastMile"/>
                     </HDTrackingInfoList>
                     <HDEventList>
                         <HDEvent Createprogid="SterlingPCFCreateOrder"

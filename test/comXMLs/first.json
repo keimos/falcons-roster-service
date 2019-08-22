@@ -21,6 +21,7 @@
                 "comStatus": "Included In Shipment",
                 "levelOfService": "Priority Ground Shipping",
                 "trackingNumber": "1Z5XX1170364915365",
+                "trackingType": "LastMile",
                 "scac": "UPSN"
             }
         ]
