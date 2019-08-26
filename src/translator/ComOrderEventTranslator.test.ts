@@ -127,10 +127,10 @@ describe('Class: ComOrderEventTranslator', () => {
                 expect(lineItem.quantity).to.be.eq(1);
                 expect(lineItem.expectedDeliveryDate).to.be.eq('2019-01-01');
                 expect(lineItem.comStatus).to.be.eq('shipped');
-                expect(lineItem.levelOfService).to.be.eq('basic');
-                expect(lineItem.scac).to.be.eq('ACME');
-                expect(lineItem.trackingNumber).to.be.eq('123-456');
-                expect(lineItem.trackingType).to.be.eq('LastMile');
+                expect(lineItem.tracking[0].levelOfService).to.be.eq('basic');
+                expect(lineItem.tracking[0].scac).to.be.eq('ACME');
+                expect(lineItem.tracking[0].trackingNumber).to.be.eq('123-456');
+                expect(lineItem.tracking[0].trackingType).to.be.eq('LastMile');
             });
             it('should contain email', () => {
                 expect(comOrderDetails[0].email).to.be.eq('dummyEmail@fake.com');
@@ -230,9 +230,9 @@ describe('Class: ComOrderEventTranslator', () => {
                 expect(response.lineItems[0].quantity).to.eq(Number.parseInt(quantity))
                 expect(response.lineItems[0].comStatus).to.be.eq(status)
                 expect(response.lineItems[0].expectedDeliveryDate).to.eq(expectedDeliveryDate)
-                expect(response.lineItems[0].levelOfService).to.eq(levelOfService)
-                expect(response.lineItems[0].scac).to.eq(scac)
-                expect(response.lineItems[0].trackingNumber).to.eq(trackingNumber)
+                expect(response.lineItems[0].tracking[0].levelOfService).to.eq(levelOfService)
+                expect(response.lineItems[0].tracking[0].scac).to.eq(scac)
+                expect(response.lineItems[0].tracking[0].trackingNumber).to.eq(trackingNumber)
             });
             
             it('should translate shipTo', () => {
@@ -334,7 +334,8 @@ function createOrderLines(lineItemsAtr: any) : Array<OrderLinesEntity>  {
                 _attributes: {
                     TrackingNumber: lineItemsAtr[0].trackingNumber,
                     TrackingType: lineItemsAtr[0].trackingType,
-                    SCAC: "ACME"
+                    SCAC: "ACME",
+                    LevelOfService: "basic"
                 }
             }
         ]
@@ -344,7 +345,7 @@ function createOrderLines(lineItemsAtr: any) : Array<OrderLinesEntity>  {
             HDOnlineProduct: [
                 {
                     _attributes: {
-                        LevelOfServiceDesc: "basic"
+                        LevelOfServiceDesc: "some desc of basic"
                     }
                 }
             ]

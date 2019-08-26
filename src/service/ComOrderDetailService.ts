@@ -42,9 +42,11 @@ export class ComOrderDetailService {
 
         if (trackingNumber) {
             for (const lineItem of orderDetails.lineItems) {
-                if (lineItem.trackingNumber === trackingNumber) {
-                    obj = [orderDetails];
-                    break;
+                for (const tracking of lineItem.tracking) {
+                    if (tracking.trackingNumber === trackingNumber) {
+                        obj = [orderDetails];
+                        break;
+                    }
                 }
             }
         }

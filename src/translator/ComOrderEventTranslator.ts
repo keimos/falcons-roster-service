@@ -1,5 +1,5 @@
  import { ComEventDTO } from "../dto/ComEventDTO";
-import { ComOrderDetailsDTO, LocationDTO, LineItemDTO } from "../dto/ComOrderDetailsDTO";
+import { ComOrderDetailsDTO, LocationDTO, LineItemDTO, TrackingDetailDTO } from "../dto/ComOrderDetailsDTO";
 
 import { get } from "lodash";
 import { OvqOrderListDTO, OvqOrderDTO } from "../dto/ComOvqDTO";
@@ -47,18 +47,23 @@ export class ComOrderEventTranslator {
                     }
                     lineItem.comStatus = orderLine.OrderStatuses[0].OrderStatus[0]._attributes.StatusDescription;
     
-                    try {
-                        lineItem.levelOfService = orderLine.Extn[0].HDOnlineProductList[0].HDOnlineProduct[0]._attributes.LevelOfServiceDesc;
-                    } catch (err){}
-    
+                    
+                    var trackingArray = new Array<TrackingDetailDTO>()
                     if (orderLine.Extn[0].HDTrackingInfoList && orderLine.Extn[0].HDTrackingInfoList[0].HDTrackingInfo) {
-                        lineItem.trackingNumber = orderLine.Extn[0].HDTrackingInfoList[0].HDTrackingInfo[0]._attributes.TrackingNumber;
-                        lineItem.trackingType = orderLine.Extn[0].HDTrackingInfoList[0].HDTrackingInfo[0]._attributes.TrackingType;
-                        lineItem.scac = orderLine.Extn[0].HDTrackingInfoList[0].HDTrackingInfo[0]._attributes.SCAC;
+                        for(const obj of  orderLine.Extn[0].HDTrackingInfoList[0].HDTrackingInfo){
+                            var trackingObj = new TrackingDetailDTO()
+                            trackingObj.scac = obj._attributes.SCAC;
+                            trackingObj.trackingNumber =obj._attributes.TrackingNumber;
+                            trackingObj.trackingType = obj._attributes.TrackingType;
+                            trackingObj.levelOfService = obj._attributes.LevelOfService;
+                            trackingArray.push(trackingObj)
+
+                        }
                     }
+                    lineItem.tracking = trackingArray
     
                     // we only want to capture events that have tracking numbers.
-                    if (lineItem.trackingNumber) {
+                    if (lineItem.tracking.length > 0) {
                         orderDetailsDTO.lineItems.push(lineItem);
                     }
                 }
@@ -109,13 +114,22 @@ export class ComOrderEventTranslator {
                     if (orderLine.OrderStatuses) {
                         lineItem.comStatus = orderLine.OrderStatuses[0].StatusDescription;
                     }
-                    if (orderLine.Extn.HDTrackingInfoList.HDTrackingInfo && orderLine.Extn.HDTrackingInfoList.HDTrackingInfo[0].TrackingType === "LastMile") {
-                        lineItem.levelOfService = orderLine.Extn.HDTrackingInfoList.HDTrackingInfo[0].LevelOfService;
-                    }
+                    var trackingArray = new Array<TrackingDetailDTO>()
                     if (orderLine.Extn.HDTrackingInfoList.HDTrackingInfo) {
-                        lineItem.scac = orderLine.Extn.HDTrackingInfoList.HDTrackingInfo[0].SCAC;
-                        lineItem.trackingNumber = orderLine.Extn.HDTrackingInfoList.HDTrackingInfo[0].TrackingNumber;
+                        for(const obj of orderLine.Extn.HDTrackingInfoList.HDTrackingInfo){
+                            var trackingObj = new TrackingDetailDTO()
+
+                            trackingObj.scac = obj.SCAC
+                            trackingObj.trackingNumber = obj.TrackingNumber
+                            trackingObj.trackingType = obj.TrackingType
+                            trackingObj.levelOfService = obj.LevelOfService;
+
+                            trackingArray.push(trackingObj)
+                        }
+                      
                     }
+
+                    lineItem.tracking = trackingArray
                     comOrderDetail.lineItems.push(lineItem)
                 }
 
