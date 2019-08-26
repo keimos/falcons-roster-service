@@ -31,10 +31,7 @@ export class LineItemDTO {
     public quantity: number;
     public expectedDeliveryDate: string;
     public comStatus: string;
-    public levelOfService: string;
-    public scac: string;
-    public trackingNumber: string;
-    public trackingType: string;
+    public tracking: Array<TrackingDetailDTO>;
 }
 
 export class CarrierDTO {
@@ -42,4 +39,11 @@ export class CarrierDTO {
     public code: string;
     public type: string;
     public trackerUrl: string;
+}
+
+export class TrackingDetailDTO {
+    public scac: string;
+    public trackingNumber: string;
+    public trackingType: string;
+    public levelOfService: string;
 }
