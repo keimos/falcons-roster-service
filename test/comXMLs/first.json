@@ -19,10 +19,14 @@
                 "quantity": "1.00",
                 "expectedDeliveryDate": "2019-06-13T10:56:51-04:00",
                 "comStatus": "Included In Shipment",
-                "levelOfService": "Priority Ground Shipping",
-                "trackingNumber": "1Z5XX1170364915365",
-                "trackingType": "LastMile",
-                "scac": "UPSN"
+                "tracking": [
+                    {
+                        "levelOfService": "Basic",
+                        "trackingNumber": "1Z5XX1170364915365",
+                        "trackingType": "LastMile",
+                        "scac": "UPSN"
+                    }
+                ]
             }
         ]
     }

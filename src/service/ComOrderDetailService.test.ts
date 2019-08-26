@@ -12,7 +12,7 @@ import { MongoRepo } from '../repo/MongoRepo';
 import { read, readFileSync } from 'fs';
 import { OvqDelegate } from '../delegate/OvqDelegate';
 import { ComOrderEventTranslator } from '../translator/ComOrderEventTranslator';
-import { ComOrderDetailsDTO, LineItemDTO } from '../dto/ComOrderDetailsDTO';
+import { ComOrderDetailsDTO, LineItemDTO, TrackingDetailDTO } from '../dto/ComOrderDetailsDTO';
 
 
 const expect = chai.expect;
@@ -64,7 +64,9 @@ describe('Class: ComOrderDetailService', () => {
                 let order = new ComOrderDetailsDTO();
                 order.lineItems = new Array();
                 order.lineItems[0] = new LineItemDTO();
-                order.lineItems[0].trackingNumber = '923DGS';
+                order.lineItems[0].tracking = new Array();
+                order.lineItems[0].tracking[0] = new TrackingDetailDTO();
+                order.lineItems[0].tracking[0].trackingNumber = '923DGS';
                 translatorStub.returns(order);
                 const comOrderDetailService: ComOrderDetailService = new ComOrderDetailService(mongoRepo, ovqDelegate, translator);
 
@@ -177,7 +179,9 @@ describe('Class: ComOrderDetailService', () => {
                 order = new ComOrderDetailsDTO();
                 order.lineItems = new Array();
                 order.lineItems[0] = new LineItemDTO();
-                order.lineItems[0].trackingNumber = trackingNumber;
+                order.lineItems[0].tracking = new Array();
+                order.lineItems[0].tracking[0] = new TrackingDetailDTO();
+                order.lineItems[0].tracking[0].trackingNumber = trackingNumber;
                 translateStub.returns(order);
                 
                 const comOrderDetailService: ComOrderDetailService = new ComOrderDetailService(null, ovqDelegate, translator);
@@ -203,7 +207,9 @@ describe('Class: ComOrderDetailService', () => {
                 order = new ComOrderDetailsDTO();
                 order.lineItems = new Array();
                 order.lineItems[0] = new LineItemDTO();
-                order.lineItems[0].trackingNumber = '127FRE';
+                order.lineItems[0].tracking = new Array();
+                order.lineItems[0].tracking[0] = new TrackingDetailDTO();
+                order.lineItems[0].tracking[0].trackingNumber = '127FRE';
                 translateStub.returns(order);
                 
                 const comOrderDetailService: ComOrderDetailService = new ComOrderDetailService(null, ovqDelegate, translator);
@@ -229,7 +235,9 @@ describe('Class: ComOrderDetailService', () => {
                 order = new ComOrderDetailsDTO();
                 order.lineItems = new Array();
                 order.lineItems[0] = new LineItemDTO();
-                order.lineItems[0].trackingNumber = '127FRE';
+                order.lineItems[0].tracking = new Array();
+                order.lineItems[0].tracking[0] = new TrackingDetailDTO();
+                order.lineItems[0].tracking[0].trackingNumber = '127FRE';
                 translateStub.returns(order);
                 
                 const comOrderDetailService: ComOrderDetailService = new ComOrderDetailService(null, ovqDelegate, translator);
