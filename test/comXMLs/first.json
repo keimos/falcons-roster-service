@@ -19,6 +19,7 @@
                 "quantity": "1.00",
                 "expectedDeliveryDate": "2019-06-13T10:56:51-04:00",
                 "comStatus": "Included In Shipment",
+                "levelOfServiceDesc": "Priority Ground Shipping",
                 "tracking": [
                     {
                         "levelOfService": "Basic",

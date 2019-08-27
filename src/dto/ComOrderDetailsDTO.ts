@@ -31,6 +31,7 @@ export class LineItemDTO {
     public quantity: number;
     public expectedDeliveryDate: string;
     public comStatus: string;
+    public levelOfServiceDesc: string;
     public tracking: Array<TrackingDetailDTO>;
 }
 
