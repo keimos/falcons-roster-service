@@ -47,7 +47,10 @@ export class ComOrderEventTranslator {
                     }
                     lineItem.comStatus = orderLine.OrderStatuses[0].OrderStatus[0]._attributes.StatusDescription;
     
-                    
+                    try {	
+                        lineItem.levelOfServiceDesc = orderLine.Extn[0].HDOnlineProductList[0].HDOnlineProduct[0]._attributes.LevelOfServiceDesc;
+                    } catch (err){}
+
                     var trackingArray = new Array<TrackingDetailDTO>()
                     if (orderLine.Extn[0].HDTrackingInfoList && orderLine.Extn[0].HDTrackingInfoList[0].HDTrackingInfo) {
                         for(const obj of  orderLine.Extn[0].HDTrackingInfoList[0].HDTrackingInfo){
