@@ -77,6 +77,19 @@ describe('Class: ComOrderEventTranslator', () => {
             const eventMeta = {
                 orders: [
                     {   
+                        documentType: "0001",
+                        orderNumber: "123",
+                        lineItems: [
+                            {
+                                sku: "999",
+                                qty: 1,
+                                deliveryType: "SHP",
+                                comStatus: "shipped"
+                            }
+                        ]
+                    },
+                    {   
+                        documentType: "0005",
                         orderNumber: "123",
                         lineItems: [
                             {
@@ -247,9 +260,6 @@ describe('Class: ComOrderEventTranslator', () => {
 
 });
 
-
-
-
 function createMockEvent(attributes: any): ComEventDTO {
     var comEvent: ComEventDTO = new ComEventDTO();
     comEvent._id = "1";
@@ -285,7 +295,8 @@ function createOrder(orderAtr: any) : OrderEntity {
                     }
                 ],
                 _attributes: {
-                    OrderDate: "2018-12-29"
+                    OrderDate: "2018-12-29",
+                    DocumentType: orderAtr.documentType
                 },
                 Extn: [
                     {
