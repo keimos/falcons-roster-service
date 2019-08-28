@@ -578,7 +578,24 @@
                     ExtnSystemReference="AURORA"
                     ExtnSystemReferenceTS="2019-06-13T10:08:44-04:00"
                     ExtnUOMConvQty="1.00" ExtnUPCCode="052963739107"
-                    ExtnUncancelledQty="0.00" ExtnUnitCost="34.8" ExtnVendorStockNumber="73910"/>
+                    ExtnUncancelledQty="0.00" ExtnUnitCost="34.8" ExtnVendorStockNumber="73910">
+                    <HDTrackingInfoList>
+                        <HDTrackingInfo
+                            Createprogid="HDProcessOrderUpdatesServer"
+                            Createts="2019-06-11T18:24:28-04:00"
+                            Createuserid="HDProcessOrderUpdatesServer"
+                            HDTrackingInfoKey="201906111824296260906139"
+                            Lockid="0"
+                            Modifyprogid="HDProcessOrderUpdatesServer"
+                            Modifyts="2019-06-11T18:24:28-04:00"
+                            Modifyuserid="HDProcessOrderUpdatesServer"
+                            OrderLineKey="201906110049316163580235"
+                            SCAC="UPSN"
+                            TrackingNumber="1Z5XX1170364915365" isHistory="N" 
+                            TrackingType="LastMile"
+                            LevelOfService="Basic"/>
+                    </HDTrackingInfoList>
+                    </Extn>
                 <Item ItemDesc="Lawn Tractor Cover" ItemID="881563"
                     ItemShortDesc="Lawn Tractor Cover" ItemWeight="2.55"
                     ItemWeightUOM="LB" ManufacturerItem="73910"
