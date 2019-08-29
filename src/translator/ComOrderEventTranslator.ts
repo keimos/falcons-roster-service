@@ -1,5 +1,5 @@
  import { ComEventDTO } from "../dto/ComEventDTO";
-import { ComOrderDetailsDTO, LocationDTO, LineItemDTO, TrackingDetailDTO } from "../dto/ComOrderDetailsDTO";
+import { ComOrderDetailsDTO, LocationDTO, LineItemDTO, TrackingDetailDTO, CustomerInfoDTO } from "../dto/ComOrderDetailsDTO";
 
 import { get } from "lodash";
 import { OvqOrderListDTO, OvqOrderDTO } from "../dto/ComOvqDTO";
@@ -24,9 +24,15 @@ export class ComOrderEventTranslator {
                 orderDetailsDTO.lastUpdatedTS = (new Date()).toISOString();
                 orderDetailsDTO.customerOrderNumber = order.Extn[0]._attributes.ExtnHostOrderReference;
                 orderDetailsDTO.orderedDate = order._attributes.OrderDate;
-                orderDetailsDTO.email = order.PersonInfoBillTo[0]._attributes.EMailID;
-                orderDetailsDTO.po = order.Extn[0]._attributes.ExtnPONumber;
-        
+
+                orderDetailsDTO.customerInfo = new CustomerInfoDTO();
+                orderDetailsDTO.customerInfo.email = order.PersonInfoBillTo[0]._attributes.EMailID;
+                orderDetailsDTO.customerInfo.phoneNumber = order.PersonInfoBillTo[0]._attributes.DayPhone;
+                orderDetailsDTO.customerInfo.mobileNumber = order.PersonInfoBillTo[0]._attributes.MobilePhone;
+                orderDetailsDTO.customerInfo.firstName = order.PersonInfoBillTo[0]._attributes.FirstName;
+                orderDetailsDTO.customerInfo.middleName = order.PersonInfoBillTo[0]._attributes.MiddleName;
+                orderDetailsDTO.customerInfo.lastName = order.PersonInfoBillTo[0]._attributes.LastName;
+
         
                 const shipTo: LocationDTO = new LocationDTO();
                 shipTo.addressLineOne = order.PersonInfoShipTo[0]._attributes.AddressLine1;
@@ -91,6 +97,7 @@ export class ComOrderEventTranslator {
                         if (trackingArray.length > 0) {
                             for (const myLine of orderDetailsDTO.lineItems) {
                                 if (myLine.sku === orderLine.Extn[0]._attributes.ExtnSKUCode) {
+                                    myLine.po = order.Extn[0]._attributes.ExtnPONumber;
                                     myLine.tracking = trackingArray;
                                     containsTracking = true;
                                     break;
@@ -112,60 +119,102 @@ export class ComOrderEventTranslator {
 
     //this method translates the COM object found in OVQ
     public translate(orders: OvqOrderListDTO): ComOrderDetailsDTO {
-        const comOrderDetail: ComOrderDetailsDTO = new ComOrderDetailsDTO();
+        const list: Array<any> = new Array();
+        let containsTracking: boolean = false;
+
+        const orderDetailsDTO: ComOrderDetailsDTO = new ComOrderDetailsDTO();
+
+        // we need to first find the sales order (0001), and create our base order object
+        for (const order of orders.Order) {
+            if (order.DocumentType === '0001') {
+                orderDetailsDTO.lastUpdatedTS = (new Date()).toISOString();
+                orderDetailsDTO.customerOrderNumber = order.Extn.ExtnHostOrderReference;
+                orderDetailsDTO.orderedDate = order.OrderDate;
+
+                orderDetailsDTO.customerInfo = new CustomerInfoDTO();
+                orderDetailsDTO.customerInfo.email = order.PersonInfoBillTo.EMailID;
+                orderDetailsDTO.customerInfo.phoneNumber = order.PersonInfoBillTo.DayPhone;
+                orderDetailsDTO.customerInfo.mobileNumber = order.PersonInfoBillTo.MobilePhone;
+                orderDetailsDTO.customerInfo.firstName = order.PersonInfoBillTo.FirstName;
+                orderDetailsDTO.customerInfo.lastName = order.PersonInfoBillTo.LastName;
+
+        
+                const shipTo: LocationDTO = new LocationDTO();
+                shipTo.addressLineOne = order.PersonInfoShipTo.AddressLine1;
+                shipTo.city = order.PersonInfoShipTo.City;
+                shipTo.zip = order.PersonInfoShipTo.ZipCode;
+                shipTo.state = order.PersonInfoShipTo.State;
+        
+                orderDetailsDTO.shipTo = shipTo;
+        
+                orderDetailsDTO.lineItems = new Array();
+                for (const orderLine of order.OrderLines.OrderLine) {
+        
+                    // we are only intrested in orders that are of type SHP, these are STH home deliveries.
+                    if (orderLine.DeliveryMethod == "SHP") {
+                        const lineItem: LineItemDTO = new LineItemDTO();
+                        lineItem.skuDescription = orderLine.Item.ItemDesc;
+                        lineItem.omsID = orderLine.Extn.ExtnOMSID
+                        lineItem.sku = Number.parseInt(orderLine.Extn.ExtnSKUCode);
+                        lineItem.quantity = Number.parseInt(orderLine.OrderedQty);
+        
+                                                    
+                        try {	
+                            lineItem.levelOfServiceDesc = orderLine.Extn.HDOnlineProductList.HDOnlineProduct[0].LevelOfServiceDesc;
+                        } catch (err){}        
+                        orderDetailsDTO.lineItems.push(lineItem);
+                    }
+                }
+                // theres only 1 sales order so we can break out of the loop
+                break;
+            }
+        }
+
+        /*
+            Next we need to find each 0005 object and enrich our base order object with the tracking details found.  
+            Each 0005 object represents a different PO, so various lines from the sales order could be split across various 0005 objects
+        */
         for (const order of orders.Order) {
             if (order.DocumentType === '0005') {
-                comOrderDetail.orderedDate = order.OrderDate;
-                comOrderDetail.lastUpdatedTS = (new Date()).toISOString();
-                comOrderDetail.customerOrderNumber = order.OvqOrderExtn.ExtnHostOrderReference;
-                comOrderDetail.email = order.OvqPersonInfoBillTo.EMailID;
-                comOrderDetail.po = order.OvqOrderExtn.ExtnPONumber;
-
-                comOrderDetail.shipTo = new LocationDTO();
-                comOrderDetail.shipTo.addressLineOne = order.OvqPersonInfoShipTo.AddressLine1;
-                comOrderDetail.shipTo.addressLineTwo;
-                comOrderDetail.shipTo.city = order.OvqPersonInfoShipTo.City;
-                comOrderDetail.shipTo.state = order.OvqPersonInfoShipTo.State;
-                comOrderDetail.shipTo.zip = order.OvqPersonInfoShipTo.ZipCode;
-
-                comOrderDetail.lineItems = new Array();
                 for (const orderLine of order.OrderLines.OrderLine) {
-                    const lineItem = new LineItemDTO();
-                    lineItem.id;
-                    lineItem.lineItemId;
-                    lineItem.sku = Number.parseInt(orderLine.Extn.ExtnSKUCode);
-                    lineItem.skuDescription = orderLine.Item.ItemDesc;
-                    lineItem.omsID = orderLine.Extn.ExtnOMSID;
-                    lineItem.quantity = Number.parseInt(orderLine.OrderedQty);
-                    if (orderLine.Extn.HDSplOrdList) {
-                        lineItem.expectedDeliveryDate = orderLine.Extn.HDSplOrdList[0].SplOrdExpectedArrivalDate;
-                    }
-                    if (orderLine.OrderStatuses) {
-                        lineItem.comStatus = orderLine.OrderStatuses[0].StatusDescription;
-                    }
-                    var trackingArray = new Array<TrackingDetailDTO>()
-                    if (orderLine.Extn.HDTrackingInfoList.HDTrackingInfo) {
-                        for(const obj of orderLine.Extn.HDTrackingInfoList.HDTrackingInfo){
-                            var trackingObj = new TrackingDetailDTO()
-
-                            trackingObj.scac = obj.SCAC
-                            trackingObj.trackingNumber = obj.TrackingNumber
-                            trackingObj.trackingType = obj.TrackingType
-                            trackingObj.levelOfService = obj.LevelOfService;
-
-                            trackingArray.push(trackingObj)
+    
+                    // we are only intrested in orders that are of type SHP, these are STH home deliveries.
+                    if (orderLine.DeliveryMethod == "SHP") {
+    
+                        var trackingArray = new Array<TrackingDetailDTO>()
+                        if (orderLine.Extn.HDTrackingInfoList && orderLine.Extn.HDTrackingInfoList.HDTrackingInfo) {
+                            for(const obj of  orderLine.Extn.HDTrackingInfoList.HDTrackingInfo){
+                                var trackingObj = new TrackingDetailDTO()
+                                trackingObj.scac = obj.SCAC;
+                                trackingObj.trackingNumber =obj.TrackingNumber;
+                                trackingObj.trackingType = obj.TrackingType;
+                                trackingObj.levelOfService = obj.LevelOfService;
+                                trackingArray.push(trackingObj)
+    
+                            }
                         }
-                      
+
+                        //we need to find the correct line item from orderDetailsDTO (our base order).
+                        if (trackingArray.length > 0) {
+                            for (const myLine of orderDetailsDTO.lineItems) {
+                                if (myLine.sku === Number.parseInt(orderLine.Extn.ExtnSKUCode)) {
+                                    myLine.po = order.Extn.ExtnPONumber;
+                                    myLine.tracking = trackingArray;
+                                    containsTracking = true;
+                                    break;
+                                }
+                            }
+                        }
                     }
-
-                    lineItem.tracking = trackingArray
-                    comOrderDetail.lineItems.push(lineItem)
                 }
-
-                break;
-            } 
-            
+            }
         }
-        return comOrderDetail;
+
+        // we have no reason to cache the order if it doesnt have tracking details (the ASN hasnt been sent)
+        if (containsTracking) {
+            return orderDetailsDTO;
+        }
+    
+        return null;
     }
 }

@@ -18,65 +18,65 @@ const expect = chai.expect;
  * ComOrderEventTranslator tests
  */
 describe('Class: ComOrderEventTranslator', () => {
-    
+
     //
     describe('function: translate COM Event', () => {
-        
+
         before(() => {
         });
         after(() => {
         })
-        
+
         describe('Given an event with null orderList, when the function is called, then it', () => {
-            
-            let comEvent: ComEventDTO = {_id: '0'};
-            
+
+            let comEvent: ComEventDTO = { _id: '0' };
+
             let comOrderDetails: Array<ComOrderDetailsDTO>;
             // Prepare / Call
             before(() => {
                 comOrderDetails = ComOrderEventTranslator.translate(comEvent);
             });
-            
+
             // Assert
             it('should return an empty list', () => {
                 expect(comOrderDetails.length).to.be.eq(0);
             });
         });
         describe('Given an event with empty orderList, when the function is called, then it', () => {
-            
-            let comEvent: ComEventDTO = {_id: '0', OrderList: []};
-            
+
+            let comEvent: ComEventDTO = { _id: '0', OrderList: [] };
+
             let comOrderDetails: Array<ComOrderDetailsDTO>;
             // Prepare / Call
             before(() => {
                 comOrderDetails = ComOrderEventTranslator.translate(comEvent);
             });
-            
+
             // Assert
             it('should return an empty list', () => {
                 expect(comOrderDetails.length).to.be.eq(0);
             });
         });
-        
+
         describe('Given an event with empty orders, when the function is called, then it', () => {
-            let comEvent: ComEventDTO = {_id: '0', OrderList: [{Order: []}]};
-            
+            let comEvent: ComEventDTO = { _id: '0', OrderList: [{ Order: [] }] };
+
             let comOrderDetails: Array<ComOrderDetailsDTO>;
             // Prepare / Call
             before(() => {
                 comOrderDetails = ComOrderEventTranslator.translate(comEvent);
             });
-            
+
             // Assert
             it('should return an empty list', () => {
                 expect(comOrderDetails.length).to.be.eq(0);
             });
         });
-        
+
         describe('Given a STH event with one order with tracking details, when the function is called, then it', () => {
             const eventMeta = {
                 orders: [
-                    {   
+                    {
                         documentType: "0001",
                         orderNumber: "123",
                         lineItems: [
@@ -88,7 +88,7 @@ describe('Class: ComOrderEventTranslator', () => {
                             }
                         ]
                     },
-                    {   
+                    {
                         documentType: "0005",
                         orderNumber: "123",
                         lineItems: [
@@ -104,14 +104,14 @@ describe('Class: ComOrderEventTranslator', () => {
                     }
                 ]
             }
-            
+
             let comOrderDetails: Array<ComOrderDetailsDTO>;
             // Prepare / Call
             before(() => {
                 let comEvent: ComEventDTO = createMockEvent(eventMeta);
                 comOrderDetails = ComOrderEventTranslator.translate(comEvent);
             });
-            
+
             // Assert
             it('should return a list of one', () => {
                 expect(comOrderDetails.length).to.be.eq(1);
@@ -144,121 +144,168 @@ describe('Class: ComOrderEventTranslator', () => {
                 expect(lineItem.tracking[0].scac).to.be.eq('ACME');
                 expect(lineItem.tracking[0].trackingNumber).to.be.eq('123-456');
                 expect(lineItem.tracking[0].trackingType).to.be.eq('LastMile');
+                expect(lineItem.po).to.be.eq('123');
             });
-            it('should contain email', () => {
-                expect(comOrderDetails[0].email).to.be.eq('dummyEmail@fake.com');
-            });
-            it('should contain po', () => {
-                expect(comOrderDetails[0].po).to.be.eq('123');
+            it('should contain customerInfo', () => {
+                expect(comOrderDetails[0].customerInfo.firstName).to.be.eq('Homer');
+                expect(comOrderDetails[0].customerInfo.middleName).to.be.eq('D');
+                expect(comOrderDetails[0].customerInfo.lastName).to.be.eq('Poe');
+                expect(comOrderDetails[0].customerInfo.email).to.be.eq('dummyEmail@fake.com');
+                expect(comOrderDetails[0].customerInfo.phoneNumber).to.be.eq('123-456-7890');
+                expect(comOrderDetails[0].customerInfo.mobileNumber).to.be.eq('098-765-4321');
             });
         });
     });
     describe('function: translate OVQ response', () => {
         let ovqDetails = new OvqOrderListDTO();
-        const customerOrderNumber = "W1239579";
+        
         const orderDate = "2019-06-03T04:07:00-04:00";
         const emailAddress = "emailaaaa@homedepot.com";
         const poNumber = "01630219";
-        const itemDescription = "CARPET";
-        const quantity = "5.00";
-        const expectedDeliveryDate = "2019-06-05T03:28:09-04:00";
+        const itemDescription = "some desc";
         const status = "Scheduled";
-        const scac = "UPSC";
+        const scac = "USPS";
         const levelOfService = "Basic";
-        const trackingNumber = "50000005000018";
+        const trackingNumber = "123-456";
 
-        
+
         before(() => {
-            let ovqOrderDTO = new OvqOrderDTO();
-            let billInfo = new OvqPersonInfoBillToDTO();
-            let shipInfo = new OvqPersonInfoShipToDTO();
-            let extnReference = new OvqOrderExtnDTO();
-            let extn = new OvqOrderLineExtnDTO();
-            let item = new OvqItemDTO();
-            let orderStatus = new OrderStatus();
-            let orderLines = new OvqOrderLinesDTO();
-            let orderLine = new OvqOrderLineDTO;
-            
-            billInfo.EMailID = emailAddress
-            shipInfo.AddressLine1 = "1234 test street"
-            shipInfo.City = "Atlanta"
-            shipInfo.State = "GA"
-            shipInfo.ZipCode = "23937"
-            extnReference.ExtnHostOrderReference = customerOrderNumber            
-            extnReference.ExtnPONumber = poNumber           
-            
-            extn.ExtnOMSID = '204798123'
-            extn.ExtnSKUCode = '1000018123'
-            let trackingInfo = new OvqHDTrackingInfoDTO()
-            trackingInfo.TrackingNumber = trackingNumber
-            trackingInfo.LevelOfService = levelOfService
-            trackingInfo.TrackingType = "LastMile"
-            trackingInfo.SCAC = scac
-            const trackingList = new OvqHDTrackingInfoListDTO();
-            trackingList.HDTrackingInfo = [trackingInfo]
-            extn.HDTrackingInfoList = trackingList
-
-            let splOrdList = new HDSplOrd();
-            splOrdList.SplOrdExpectedArrivalDate = expectedDeliveryDate
-            extn.HDSplOrdList = [splOrdList]
-
-            item.ItemDesc = itemDescription;
-            item.UnitCost = "152.00";
-            orderStatus.StatusDate = "2019-06-03T03:28:09-04:00"
-            orderStatus.StatusDescription = status
-            
-            orderLine.Extn = extn;
-            orderLine.Item = item;
-            orderLine.OrderStatuses = [orderStatus]
-            orderLine.OrderedQty = quantity
-            orderLine.ShipNode = "MVNDR-60085653"
-            
-            orderLines.OrderLine = [orderLine];
-
-            ovqOrderDTO.DocumentType = "0005"
-            ovqOrderDTO.OrderDate = orderDate
-            ovqOrderDTO.OvqPersonInfoBillTo = billInfo
-            ovqOrderDTO.OvqPersonInfoShipTo = shipInfo
-            ovqOrderDTO.OvqOrderExtn = extnReference
-            ovqOrderDTO.OrderLines = orderLines
-            ovqDetails.Order = [ovqOrderDTO];
+            const eventMeta = {
+                orders: [
+                    {
+                        orderDate: "2019-06-03T04:07:00-04:00",
+                        documentType: "0001",
+                        orderNumber: "W1239579",
+                        email: "homer@homedepot.com",
+                        po: "1234",
+                        levelOfService: "Basic",
+                        lineItems: [
+                            {
+                                sku: "999",
+                                qty: 5.00,
+                                deliveryType: "SHP",
+                                comStatus: "shipped"
+                            }
+                        ]
+                    },
+                    {
+                        documentType: "0005",
+                        orderNumber: "W1239579",
+                        trackingNumber: "track",
+                        expectedDeliveryDate: "2019-06-05T03:28:09-04:00",
+                        lineItems: [
+                            {
+                                sku: "999",
+                                qty: 5.00,
+                                deliveryType: "SHP",
+                                trackingNumber: "123-456",
+                                trackingType: "LastMile",
+                                comStatus: "shipped"
+                            }
+                        ]
+                    }
+                ]
+            }
+            ovqDetails = createMockOVQObject(eventMeta);
         });
-        describe('Given an OVQ Order dto, when the function is invoked, then it ',() => {
+        describe('Given an OVQ Order dto, when the function is invoked, then it ', () => {
             let comTranslator = new ComOrderEventTranslator();
             let response: ComOrderDetailsDTO;
             before(() => {
-                 response = comTranslator.translate(ovqDetails)
+                response = comTranslator.translate(ovqDetails)
             })
             it('should translate order attributes', () => {
                 expect(response).to.not.be.null
                 expect(response.lastUpdatedTS).to.not.be.null
-                expect(response.customerOrderNumber).to.eq(customerOrderNumber)
+                expect(response.customerOrderNumber).to.eq("W1239579")
                 expect(response.orderedDate).to.eq(orderDate)
-                expect(response.email).to.eq(emailAddress)
-                expect(response.po).to.eq(poNumber)
             });
             it('should translate line items', () => {
                 expect(response.lineItems.length).to.eq(1)
                 expect(response.lineItems[0].skuDescription).to.eq(itemDescription)
-                expect(response.lineItems[0].quantity).to.eq(Number.parseInt(quantity))
-                expect(response.lineItems[0].comStatus).to.be.eq(status)
-                expect(response.lineItems[0].expectedDeliveryDate).to.eq(expectedDeliveryDate)
-                expect(response.lineItems[0].tracking[0].levelOfService).to.eq(levelOfService)
+                expect(response.lineItems[0].quantity).to.eq(Number.parseInt("5"))
                 expect(response.lineItems[0].tracking[0].scac).to.eq(scac)
                 expect(response.lineItems[0].tracking[0].trackingNumber).to.eq(trackingNumber)
             });
-            
+
             it('should translate shipTo', () => {
                 expect(response.shipTo).to.not.be.null
-                expect(response.shipTo.addressLineOne).to.eq(ovqDetails.Order[0].OvqPersonInfoShipTo.AddressLine1)
-                expect(response.shipTo.city).to.eq(ovqDetails.Order[0].OvqPersonInfoShipTo.City)
-                expect(response.shipTo.zip).to.eq(ovqDetails.Order[0].OvqPersonInfoShipTo.ZipCode)
-                expect(response.shipTo.state).to.eq(ovqDetails.Order[0].OvqPersonInfoShipTo.State)
+                expect(response.shipTo.addressLineOne).to.eq(ovqDetails.Order[0].PersonInfoShipTo.AddressLine1)
+                expect(response.shipTo.city).to.eq(ovqDetails.Order[0].PersonInfoShipTo.City)
+                expect(response.shipTo.zip).to.eq(ovqDetails.Order[0].PersonInfoShipTo.ZipCode)
+                expect(response.shipTo.state).to.eq(ovqDetails.Order[0].PersonInfoShipTo.State)
             });
         })
     });
 
 });
+
+function createMockOVQObject(attributes: any) {
+
+    let ovqDetails = new OvqOrderListDTO();
+    ovqDetails.Order = new Array();
+
+    for (const orderAtr of attributes.orders) {
+        const order = createOVQOrder(orderAtr);
+        ovqDetails.Order.push(order);
+    }
+
+    return ovqDetails;
+}
+
+function createOVQOrder(orderAtr: any) {
+    let ovqOrderDTO = new OvqOrderDTO();
+    let billInfo = new OvqPersonInfoBillToDTO();
+    let shipInfo = new OvqPersonInfoShipToDTO();
+    let extnReference = new OvqOrderExtnDTO();
+    let extn = new OvqOrderLineExtnDTO();
+    let item = new OvqItemDTO();
+    let orderStatus = new OrderStatus();
+    let orderLines = new OvqOrderLinesDTO();
+    let orderLine = new OvqOrderLineDTO;
+
+    billInfo.EMailID = orderAtr.email;
+    shipInfo.AddressLine1 = "1234 test street"
+    shipInfo.City = "Atlanta"
+    shipInfo.State = "GA"
+    shipInfo.ZipCode = "23937"
+    extnReference.ExtnHostOrderReference = orderAtr.orderNumber;
+    extnReference.ExtnPONumber = orderAtr.po;
+
+    extn.ExtnOMSID = '204798123'
+    extn.ExtnSKUCode = '1000018123'
+    let trackingInfo = new OvqHDTrackingInfoDTO()
+    trackingInfo.TrackingNumber = orderAtr.lineItems[0].trackingNumber;
+    trackingInfo.TrackingType = orderAtr.lineItems[0].trackingType;
+    trackingInfo.SCAC = 'USPS'
+    const trackingList = new OvqHDTrackingInfoListDTO();
+    trackingList.HDTrackingInfo = [trackingInfo]
+    extn.HDTrackingInfoList = trackingList
+
+
+    item.ItemDesc = 'some desc';
+    item.UnitCost = "152.00";
+    orderStatus.StatusDate = "2019-06-03T03:28:09-04:00"
+    orderStatus.StatusDescription = "Scheduled"
+
+    orderLine.DeliveryMethod = "SHP";
+    orderLine.Extn = extn;
+    orderLine.Item = item;
+    orderLine.OrderStatuses = [orderStatus]
+    orderLine.OrderedQty = orderAtr.lineItems[0].qty
+    orderLine.ShipNode = "MVNDR-60085653"
+
+    orderLines.OrderLine = [orderLine];
+
+    ovqOrderDTO.DocumentType = orderAtr.documentType;
+    ovqOrderDTO.OrderDate = orderAtr.orderDate;
+    ovqOrderDTO.PersonInfoBillTo = billInfo
+    ovqOrderDTO.PersonInfoShipTo = shipInfo
+    ovqOrderDTO.Extn = extnReference
+    ovqOrderDTO.OrderLines = orderLines;
+
+    return ovqOrderDTO;
+}
 
 function createMockEvent(attributes: any): ComEventDTO {
     var comEvent: ComEventDTO = new ComEventDTO();
@@ -267,7 +314,7 @@ function createMockEvent(attributes: any): ComEventDTO {
     comEvent.OrderList[0] = new OrderListEntity();
     comEvent.OrderList[0].Order = new Array();
 
-   for (const orderAtr of attributes.orders) {
+    for (const orderAtr of attributes.orders) {
         const order = createOrder(orderAtr);
         comEvent.OrderList[0].Order.push(order);
     }
@@ -275,49 +322,48 @@ function createMockEvent(attributes: any): ComEventDTO {
     return comEvent;
 }
 
-function createOrder(orderAtr: any) : OrderEntity {
+function createOrder(orderAtr: any): OrderEntity {
     var order: OrderEntity = {
-                PersonInfoBillTo: [
-                    {
-                        _attributes: {
-                            EMailID: "dummyEmail@fake.com"
-                        }
-                    }
-                ],
-                PersonInfoShipTo: [
-                    {
-                        _attributes: {
-                            AddressLine1: "123 main st",
-                            City: "Atlanta",
-                            ZipCode: "12345",
-                            State: "GA"
-                        }
-                    }
-                ],
+        PersonInfoBillTo: [
+            {
                 _attributes: {
-                    OrderDate: "2018-12-29",
-                    DocumentType: orderAtr.documentType
-                },
-                Extn: [
-                    {
-                        _attributes: {
-                            ExtnHostOrderReference: orderAtr.orderNumber,
-                            ExtnPONumber: "123"
-                        }
-                    }
-                ],
-                OrderLines: createOrderLines(orderAtr.lineItems)
+                    FirstName: "Homer",
+                    MiddleName: "D",
+                    LastName: "Poe",
+                    EMailID: "dummyEmail@fake.com",
+                    DayPhone: "123-456-7890",
+                    MobilePhone: "098-765-4321"
+                }
             }
+        ],
+        PersonInfoShipTo: [
+            {
+                _attributes: {
+                    AddressLine1: "123 main st",
+                    City: "Atlanta",
+                    ZipCode: "12345",
+                    State: "GA"
+                }
+            }
+        ],
+        _attributes: {
+            OrderDate: "2018-12-29",
+            DocumentType: orderAtr.documentType
+        },
+        Extn: [
+            {
+                _attributes: {
+                    ExtnHostOrderReference: orderAtr.orderNumber,
+                    ExtnPONumber: "123"
+                }
+            }
+        ],
+        OrderLines: createOrderLines(orderAtr.lineItems)
+    }
     return order;
 }
 
-
-//{
-//    sku: "1",
-//    qty: "1",
-//    deliveryType: "SHP"
-//}
-function createOrderLines(lineItemsAtr: any) : Array<OrderLinesEntity>  {
+function createOrderLines(lineItemsAtr: any): Array<OrderLinesEntity> {
     var orderLinesList: Array<OrderLinesEntity> = new Array();
     var orderLines: OrderLinesEntity = new OrderLinesEntity();
     orderLines.OrderLine = new Array();
@@ -330,7 +376,7 @@ function createOrderLines(lineItemsAtr: any) : Array<OrderLinesEntity>  {
     orderLine.Item = new Array();
     var item: ItemEntity = new ItemEntity();
     item._attributes = new Attributes15();
-    item._attributes.ItemDesc = "This is some dummy sku" ;
+    item._attributes.ItemDesc = "This is some dummy sku";
     orderLine.Item.push(item);
 
     orderLine.Extn = new Array();
@@ -353,13 +399,13 @@ function createOrderLines(lineItemsAtr: any) : Array<OrderLinesEntity>  {
     };
     extn.HDOnlineProductList = new Array();
     extn.HDOnlineProductList[0] = {
-            HDOnlineProduct: [
-                {
-                    _attributes: {
-                        LevelOfServiceDesc: "some desc of basic"
-                    }
+        HDOnlineProduct: [
+            {
+                _attributes: {
+                    LevelOfServiceDesc: "some desc of basic"
                 }
-            ]
+            }
+        ]
     };
 
     orderLine.Extn.push(extn);

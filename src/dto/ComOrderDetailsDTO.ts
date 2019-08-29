@@ -3,21 +3,26 @@ export class ComOrderDetailsDTO {
     public customerOrderNumber: string;
     public orderedDate: string;
     public shipTo: LocationDTO;
+    public customerInfo: CustomerInfoDTO;
     public lineItems: Array<LineItemDTO>;
+}
+
+export class CustomerInfoDTO {
+    public firstName: string;
+    public middleName: string;
+    public lastName: string;
+    public phoneNumber: string;
+    public mobileNumber: string;
     public email: string;
-    public po: string;
 }
 
 export class LocationDTO {
-    public nameLineOne: string;
-    public nameLineTwo: string;
     public addressLineOne: string;
     public addressLineTwo: string;
     public crossStreet: string;
     public city: string;
     public state: string;
     public zip: string;
-    public phoneNumber: string;
     public timezone: string;
     public type: string;
 }
@@ -32,6 +37,7 @@ export class LineItemDTO {
     public expectedDeliveryDate: string;
     public comStatus: string;
     public levelOfServiceDesc: string;
+    public po: string;
     public tracking: Array<TrackingDetailDTO>;
 }
 

@@ -1,0 +1,63 @@
+{
+  order(id: "${customerOrderNumber}") {
+    OrderList {
+      Order {
+        DocumentType
+        Extn {
+          HDSplOrdList {
+            HDSplOrd {
+              SplOrdExpectedArrivalDate
+            }
+          }
+          ExtnPONumber
+          ExtnHostOrderReference
+        }
+        PersonInfoBillTo {
+          EMailID
+          MobilePhone
+          DayPhone
+          FirstName
+          LastName
+        }
+        PersonInfoShipTo {
+          AddressLine1
+          AddressLine2
+          City
+          ZipCode
+          State
+        }
+        OrderDate
+        OrderLines {
+          OrderLine {
+            OrderStatuses {
+              OrderStatus {
+                StatusDate
+                StatusDescription
+              }
+            }
+            OrderedQty
+            Extn {
+              ExtnOMSID
+              ExtnSKUCode
+            }
+            ShipNode
+            Item {
+              ItemDesc
+              UnitCost
+            }
+            Extn {
+              HDTrackingInfoList {
+                HDTrackingInfo {
+                  TrackingNumber
+                  SCAC
+                  LevelOfService
+                  TrackingType
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
