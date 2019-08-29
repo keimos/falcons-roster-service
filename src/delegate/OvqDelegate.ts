@@ -6,7 +6,7 @@ export class OvqDelegate {
     private body: string;
 
     constructor() {
-        this.body = readFileSync('src/resources/OVQOrderDetailsTemplate.txt').toString();
+        this.body = readFileSync('src/config/OVQOrderDetailsTemplate.txt').toString();
     }
     public async getOrderDetails(customerOrderNumber: string){
         const uri = process.env.OVQ_URL
