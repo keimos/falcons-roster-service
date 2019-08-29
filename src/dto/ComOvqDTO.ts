@@ -4,12 +4,12 @@ export class OvqOrderListDTO {
 }
 
 export class OvqOrderDTO {
-    public OvqOrderExtn: OvqOrderExtnDTO;
+    public Extn: OvqOrderExtnDTO;
     public OrderDate: string;
     public OrderLines: OvqOrderLinesDTO;
     public DocumentType: string;
-    public OvqPersonInfoBillTo: OvqPersonInfoBillToDTO;
-    public OvqPersonInfoShipTo: OvqPersonInfoShipToDTO; 
+    public PersonInfoBillTo: OvqPersonInfoBillToDTO;
+    public PersonInfoShipTo: OvqPersonInfoShipToDTO; 
 }
 
 export class OvqOrderLinesDTO {
@@ -17,6 +17,7 @@ export class OvqOrderLinesDTO {
 }
 
 export class OvqOrderLineDTO {
+    public DeliveryMethod: string;
     public Extn: OvqOrderLineExtnDTO;
     public ShipNode: string;
     public Item: OvqItemDTO;
@@ -60,6 +61,7 @@ export class OvqHDOnlineProductListDTO {
 }
 export class OvqHDOnlineProductDTO {
     public CatalogOMSID: string;
+    public LevelOfServiceDesc: string
 }
 
 export class OvqItemDTO {
@@ -74,10 +76,15 @@ export class OvqOrderExtnDTO{
 
 export class OvqPersonInfoBillToDTO {
     public EMailID: string;
+    public MobilePhone: string
+    public DayPhone: string;
+    public FirstName: string;
+    public LastName: string;
 }
 
 export class OvqPersonInfoShipToDTO {
     public AddressLine1: string;
+    public AddressLine2: string;
     public City: string;
     public ZipCode: string;
     public State: string;
