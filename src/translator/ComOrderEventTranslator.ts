@@ -3,6 +3,7 @@ import { ComOrderDetailsDTO, LocationDTO, LineItemDTO, TrackingDetailDTO, Custom
 
 import { get } from "lodash";
 import { OvqOrderListDTO, OvqOrderDTO } from "../dto/ComOvqDTO";
+import { json } from "body-parser";
 
 export class ComOrderEventTranslator {
     
@@ -177,7 +178,6 @@ export class ComOrderEventTranslator {
         for (const order of orders.Order) {
             if (order.DocumentType === '0005') {
                 for (const orderLine of order.OrderLines.OrderLine) {
-    
                     // we are only intrested in orders that are of type SHP, these are STH home deliveries.
                     if (orderLine.DeliveryMethod == "SHP") {
     
