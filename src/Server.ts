@@ -9,7 +9,6 @@ import { KafkaService } from './common/KafkaService';
 import log from './logging/Log';
 // import { PubSubService } from './common/PubSubService';
 // import { MessageQueueService } from './common/MessageQueueService';
-// import { MongoService } from './common/MongoService';
 import { ComOrderEventsService } from './service/ComOrderEventsService';
 import { MongoRepo } from './repo/MongoRepo';
 import { COMOrderDetailController } from './controller/ComOrderDetailController';

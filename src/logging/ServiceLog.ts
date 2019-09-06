@@ -9,6 +9,7 @@ import {BAD_REQUEST, CREATED, INTERNAL_SERVER_ERROR} from 'http-status';
 import { ErrorCode } from '../utils/error-codes-enum';
 import { SystemError } from '../error/SystemError';
 import { InvalidRequestError } from '../error/InvalidRequestError';
+import { BusinessError } from '../error/BusinessError';
 
 
 class ServiceLog {
@@ -51,7 +52,7 @@ class ServiceLog {
             httpContext.set('TransactionId', uuid.v1());
 
             // Log the request
-            log.info(`INCOMMING REQUEST: ${JSON.stringify(req.body)}`);
+            log.info(`INCOMING REQUEST: ${JSON.stringify(req.body)}`);
 
             // Set the transaction ID in the response
             res.set('TransactionId', httpContext.get('TransactionId'));
@@ -84,8 +85,16 @@ class ServiceLog {
             log.error(err);
             if (err instanceof InvalidRequestError) {
                 code = BAD_REQUEST;
+            } else if (err instanceof BusinessError) {
+                switch (err.code) {
+                    case ErrorCode.NOT_FOUND:
+                        code = 404;
+                        break;
+                    default:
+                        code = 409;
+                }
             } else if (err instanceof SystemError) {
-                if (err.code = ErrorCode.VALIDATION_ERROR) {
+                if (err.code === ErrorCode.INVALID_REQUEST) {
                     code = BAD_REQUEST
                 } else {
                     code = INTERNAL_SERVER_ERROR;

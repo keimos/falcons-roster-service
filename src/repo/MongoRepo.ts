@@ -79,14 +79,10 @@ export class MongoRepo {
 
     return new Promise<any>((resolve, reject) => {
       const collection: Collection = this.dataBase.collection(table);
-      const cursor: Cursor = collection.find(query, { sort: sort });
-
-
-      const myInstance = this;
-      cursor.toArray(async function (err: Error, results: Array<any>) {
-        resolve(results);
+      collection.findOne(query, { sort: sort }, async function(err, result) {
+        if (err) throw err;
+        resolve(result);
       });
-
     });
   }
 

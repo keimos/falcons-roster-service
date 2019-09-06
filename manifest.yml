@@ -19,7 +19,7 @@ applications:
 
 - name: Q2-COMOrderDetailService
   command: NODE_ENV=QA profile=Q2 node ./dist/Server.js --use_strict
-  memory: 128M
+  memory: 528M
   instances: 2
   disk_quota: 1G
   route: Q2-COMOrderDetailService
