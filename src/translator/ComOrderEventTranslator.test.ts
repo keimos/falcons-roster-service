@@ -10,7 +10,7 @@ import { SystemError } from '../error/SystemError'
 import { ComEventDTO, OrderEntity, OrderLineEntity, OrderLinesEntity, Attributes8, ItemEntity, Attributes15, ExtnEntity1, Attributes9, OrderStatusesEntity, OrderStatusEntity, Attributes33, DetailsEntity, Attributes34, OrderListEntity } from '../dto/ComEventDTO';
 import { ComOrderDetailsDTO } from '../dto/ComOrderDetailsDTO';
 import { ComOrderEventTranslator } from './ComOrderEventTranslator';
-import { OvqOrderListDTO, OvqOrderDTO, OvqOrderLinesDTO, OvqOrderLineDTO, OvqOrderLineExtnDTO, OvqItemDTO, OrderStatus, OvqPersonInfoBillToDTO, OvqPersonInfoShipToDTO, OvqOrderExtnDTO, OvqHDTrackingInfoListDTO, OvqHDTrackingInfoDTO, HDSplOrd } from '../dto/ComOvqDTO';
+import { OvqOrderListDTO, OvqOrderDTO, OvqOrderLinesDTO, OvqOrderLineDTO, OvqOrderLineExtnDTO, OvqItemDTO, OrderStatus, OvqPersonInfoBillToDTO, OvqPersonInfoShipToDTO, OvqOrderExtnDTO, OvqHDTrackingInfoListDTO, OvqHDTrackingInfoDTO, HDSplOrd, OvqHDOnlineProductListDTO, OvqHDOnlineProductDTO } from '../dto/ComOvqDTO';
 
 const expect = chai.expect;
 
@@ -82,7 +82,7 @@ describe('Class: ComOrderEventTranslator', () => {
                         lineItems: [
                             {
                                 sku: "999",
-                                qty: 1,
+                                qty: "1",
                                 deliveryType: "SHP",
                                 comStatus: "shipped"
                             }
@@ -94,7 +94,7 @@ describe('Class: ComOrderEventTranslator', () => {
                         lineItems: [
                             {
                                 sku: "999",
-                                qty: 1,
+                                qty: "1",
                                 deliveryType: "SHP",
                                 trackingNumber: "123-456",
                                 trackingType: "LastMile",
@@ -137,7 +137,7 @@ describe('Class: ComOrderEventTranslator', () => {
                 expect(lineItem.sku).to.be.eq('999');
                 expect(lineItem.skuDescription).to.be.eq('This is some dummy sku');
                 expect(lineItem.omsID).to.be.eq('123');
-                expect(lineItem.quantity).to.be.eq(1);
+                expect(lineItem.quantity).to.be.eq("1");
                 expect(lineItem.expectedDeliveryDate).to.be.eq('2019-01-01');
                 expect(lineItem.comStatus).to.be.eq('shipped');
                 expect(lineItem.tracking[0].levelOfService).to.be.eq('basic');
@@ -182,7 +182,7 @@ describe('Class: ComOrderEventTranslator', () => {
                         lineItems: [
                             {
                                 sku: "999",
-                                qty: 5.00,
+                                qty: "5.00",
                                 deliveryType: "SHP",
                                 comStatus: "shipped"
                             }
@@ -196,7 +196,7 @@ describe('Class: ComOrderEventTranslator', () => {
                         lineItems: [
                             {
                                 sku: "999",
-                                qty: 5.00,
+                                qty: "5.00",
                                 deliveryType: "SHP",
                                 trackingNumber: "123-456",
                                 trackingType: "LastMile",
@@ -223,7 +223,7 @@ describe('Class: ComOrderEventTranslator', () => {
             it('should translate line items', () => {
                 expect(response.lineItems.length).to.eq(1)
                 expect(response.lineItems[0].skuDescription).to.eq(itemDescription)
-                expect(response.lineItems[0].quantity).to.eq(Number.parseInt("5"))
+                expect(response.lineItems[0].quantity).to.eq("5.00")
                 expect(response.lineItems[0].tracking[0].scac).to.eq(scac)
                 expect(response.lineItems[0].tracking[0].trackingNumber).to.eq(trackingNumber)
             });
@@ -281,7 +281,12 @@ function createOVQOrder(orderAtr: any) {
     const trackingList = new OvqHDTrackingInfoListDTO();
     trackingList.HDTrackingInfo = [trackingInfo]
     extn.HDTrackingInfoList = trackingList
-
+    const productList = new OvqHDOnlineProductListDTO();
+    let productDTO = new OvqHDOnlineProductDTO();
+    productDTO.LevelOfServiceDesc = 'Basic'
+    productList.HDOnlineProduct = [productDTO]
+    extn.HDOnlineProductList = productList
+    
 
     item.ItemDesc = 'some desc';
     item.UnitCost = "152.00";
@@ -389,7 +394,7 @@ function createOrderLines(lineItemsAtr: any): Array<OrderLinesEntity> {
         HDTrackingInfo: [
             {
                 _attributes: {
-                    TrackingNumber: lineItemsAtr[0].trackingNumber,
+                    TrackingNumber: lineItemsAtr[0].trackingNumber, 
                     TrackingType: lineItemsAtr[0].trackingType,
                     SCAC: "ACME",
                     LevelOfService: "basic"

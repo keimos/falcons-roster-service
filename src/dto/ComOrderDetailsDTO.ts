@@ -30,10 +30,10 @@ export class LocationDTO {
 export class LineItemDTO {
     public id: number;
     public lineItemId: string;
-    public sku: number;
+    public sku: string;
     public skuDescription: string;
     public omsID: string;
-    public quantity: number;
+    public quantity: string;
     public expectedDeliveryDate: string;
     public comStatus: string;
     public levelOfServiceDesc: string;

@@ -1,9 +1,7 @@
  import { ComEventDTO } from "../dto/ComEventDTO";
 import { ComOrderDetailsDTO, LocationDTO, LineItemDTO, TrackingDetailDTO, CustomerInfoDTO } from "../dto/ComOrderDetailsDTO";
 
-import { get } from "lodash";
 import { OvqOrderListDTO, OvqOrderDTO } from "../dto/ComOvqDTO";
-import { json } from "body-parser";
 
 export class ComOrderEventTranslator {
     
@@ -51,8 +49,8 @@ export class ComOrderEventTranslator {
                         const lineItem: LineItemDTO = new LineItemDTO();
                         lineItem.skuDescription = orderLine.Item[0]._attributes.ItemDesc;
                         lineItem.omsID = orderLine.Extn[0]._attributes.ExtnOMSID
-                        lineItem.sku = orderLine.Extn[0]._attributes.ExtnSKUCode;
-                        lineItem.quantity = orderLine._attributes.OrderedQty;
+                        lineItem.sku = orderLine.Extn[0]._attributes.ExtnSKUCode.toString();
+                        lineItem.quantity = orderLine._attributes.OrderedQty.toString();
         
                         if (orderLine.OrderStatuses[0].OrderStatus[0].Details[0]._attributes) {
                             lineItem.expectedDeliveryDate = orderLine.OrderStatuses[0].OrderStatus[0].Details[0]._attributes.ExpectedDeliveryDate;
@@ -97,7 +95,7 @@ export class ComOrderEventTranslator {
                         //we need to find the correct line item from orderDetailsDTO (our base order).
                         if (trackingArray.length > 0) {
                             for (const myLine of orderDetailsDTO.lineItems) {
-                                if (myLine.sku === orderLine.Extn[0]._attributes.ExtnSKUCode) {
+                                if (myLine.sku === orderLine.Extn[0]._attributes.ExtnSKUCode.toString()) {
                                     myLine.po = order.Extn[0]._attributes.ExtnPONumber;
                                     myLine.tracking = trackingArray;
                                     containsTracking = true;
@@ -156,8 +154,8 @@ export class ComOrderEventTranslator {
                         const lineItem: LineItemDTO = new LineItemDTO();
                         lineItem.skuDescription = orderLine.Item.ItemDesc;
                         lineItem.omsID = orderLine.Extn.ExtnOMSID
-                        lineItem.sku = Number.parseInt(orderLine.Extn.ExtnSKUCode);
-                        lineItem.quantity = Number.parseInt(orderLine.OrderedQty);
+                        lineItem.sku = orderLine.Extn.ExtnSKUCode;
+                        lineItem.quantity = orderLine.OrderedQty;
         
                                                     
                         try {	
@@ -197,7 +195,7 @@ export class ComOrderEventTranslator {
                         //we need to find the correct line item from orderDetailsDTO (our base order).
                         if (trackingArray.length > 0) {
                             for (const myLine of orderDetailsDTO.lineItems) {
-                                if (myLine.sku === Number.parseInt(orderLine.Extn.ExtnSKUCode)) {
+                                if (myLine.sku === orderLine.Extn.ExtnSKUCode) {
                                     myLine.po = order.Extn.ExtnPONumber;
                                     myLine.tracking = trackingArray;
                                     containsTracking = true;

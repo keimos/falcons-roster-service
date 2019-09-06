@@ -40,6 +40,13 @@
                   "Extn": {
                     "ExtnOMSID": "900000279",
                     "ExtnSKUCode": "1111000279",
+                    "HDOnlineProductList": {
+                      "HDOnlineProduct": [
+                        {
+                          "LevelOfServiceDesc": null
+                        }
+                      ]
+                    },
                     "HDTrackingInfoList": null
                   },
                   "ShipNode": "6777",
@@ -95,6 +102,7 @@
                   "Extn": {
                     "ExtnOMSID": "900000279",
                     "ExtnSKUCode": "1111000279",
+                    "HDOnlineProductList": null,
                     "HDTrackingInfoList": {
                       "HDTrackingInfo": [
                         {
@@ -165,6 +173,7 @@
                   "Extn": {
                     "ExtnOMSID": "900000279",
                     "ExtnSKUCode": "1111000279",
+                    "HDOnlineProductList": null,
                     "HDTrackingInfoList": {
                       "HDTrackingInfo": [
                         {
