@@ -47,6 +47,11 @@
             }
             DeliveryMethod
             Extn {
+              HDOnlineProductList{
+                HDOnlineProduct{
+                  LevelOfServiceDesc
+                }
+              }
               HDTrackingInfoList {
                 HDTrackingInfo {
                   TrackingNumber
