@@ -39,6 +39,7 @@ export class LineItemDTO {
     public levelOfServiceDesc: string;
     public po: string;
     public tracking: Array<TrackingDetailDTO>;
+    public manufacturerName: string;
 }
 
 export class CarrierDTO {
