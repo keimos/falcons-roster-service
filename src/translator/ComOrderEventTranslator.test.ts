@@ -98,7 +98,8 @@ describe('Class: ComOrderEventTranslator', () => {
                                 deliveryType: "SHP",
                                 trackingNumber: "123-456",
                                 trackingType: "LastMile",
-                                comStatus: "shipped"
+                                comStatus: "shipped",
+                                manufacturername: "manufacturername"
                             }
                         ]
                     }
@@ -145,6 +146,7 @@ describe('Class: ComOrderEventTranslator', () => {
                 expect(lineItem.tracking[0].trackingNumber).to.be.eq('123-456');
                 expect(lineItem.tracking[0].trackingType).to.be.eq('LastMile');
                 expect(lineItem.po).to.be.eq('123');
+                expect(lineItem.manufacturerName).to.be.eq('manufacturername');
             });
             it('should contain customerInfo', () => {
                 expect(comOrderDetails[0].customerInfo.firstName).to.be.eq('Homer');
@@ -167,6 +169,7 @@ describe('Class: ComOrderEventTranslator', () => {
         const scac = "USPS";
         const levelOfService = "Basic";
         const trackingNumber = "123-456";
+        const manufacturerName = "manufacturername";
 
 
         before(() => {
@@ -184,7 +187,8 @@ describe('Class: ComOrderEventTranslator', () => {
                                 sku: "999",
                                 qty: "5.00",
                                 deliveryType: "SHP",
-                                comStatus: "shipped"
+                                comStatus: "shipped",
+                                manufacturername: "manufacturername"
                             }
                         ]
                     },
@@ -226,6 +230,7 @@ describe('Class: ComOrderEventTranslator', () => {
                 expect(response.lineItems[0].quantity).to.eq("5.00")
                 expect(response.lineItems[0].tracking[0].scac).to.eq(scac)
                 expect(response.lineItems[0].tracking[0].trackingNumber).to.eq(trackingNumber)
+                expect(response.lineItems[0].manufacturerName).to.eq(manufacturerName)
             });
 
             it('should translate shipTo', () => {
@@ -290,6 +295,7 @@ function createOVQOrder(orderAtr: any) {
 
     item.ItemDesc = 'some desc';
     item.UnitCost = "152.00";
+    item.ManufacturerName = "manufacturername";
     orderStatus.StatusDate = "2019-06-03T03:28:09-04:00"
     orderStatus.StatusDescription = "Scheduled"
 
@@ -382,6 +388,7 @@ function createOrderLines(lineItemsAtr: any): Array<OrderLinesEntity> {
     var item: ItemEntity = new ItemEntity();
     item._attributes = new Attributes15();
     item._attributes.ItemDesc = "This is some dummy sku";
+    item._attributes.ManufacturerName = "manufacturername";
     orderLine.Item.push(item);
 
     orderLine.Extn = new Array();

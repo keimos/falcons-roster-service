@@ -4,7 +4,7 @@ import { ComOrderDetailsDTO, LocationDTO, LineItemDTO, TrackingDetailDTO, Custom
 import { OvqOrderListDTO, OvqOrderDTO } from "../dto/ComOvqDTO";
 
 export class ComOrderEventTranslator {
-    
+
     //this method translates the COM object found in the kafka topic
     public static translate(event: ComEventDTO): Array<ComOrderDetailsDTO> {
 
@@ -32,34 +32,35 @@ export class ComOrderEventTranslator {
                 orderDetailsDTO.customerInfo.middleName = order.PersonInfoBillTo[0]._attributes.MiddleName;
                 orderDetailsDTO.customerInfo.lastName = order.PersonInfoBillTo[0]._attributes.LastName;
 
-        
+
                 const shipTo: LocationDTO = new LocationDTO();
                 shipTo.addressLineOne = order.PersonInfoShipTo[0]._attributes.AddressLine1;
                 shipTo.city = order.PersonInfoShipTo[0]._attributes.City;
                 shipTo.zip = order.PersonInfoShipTo[0]._attributes.ZipCode;
                 shipTo.state = order.PersonInfoShipTo[0]._attributes.State;
-        
+
                 orderDetailsDTO.shipTo = shipTo;
-        
+
                 orderDetailsDTO.lineItems = new Array();
                 for (const orderLine of order.OrderLines[0].OrderLine) {
-        
+
                     // we are only intrested in orders that are of type SHP, these are STH home deliveries.
                     if (orderLine._attributes.DeliveryMethod == "SHP") {
                         const lineItem: LineItemDTO = new LineItemDTO();
                         lineItem.skuDescription = orderLine.Item[0]._attributes.ItemDesc;
-                        lineItem.omsID = orderLine.Extn[0]._attributes.ExtnOMSID
+                        lineItem.manufacturerName = orderLine.Item[0]._attributes.ManufacturerName;
+                        lineItem.omsID = orderLine.Extn[0]._attributes.ExtnOMSID;
                         lineItem.sku = orderLine.Extn[0]._attributes.ExtnSKUCode.toString();
                         lineItem.quantity = orderLine._attributes.OrderedQty.toString();
-        
+
                         if (orderLine.OrderStatuses[0].OrderStatus[0].Details[0]._attributes) {
                             lineItem.expectedDeliveryDate = orderLine.OrderStatuses[0].OrderStatus[0].Details[0]._attributes.ExpectedDeliveryDate;
                         }
                         lineItem.comStatus = orderLine.OrderStatuses[0].OrderStatus[0]._attributes.StatusDescription;
-        
-                        try {	
+
+                        try {
                             lineItem.levelOfServiceDesc = orderLine.Extn[0].HDOnlineProductList[0].HDOnlineProduct[0]._attributes.LevelOfServiceDesc;
-                        } catch (err){}        
+                        } catch (err){}
                         orderDetailsDTO.lineItems.push(lineItem);
                     }
                 }
@@ -69,16 +70,16 @@ export class ComOrderEventTranslator {
         }
 
         /*
-            Next we need to find each 0005 object and enrich our base order object with the tracking details found.  
+            Next we need to find each 0005 object and enrich our base order object with the tracking details found.
             Each 0005 object represents a different PO, so various lines from the sales order could be split across various 0005 objects
         */
         for (const order of event.OrderList[0].Order) {
             if (order._attributes.DocumentType === '0005') {
                 for (const orderLine of order.OrderLines[0].OrderLine) {
-    
+
                     // we are only intrested in orders that are of type SHP, these are STH home deliveries.
                     if (orderLine._attributes.DeliveryMethod == "SHP") {
-    
+
                         var trackingArray = new Array<TrackingDetailDTO>()
                         if (orderLine.Extn[0].HDTrackingInfoList && orderLine.Extn[0].HDTrackingInfoList[0].HDTrackingInfo) {
                             for(const obj of  orderLine.Extn[0].HDTrackingInfoList[0].HDTrackingInfo){
@@ -88,7 +89,7 @@ export class ComOrderEventTranslator {
                                 trackingObj.trackingType = obj._attributes.TrackingType;
                                 trackingObj.levelOfService = obj._attributes.LevelOfService;
                                 trackingArray.push(trackingObj)
-    
+
                             }
                         }
 
@@ -112,7 +113,7 @@ export class ComOrderEventTranslator {
         if (containsTracking) {
             list.push(orderDetailsDTO);
         }
-    
+
         return list;
     }
 
@@ -137,18 +138,18 @@ export class ComOrderEventTranslator {
                 orderDetailsDTO.customerInfo.firstName = order.PersonInfoBillTo.FirstName;
                 orderDetailsDTO.customerInfo.lastName = order.PersonInfoBillTo.LastName;
 
-        
+
                 const shipTo: LocationDTO = new LocationDTO();
                 shipTo.addressLineOne = order.PersonInfoShipTo.AddressLine1;
                 shipTo.city = order.PersonInfoShipTo.City;
                 shipTo.zip = order.PersonInfoShipTo.ZipCode;
                 shipTo.state = order.PersonInfoShipTo.State;
-        
+
                 orderDetailsDTO.shipTo = shipTo;
-        
+
                 orderDetailsDTO.lineItems = new Array();
                 for (const orderLine of order.OrderLines.OrderLine) {
-        
+
                     // we are only intrested in orders that are of type SHP, these are STH home deliveries.
                     if (orderLine.DeliveryMethod == "SHP") {
                         const lineItem: LineItemDTO = new LineItemDTO();
@@ -156,11 +157,11 @@ export class ComOrderEventTranslator {
                         lineItem.omsID = orderLine.Extn.ExtnOMSID
                         lineItem.sku = orderLine.Extn.ExtnSKUCode;
                         lineItem.quantity = orderLine.OrderedQty;
-        
-                                                    
-                        try {	
+                        lineItem.manufacturerName = orderLine.Item.ManufacturerName;
+
+                        try {
                             lineItem.levelOfServiceDesc = orderLine.Extn.HDOnlineProductList.HDOnlineProduct[0].LevelOfServiceDesc;
-                        } catch (err){}        
+                        } catch (err){}
                         orderDetailsDTO.lineItems.push(lineItem);
                     }
                 }
@@ -170,7 +171,7 @@ export class ComOrderEventTranslator {
         }
 
         /*
-            Next we need to find each 0005 object and enrich our base order object with the tracking details found.  
+            Next we need to find each 0005 object and enrich our base order object with the tracking details found.
             Each 0005 object represents a different PO, so various lines from the sales order could be split across various 0005 objects
         */
         for (const order of orders.Order) {
@@ -178,7 +179,7 @@ export class ComOrderEventTranslator {
                 for (const orderLine of order.OrderLines.OrderLine) {
                     // we are only intrested in orders that are of type SHP, these are STH home deliveries.
                     if (orderLine.DeliveryMethod == "SHP") {
-    
+
                         var trackingArray = new Array<TrackingDetailDTO>()
                         if (orderLine.Extn.HDTrackingInfoList && orderLine.Extn.HDTrackingInfoList.HDTrackingInfo) {
                             for(const obj of  orderLine.Extn.HDTrackingInfoList.HDTrackingInfo){
@@ -188,7 +189,7 @@ export class ComOrderEventTranslator {
                                 trackingObj.trackingType = obj.TrackingType;
                                 trackingObj.levelOfService = obj.LevelOfService;
                                 trackingArray.push(trackingObj)
-    
+
                             }
                         }
 
@@ -212,7 +213,7 @@ export class ComOrderEventTranslator {
         if (containsTracking) {
             return orderDetailsDTO;
         }
-    
+
         return null;
     }
 }

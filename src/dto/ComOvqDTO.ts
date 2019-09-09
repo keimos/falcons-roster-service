@@ -67,6 +67,7 @@ export class OvqHDOnlineProductDTO {
 export class OvqItemDTO {
     public ItemDesc: string;
     public UnitCost: string;
+    public ManufacturerName: string;
 
 }
 export class OvqOrderExtnDTO{
