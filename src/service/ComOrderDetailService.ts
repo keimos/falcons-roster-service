@@ -4,20 +4,19 @@ import log from '../logging/Log';
 import { OvqDelegate } from "../delegate/OvqDelegate";
 import { ComOrderEventTranslator } from "../translator/ComOrderEventTranslator";
 import { OvqOrderListDTO } from "../dto/ComOvqDTO";
-import { ComOrderDetailsDTO } from "../dto/ComOrderDetailsDTO";
+import {ComOrderDetailsDTO, LineItemDTO, TrackingUrlDTO} from "../dto/ComOrderDetailsDTO";
 import { SystemError } from "../error/SystemError";
 import { BusinessError } from "../error/BusinessError";
 import { ErrorCode } from "../utils/error-codes-enum";
 import httpstatus = require('http-status');
+import NodeCache = require("node-cache");
 
 export class ComOrderDetailService {
-    constructor(private mongoRepo: MongoRepo, private ovqDelegate: OvqDelegate, private translator: ComOrderEventTranslator) {}
+    constructor(private mongoRepo: MongoRepo, private cache: NodeCache, private ovqDelegate: OvqDelegate, private translator: ComOrderEventTranslator) {}
 
     public async getOrderDetailByCustomerOrderNumberAndTrackingNumber(customerOrderNum: string, trackingNumber: string) {
-        log.info(`customerOrderNumber: ${customerOrderNum} & trackingNumber: ${trackingNumber}`);
-        
-        let order: ComOrderDetailsDTO = await this.getOrderDetailFromMongoCache(customerOrderNum, trackingNumber);
-        log.debug(order);
+        let order: ComOrderDetailsDTO = await this.getOrderDetailFromDB(customerOrderNum, trackingNumber);
+
         if (order === null && customerOrderNum) {
             try {
                 order = await this.getOrderDetailFromOVQ(customerOrderNum, trackingNumber);
@@ -28,10 +27,35 @@ export class ComOrderDetailService {
                 throw err
             }
         }
+        // depending on scac, call a service to get the trackingurl from mongoDB - scac_tracking_url
+        if(order && order.lineItems != undefined) {
+            let items = order.lineItems;
+            for (const lineItem of items) {
+                if (!lineItem.tracking) {
+                    continue;
+                }
+                for (const tracking of lineItem.tracking) {
+                    if (tracking.scac) {
+                        let trackerUrlTemplate = new TrackingUrlDTO();
+                        try{
+                            trackerUrlTemplate = await this.getTrackerUrlsByScac(tracking.scac);
+                        } catch(err) {
+                            if(err instanceof SystemError) {
+                                throw new BusinessError(ErrorCode.NOT_FOUND, 'Tracking Urls  Not Found', `SCAC Tracking URL for  ${tracking.scac} not found`)
+                            }
+                            throw err
+                        }
+                        if(trackerUrlTemplate) {
+                            tracking.trackingUrls = trackerUrlTemplate
+                        }
+                    }
+                }
+            }
+        }
         return order;
     }
 
-    public async getOrderDetailFromMongoCache(customerOrderNum: string, trackingNumber: string) {
+    public async getOrderDetailFromDB(customerOrderNum: string, trackingNumber: string) {
         let query;
         if (customerOrderNum && trackingNumber) {
             query = { "customerOrderNumber": customerOrderNum, "lineItems.tracking.trackingNumber": trackingNumber };
@@ -40,7 +64,7 @@ export class ComOrderDetailService {
         } else if (customerOrderNum) {
             query = { "customerOrderNumber": customerOrderNum };
         }
-        let obj: ComOrderDetailsDTO = await this.mongoRepo.readDocuments(query, [['lastUpdatedTS', -1]], 'ComOrderDetails');
+        let obj: ComOrderDetailsDTO = await this.mongoRepo.readDocuments('ComOrderDetails', query, [['lastUpdatedTS', -1]]);
         return obj
     }
 
@@ -60,5 +84,16 @@ export class ComOrderDetailService {
         }
         return obj;
     }
-    
+
+    public async getTrackerUrlsByScac(scac: string) {
+        let trackingUrls: TrackingUrlDTO = this.cache.get(scac)
+        if(!trackingUrls){
+            let query = {"scac": scac};
+            trackingUrls = await this.mongoRepo.readDocuments('scacTrackingUrls', query, [['createTS', -1]], {primaryUrl: 1, trackingUrl: 1, _id: 0});
+            if(trackingUrls){
+                this.cache.set(scac, trackingUrls, 43200)
+            }
+        }
+        return trackingUrls
+    }
 }

@@ -15,6 +15,7 @@ import { COMOrderDetailController } from './controller/ComOrderDetailController'
 import { ComOrderDetailService } from './service/ComOrderDetailService';
 import { OvqDelegate } from './delegate/OvqDelegate';
 import { ComOrderEventTranslator } from './translator/ComOrderEventTranslator';
+import NodeCache = require('node-cache');
 
 // if (process.env.VCAP_APPLICATION) {
 //   const nodeName: any = process.env.VCAP_APPLICATION;
@@ -34,7 +35,7 @@ import { ComOrderEventTranslator } from './translator/ComOrderEventTranslator';
 const kafkaFactory: KafkaFactory = new KafkaFactory();
 const kafka: KafkaService = new KafkaService(kafkaFactory, process.env.KafkaCluster);
 const comOrderEventsService: ComOrderEventsService = new ComOrderEventsService(kafka);
-const comOrderDetailService: ComOrderDetailService = new ComOrderDetailService(new MongoRepo(), new OvqDelegate(), new ComOrderEventTranslator())
+const comOrderDetailService: ComOrderDetailService = new ComOrderDetailService(new MongoRepo(), new NodeCache(), new OvqDelegate(), new ComOrderEventTranslator())
 const comOrderDetailController: COMOrderDetailController = new COMOrderDetailController(comOrderDetailService);
 
 const topicName: string = process.env.KafkaTopic;

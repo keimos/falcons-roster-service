@@ -32,7 +32,7 @@ describe('GET /api/v1/orders', ()=>{
         let responseStatusCode: number;
         const expectedObj = [{customerOrderNumber: '123'}];
         before((done) =>{
-            comOrderDetailService = new ComOrderDetailService(null, null, null); 
+            comOrderDetailService = new ComOrderDetailService(null, null, null, null); 
 
             //Stub
             getOrderDetailByCustomerOrderNumberAndTrackingNumber = stub(comOrderDetailService, 'getOrderDetailByCustomerOrderNumberAndTrackingNumber');
@@ -61,7 +61,7 @@ describe('GET /api/v1/orders', ()=>{
         let responseStatusCode: number;
         const expectedObj = [{trackingNumber: '9Z34HER'}];
         before((done) =>{
-            comOrderDetailService = new ComOrderDetailService(null, null, null); 
+            comOrderDetailService = new ComOrderDetailService(null, null, null, null); 
 
             //Stub
             getOrderDetailByCustomerOrderNumberAndTrackingNumber = stub(comOrderDetailService, 'getOrderDetailByCustomerOrderNumberAndTrackingNumber');
@@ -90,7 +90,7 @@ describe('GET /api/v1/orders', ()=>{
         let responseStatusCode: number;
         const expectedObj = [{customerOrderNumber: '123', trackingNumber: '9Z34HER'}];
         before((done) =>{
-            comOrderDetailService = new ComOrderDetailService(null, null, null); 
+            comOrderDetailService = new ComOrderDetailService(null, null, null, null); 
 
             //Stub
             getOrderDetailByCustomerOrderNumberAndTrackingNumber = stub(comOrderDetailService, 'getOrderDetailByCustomerOrderNumberAndTrackingNumber');

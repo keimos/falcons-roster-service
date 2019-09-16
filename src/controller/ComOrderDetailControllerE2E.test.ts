@@ -13,6 +13,7 @@ import { OvqDelegate } from "../delegate/OvqDelegate";
 import { ComOrderEventTranslator } from "../translator/ComOrderEventTranslator";
 import { response } from "express";
 import { SystemError } from "../error/SystemError";
+import NodeCache = require("node-cache");
 
 // Dependencies
 let app: App;
@@ -46,7 +47,7 @@ describe('GET /api/v1/orders', () => {
 
                 ovqDelegate = new OvqDelegate();
                 comOrderEventTranslator = new ComOrderEventTranslator();
-                comOrderDetailService = new ComOrderDetailService(mongoRepo, ovqDelegate, comOrderEventTranslator);
+                comOrderDetailService = new ComOrderDetailService(mongoRepo, new NodeCache(), ovqDelegate, comOrderEventTranslator);
                 comOrderDetailController = new COMOrderDetailController(comOrderDetailService);
                 app = new App(comOrderDetailController);
                 const uri = `/api/v1/orders?customerOrderNumber=${customerOrderNumber}&trackingNumber=9Z34HER`;
@@ -82,11 +83,12 @@ describe('GET /api/v1/orders', () => {
                 mongoResponse = '{"lastUpdatedTS":"2019-09-04T19:48:49.677Z","customerOrderNumber":"W11919755","orderedDate":"2019-09-02T23:27:00-04:00","customerInfo":{"email":"test@homedepot.com","phoneNumber":"5555555546","mobileNumber":"5555555546","firstName":"Satheskumar","middleName":"","lastName":"Kulandaisamy"},"shipTo":{"addressLineOne":"1151 NW COPANS RD","city":"POMPANO BEACH","zip":"30189","state":"FL"},"lineItems":[{"skuDescription":"MONTICELLO D","omsID":"202988041","sku":"1000062324","quantity":"5.00","expectedDeliveryDate":"2019-09-03T10:50:34-04:00","comStatus":"Included In Shipment","levelOfServiceDesc":null,"po":"01633384","tracking":[{"scac":"UPSC","trackingNumber":"50000005000018","trackingType":"LastMile","levelOfService":"Basic"},{"scac":"UPSC","trackingNumber":null,"trackingType":"LineHaul","levelOfService":null}]}]}'
                 mongoRepo = new MongoRepo();
                 readDocumentsStub = stub(mongoRepo, 'readDocuments');
-                readDocumentsStub.resolves(JSON.parse(mongoResponse));
-                
+                readDocumentsStub.onFirstCall().resolves(JSON.parse(mongoResponse));
+
+
                 ovqDelegate = new OvqDelegate();
                 comOrderEventTranslator = new ComOrderEventTranslator();
-                comOrderDetailService = new ComOrderDetailService(mongoRepo, ovqDelegate, comOrderEventTranslator);
+                comOrderDetailService = new ComOrderDetailService(mongoRepo, new NodeCache(),  ovqDelegate, comOrderEventTranslator);
                 comOrderDetailController = new COMOrderDetailController(comOrderDetailService);
                 app = new App(comOrderDetailController);
                 const uri = `/api/v1/orders?customerOrderNumber=${customerOrderNumber}&trackingNumber=9Z34HER`;
@@ -132,7 +134,7 @@ describe('GET /api/v1/orders', () => {
                 
                 ovqDelegate = new OvqDelegate();
                 comOrderEventTranslator = new ComOrderEventTranslator();
-                comOrderDetailService = new ComOrderDetailService(mongoRepo, ovqDelegate, comOrderEventTranslator);
+                comOrderDetailService = new ComOrderDetailService(mongoRepo, new NodeCache(), ovqDelegate, comOrderEventTranslator);
                 comOrderDetailController = new COMOrderDetailController(comOrderDetailService);
                 app = new App(comOrderDetailController);
                 const uri = `/api/v1/orders?customerOrderNumber=${customerOrderNumber}&trackingNumber=${trackingNumber}`;
@@ -167,7 +169,7 @@ describe('GET /api/v1/orders', () => {
             mongoRepo = new MongoRepo();
 
             comOrderEventTranslator = new ComOrderEventTranslator();
-            comOrderDetailService = new ComOrderDetailService(mongoRepo, ovqDelegate, comOrderEventTranslator);
+            comOrderDetailService = new ComOrderDetailService(mongoRepo, new NodeCache(), ovqDelegate, comOrderEventTranslator);
             comOrderDetailController = new COMOrderDetailController(comOrderDetailService);
             app = new App(comOrderDetailController);
             const uri = `/api/v1/orders`;
