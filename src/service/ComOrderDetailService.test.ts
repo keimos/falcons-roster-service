@@ -7,10 +7,11 @@ import { ComOrderDetailService } from './ComOrderDetailService';
 import { MongoRepo } from '../repo/MongoRepo';
 import { OvqDelegate } from '../delegate/OvqDelegate';
 import { ComOrderEventTranslator } from '../translator/ComOrderEventTranslator';
-import { ComOrderDetailsDTO, LineItemDTO, TrackingDetailDTO } from '../dto/ComOrderDetailsDTO';
+import {ComOrderDetailsDTO, LineItemDTO, TrackingDetailDTO, TrackingUrlDTO} from '../dto/ComOrderDetailsDTO';
 import { SystemError } from '../error/SystemError';
 import { BusinessError } from '../error/BusinessError';
 import { ErrorCode } from '../utils/error-codes-enum';
+import NodeCache = require('node-cache');
 
 
 const expect = chai.expect;
@@ -21,12 +22,64 @@ describe('Class: ComOrderDetailService', () => {
         describe('Given a customerOrderNumber and Tracking Number, when the function is invoked, then it', () => {
             let readDocumentsStub: SinonStub;
             let orderDetail: any;
-            const expectedDbObj = {customerOrderNumber: '123', trackingNumber: '9Z34HER'};
+            let order: ComOrderDetailsDTO;
+            const cachedOrder =
+                {
+                    customerOrderNumber: '123',
+                    trackingNumber: '9Z34HER',
+                    lineItems: [
+                        {
+                            tracking: [
+                                {
+                                    trackingNumber: '127FRE',
+                                    scac: 'ABC'
+                                },
+                                {
+                                    trackingNumber: '117FRE',
+                                    scac: 'DEF'
+                                },
+
+                            ]
+                        }
+                    ]
+                };
+            const result =
+                {
+                    customerOrderNumber: '123',
+                    trackingNumber: '9Z34HER',
+                    lineItems: [
+                        {
+                            tracking: [
+                                {
+                                    trackingNumber: '127FRE',
+                                    scac: 'ABC',
+                                    trackingUrls: {
+                                        primaryUrl: 'http://something.com/abc',
+                                        trackingUrl: 'http://something.com/abc'
+                                    }
+                                },
+                                {
+                                    trackingNumber: '117FRE',
+                                    scac: 'DEF',
+                                    trackingUrls: {
+                                        primaryUrl: 'http://something.com/def',
+                                        trackingUrl: 'http://something.com/def'
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                };
+            const trackingUrl1 =   { primaryUrl: 'http://something.com/abc', trackingUrl: 'http://something.com/abc'};
+            const trackingUrl2 =   { primaryUrl: 'http://something.com/def', trackingUrl: 'http://something.com/def'};
             before(async () => {
                 const mongoRepo: MongoRepo = new MongoRepo();
                 readDocumentsStub = stub(mongoRepo, 'readDocuments')
-                readDocumentsStub.resolves(expectedDbObj);
-                const comOrderDetailService: ComOrderDetailService = new ComOrderDetailService(mongoRepo, new OvqDelegate(), new ComOrderEventTranslator());
+                readDocumentsStub.onCall(0).resolves(cachedOrder);
+                readDocumentsStub.onCall(1).resolves(trackingUrl1);
+                readDocumentsStub.onCall(2).resolves(trackingUrl2);
+
+                const comOrderDetailService: ComOrderDetailService = new ComOrderDetailService(mongoRepo, new NodeCache(), new OvqDelegate(), new ComOrderEventTranslator());
 
                 orderDetail = await comOrderDetailService.getOrderDetailByCustomerOrderNumberAndTrackingNumber('123', '9Z34HER');
             });
@@ -34,13 +87,18 @@ describe('Class: ComOrderDetailService', () => {
                 readDocumentsStub.restore();
             });
             it('should call mongo cache', () => {
-                expect(readDocumentsStub.calledOnce).to.be.true;
+                expect(readDocumentsStub.calledThrice).to.be.true;
             });
             it('should query with both customerOrderNumber and trackingNumber', () => {
-                expect(readDocumentsStub.getCall(0).args[0]).to.be.deep.eq({"customerOrderNumber": '123', "lineItems.tracking.trackingNumber": '9Z34HER'});
+                expect(readDocumentsStub.getCall(0).args[1]).to.be.deep.eq({"customerOrderNumber": '123', "lineItems.tracking.trackingNumber": '9Z34HER'});
             });
-            it('should return object from mongo', () => {
-                expect(orderDetail).to.be.eq(expectedDbObj)
+            it('should return updated object with tracking URLs', () => {
+                expect(orderDetail).excluding('trackingUrls').to.be.deep.eq(cachedOrder)
+                expect(orderDetail).to.be.deep.equal(result)
+                expect(orderDetail.lineItems[0].tracking[0].trackingUrls.primaryUrl).to.be.equal('http://something.com/abc')
+                expect(orderDetail.lineItems[0].tracking[0].trackingUrls.trackingUrl).to.be.equal('http://something.com/abc')
+                expect(orderDetail.lineItems[0].tracking[1].trackingUrls.primaryUrl).to.be.equal('http://something.com/def')
+                expect(orderDetail.lineItems[0].tracking[1].trackingUrls.trackingUrl).to.be.equal('http://something.com/def')
             });
         });
         describe('Given a customerOrderNumber and Tracking Number, and Mongo does not have the order details, when the function is invoked, then it', () => {
@@ -57,6 +115,7 @@ describe('Class: ComOrderDetailService', () => {
                 translatorStub = stub(translator, 'translate')
                 readDocumentsStub = stub(mongoRepo, 'readDocuments')
                 ovqStub = stub(ovqDelegate, 'getOrderDetails')
+
                 readDocumentsStub.resolves(null);
                 order.lineItems = new Array();
                 order.lineItems[0] = new LineItemDTO();
@@ -64,7 +123,7 @@ describe('Class: ComOrderDetailService', () => {
                 order.lineItems[0].tracking[0] = new TrackingDetailDTO();
                 order.lineItems[0].tracking[0].trackingNumber = '9Z34HER';
                 translatorStub.returns(order);
-                const comOrderDetailService: ComOrderDetailService = new ComOrderDetailService(mongoRepo, ovqDelegate, translator);
+                const comOrderDetailService: ComOrderDetailService = new ComOrderDetailService(mongoRepo, new NodeCache(), ovqDelegate, translator);
 
                 orderDetail = await comOrderDetailService.getOrderDetailByCustomerOrderNumberAndTrackingNumber('123', '9Z34HER');
             });
@@ -75,7 +134,7 @@ describe('Class: ComOrderDetailService', () => {
                 expect(readDocumentsStub.calledOnce).to.be.true;
             });
             it('should query with both customerOrderNumber and trackingNumber', () => {
-                expect(readDocumentsStub.getCall(0).args[0]).to.be.deep.eq({"customerOrderNumber": '123', "lineItems.tracking.trackingNumber": '9Z34HER'});
+                expect(readDocumentsStub.getCall(0).args[1]).to.be.deep.eq({"customerOrderNumber": '123', "lineItems.tracking.trackingNumber": '9Z34HER'});
             });
             it('should call OVQ because the details are not in Mongo', () => {
                 expect(ovqStub.calledOnce).to.be.true;
@@ -102,7 +161,7 @@ describe('Class: ComOrderDetailService', () => {
                 ovqStub = stub(ovqDelegate, 'getOrderDetails')
                 readDocumentsStub.resolves(null);
                 ovqStub.throws(new SystemError(ErrorCode.NOT_FOUND, 'Not Found Error', `Can not find customer order ${customerOrderNumber} in OVQ`))
-                comOrderDetailService = new ComOrderDetailService(mongoRepo, ovqDelegate, translator);
+                comOrderDetailService = new ComOrderDetailService(mongoRepo, new NodeCache(), ovqDelegate, translator);
                 orderDetail = await comOrderDetailService.getOrderDetailByCustomerOrderNumberAndTrackingNumber(customerOrderNumber, trackingNumber).catch((err) => {});
             });
             after(() => {
@@ -112,7 +171,7 @@ describe('Class: ComOrderDetailService', () => {
                 expect(readDocumentsStub.calledOnce).to.be.true;
             });
             it('should query with both customerOrderNumber and trackingNumber', async () => {
-                expect(readDocumentsStub.getCall(0).args[0]).to.be.deep.eq({"customerOrderNumber": customerOrderNumber, "lineItems.tracking.trackingNumber": trackingNumber});
+                expect(readDocumentsStub.getCall(0).args[1]).to.be.deep.eq({"customerOrderNumber": customerOrderNumber, "lineItems.tracking.trackingNumber": trackingNumber});
             });
             it('should call OVQ because the details are not in Mongo', async () => {
                 expect(ovqStub.calledOnce).to.be.true;
@@ -126,7 +185,7 @@ describe('Class: ComOrderDetailService', () => {
             });
         });
     });
-    describe('Function: getOrderDetailFromMongoCache', () => {
+    describe('Function: getOrderDetailFromDB', () => {
         let readDocumentsStub: SinonStub;
         let orderDetail: any;
         let comOrderDetailService: ComOrderDetailService;
@@ -138,9 +197,9 @@ describe('Class: ComOrderDetailService', () => {
                 const mongoRepo: MongoRepo = new MongoRepo();
                 readDocumentsStub = stub(mongoRepo, 'readDocuments')
     
-                comOrderDetailService = new ComOrderDetailService(mongoRepo, new OvqDelegate(), new ComOrderEventTranslator());
+                comOrderDetailService = new ComOrderDetailService(mongoRepo, new NodeCache(),  new OvqDelegate(), new ComOrderEventTranslator());
                 readDocumentsStub.resolves(expectedDbObj);
-                orderDetail = await (comOrderDetailService as any).getOrderDetailFromMongoCache('123', '9Z34HER');
+                orderDetail = await (comOrderDetailService as any).getOrderDetailFromDB('123', '9Z34HER');
             })
             
             after(() => {
@@ -151,7 +210,7 @@ describe('Class: ComOrderDetailService', () => {
                 expect(readDocumentsStub.calledOnce).to.be.true;
             });
             it('should query with both customerOrderNumber and trackingNumber', () => {
-                expect(readDocumentsStub.getCall(0).args[0]).to.be.deep.eq({"customerOrderNumber": '123', "lineItems.tracking.trackingNumber": '9Z34HER'});
+                expect(readDocumentsStub.getCall(0).args[1]).to.be.deep.eq({"customerOrderNumber": '123', "lineItems.tracking.trackingNumber": '9Z34HER'});
             });
             it('should return object from mongo', () => {
                 expect(orderDetail).to.be.eq(expectedDbObj)
@@ -164,9 +223,9 @@ describe('Class: ComOrderDetailService', () => {
                 const mongoRepo: MongoRepo = new MongoRepo();
                 readDocumentsStub = stub(mongoRepo, 'readDocuments')
     
-                comOrderDetailService = new ComOrderDetailService(mongoRepo, new OvqDelegate(), new ComOrderEventTranslator());
+                comOrderDetailService = new ComOrderDetailService(mongoRepo, new NodeCache(),  new OvqDelegate(), new ComOrderEventTranslator());
                 readDocumentsStub.resolves(expectedDbObj);
-                orderDetail = await (comOrderDetailService as any).getOrderDetailFromMongoCache('123', null);
+                orderDetail = await (comOrderDetailService as any).getOrderDetailFromDB('123', null);
             })
 
             after(() => {
@@ -177,7 +236,7 @@ describe('Class: ComOrderDetailService', () => {
                 expect(readDocumentsStub.calledOnce).to.be.true;
             });
             it('should query with only customerOrderNumber ', () => {
-                expect(readDocumentsStub.getCall(0).args[0]).to.be.deep.eq({"customerOrderNumber": '123'});
+                expect(readDocumentsStub.getCall(0).args[1]).to.be.deep.eq({"customerOrderNumber": '123'});
             });
             it('should return object from mongo', () => {
                 expect(orderDetail).to.be.eq(expectedDbObj)
@@ -191,9 +250,9 @@ describe('Class: ComOrderDetailService', () => {
                 const mongoRepo: MongoRepo = new MongoRepo();
                 readDocumentsStub = stub(mongoRepo, 'readDocuments')
     
-                comOrderDetailService = new ComOrderDetailService(mongoRepo, new OvqDelegate(), new ComOrderEventTranslator());
+                comOrderDetailService = new ComOrderDetailService(mongoRepo, new NodeCache(), new OvqDelegate(), new ComOrderEventTranslator());
                 readDocumentsStub.resolves(expectedDbObj);
-                orderDetail = await (comOrderDetailService as any).getOrderDetailFromMongoCache(null, trackingNumber);
+                orderDetail = await (comOrderDetailService as any).getOrderDetailFromDB(null, trackingNumber);
             })
 
             after(() => {
@@ -203,7 +262,7 @@ describe('Class: ComOrderDetailService', () => {
                 expect(readDocumentsStub.calledOnce).to.be.true;
             });
             it('should query with only customerOrderNumber ', () => {
-                expect(readDocumentsStub.getCall(0).args[0]).to.be.deep.eq({"lineItems.tracking.trackingNumber": trackingNumber});
+                expect(readDocumentsStub.getCall(0).args[1]).to.be.deep.eq({"lineItems.tracking.trackingNumber": trackingNumber});
             });
             it('should return object from mongo', () => {
                 expect(orderDetail).to.be.eq(expectedDbObj) 
@@ -232,7 +291,7 @@ describe('Class: ComOrderDetailService', () => {
                 order.lineItems[0].tracking[0].trackingNumber = trackingNumber;
                 translateStub.returns(order);
                 
-                const comOrderDetailService: ComOrderDetailService = new ComOrderDetailService(null, ovqDelegate, translator);
+                const comOrderDetailService: ComOrderDetailService = new ComOrderDetailService(null, new NodeCache(), ovqDelegate, translator);
                 orderDetail = await (comOrderDetailService as any).getOrderDetailFromOVQ('123', trackingNumber);
 
             });
@@ -264,7 +323,7 @@ describe('Class: ComOrderDetailService', () => {
                 order.lineItems[0].tracking[0].trackingNumber = '127FRE';
                 translateStub.returns(order);
                 
-                const comOrderDetailService: ComOrderDetailService = new ComOrderDetailService(null, ovqDelegate, translator);
+                const comOrderDetailService: ComOrderDetailService = new ComOrderDetailService(null, new NodeCache(), ovqDelegate, translator);
                 orderDetail = await (comOrderDetailService as any).getOrderDetailFromOVQ('123', '986AAX');
             });
 
@@ -296,7 +355,7 @@ describe('Class: ComOrderDetailService', () => {
                 order.lineItems[0].tracking[0].trackingNumber = '127FRE';
                 translateStub.returns(order);
                 
-                const comOrderDetailService: ComOrderDetailService = new ComOrderDetailService(null, ovqDelegate, translator);
+                const comOrderDetailService: ComOrderDetailService = new ComOrderDetailService(null, new NodeCache(), ovqDelegate, translator);
                 orderDetail = await (comOrderDetailService as any).getOrderDetailFromOVQ('123', null);
             });
             after(() => {
@@ -313,7 +372,116 @@ describe('Class: ComOrderDetailService', () => {
                 expect(orderDetail).to.be.empty
             });
 
+        });
+    });
+});
+describe('Function: getTrackerUrlsByScac', () => {
+    const mongoRepo: MongoRepo = new MongoRepo();
+    const nodeCache: NodeCache = new NodeCache();
+    let readDocumentsStub: SinonStub
+    let getFromCacheStub: SinonStub
+    let setToCacheStub: SinonStub
+    let trackingObj : TrackingUrlDTO
+    const expectedUrlObj = {primary_url : 'http://somedomain.com/ups',tracking_url : 'http://somedomain.com/ups'}; 
+    describe('given the function is called and there is no cached object, then it', () => {
+        before(async() => {
+            readDocumentsStub = stub(mongoRepo, 'readDocuments')
+            readDocumentsStub.resolves(expectedUrlObj)
+            
+            getFromCacheStub = stub(nodeCache, 'get')
+            getFromCacheStub.callThrough()
+            
+            setToCacheStub = stub(nodeCache, 'set')
+            setToCacheStub.callThrough()
+            
+            const comOrderDetailService: ComOrderDetailService = new ComOrderDetailService(mongoRepo, nodeCache, null, null);
+            trackingObj = await (comOrderDetailService as any).getTrackerUrlsByScac('UPS');
+        });
+        after(() => {
+            readDocumentsStub.restore();
+            getFromCacheStub.restore();
+            setToCacheStub.restore();
+            nodeCache.del('UPS');
         })
-    })
-
+        it('should call mongo', () => {
+            expect(readDocumentsStub.calledOnce).to.be.true
+        });
+        it('should save to cache', () => {
+            expect(setToCacheStub.calledOnce).to.be.true
+            expect(setToCacheStub.getCall(0).args[0]).to.be.deep.eq('UPS')
+            expect(setToCacheStub.getCall(0).args[1]).to.be.deep.eq(trackingObj)
+            expect(setToCacheStub.getCall(0).args[2]).to.be.deep.eq(43200)
+        });
+        it('should return object', () => {
+            expect(trackingObj).to.be.eq(expectedUrlObj)
+        });
+    });
+    describe('given the function is called and there is no cached object and no mongo object, then it', () => {
+        before(async() => {
+            readDocumentsStub = stub(mongoRepo, 'readDocuments')
+            readDocumentsStub.resolves(null)
+            
+            getFromCacheStub = stub(nodeCache, 'get')
+            getFromCacheStub.callThrough()
+            
+            setToCacheStub = stub(nodeCache, 'set')
+            setToCacheStub.callThrough()
+            
+            const comOrderDetailService: ComOrderDetailService = new ComOrderDetailService(mongoRepo, nodeCache, null, null);
+            trackingObj = await (comOrderDetailService as any).getTrackerUrlsByScac('UPS');
+        });
+        after(() => {
+            readDocumentsStub.restore();
+            getFromCacheStub.restore();
+            setToCacheStub.restore();
+            nodeCache.del('UPS');
+        })
+        it('should call cache', () => {
+            expect(getFromCacheStub.calledOnce).to.be.true
+        });
+        it('should call mongo', () => {
+            expect(readDocumentsStub.calledOnce).to.be.true
+        });
+        it('should not save to cache', () => {
+            expect(setToCacheStub.called).to.be.false
+        });
+        it('should return object', () => {
+            expect(trackingObj).to.be.null
+        });
+    });
+    describe('given the function is called and there is a cached object, then it', () => {
+        before(async() => {
+            readDocumentsStub = stub(mongoRepo, 'readDocuments')
+            readDocumentsStub.resolves(expectedUrlObj)
+            
+            nodeCache.set('UPS', expectedUrlObj, 1)
+            getFromCacheStub = stub(nodeCache, 'get')
+            getFromCacheStub.callThrough()
+            
+            setToCacheStub = stub(nodeCache, 'set')
+            setToCacheStub.callThrough()
+            
+            const comOrderDetailService: ComOrderDetailService = new ComOrderDetailService(mongoRepo, nodeCache, null, null);
+            trackingObj = await (comOrderDetailService as any).getTrackerUrlsByScac('UPS');
+        });
+        after(() => {
+            readDocumentsStub.restore();
+            getFromCacheStub.restore();
+            setToCacheStub.restore();
+            nodeCache.del('UPS')
+        })
+        it('should get from cache', () => {
+            expect(getFromCacheStub.calledOnce).to.be.true
+            expect(getFromCacheStub.getCall(0).args[0]).to.be.deep.eq('UPS')
+        });
+        it('should not call mongo', () => {
+            expect(readDocumentsStub.notCalled).to.be.true
+        });
+        it('should not save to cache', () => {
+            expect(setToCacheStub.notCalled).to.be.true
+        });
+        it('should return object', () => {
+            expect(trackingObj).to.be.deep.eq(expectedUrlObj)
+        });
+    });
 });

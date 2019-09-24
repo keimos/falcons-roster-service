@@ -70,16 +70,14 @@ export class MongoRepo {
     });
   }
 
-  public async readDocuments(query: any, sort: any, table: string): Promise<any> {
-
-
+  public async readDocuments(table: string, query: any, sort: any, fields: any = null): Promise<any> {
     if (!this.dataBase) {
       this.dataBase = await this.getConnection();
     }
 
     return new Promise<any>((resolve, reject) => {
       const collection: Collection = this.dataBase.collection(table);
-      collection.findOne(query, { sort: sort }, async function(err, result) {
+      collection.findOne(query, { sort: sort, fields: fields }, async function(err, result) {
         if (err) throw err;
         resolve(result);
       });
