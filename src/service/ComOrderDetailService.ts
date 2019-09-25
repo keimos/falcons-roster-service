@@ -4,7 +4,7 @@ import log from '../logging/Log';
 import { OvqDelegate } from "../delegate/OvqDelegate";
 import { ComOrderEventTranslator } from "../translator/ComOrderEventTranslator";
 import { OvqOrderListDTO } from "../dto/ComOvqDTO";
-import {ComOrderDetailsDTO, LineItemDTO, TrackingUrlDTO} from "../dto/ComOrderDetailsDTO";
+import {ComOrderDetailsDTO, LineItemDTO} from "../dto/ComOrderDetailsDTO";
 import { SystemError } from "../error/SystemError";
 import { BusinessError } from "../error/BusinessError";
 import { ErrorCode } from "../utils/error-codes-enum";
@@ -36,17 +36,17 @@ export class ComOrderDetailService {
                 }
                 for (const tracking of lineItem.tracking) {
                     if (tracking.scac) {
-                        let trackerUrlTemplate = new TrackingUrlDTO();
+                        let trackerUrl: string;
                         try{
-                            trackerUrlTemplate = await this.getTrackerUrlsByScac(tracking.scac);
+                            trackerUrl = await this.getTrackerUrlsByScac(tracking.scac);
                         } catch(err) {
                             if(err instanceof SystemError) {
                                 throw new BusinessError(ErrorCode.NOT_FOUND, 'Tracking Urls  Not Found', `SCAC Tracking URL for  ${tracking.scac} not found`)
                             }
                             throw err
                         }
-                        if(trackerUrlTemplate) {
-                            tracking.trackingUrls = trackerUrlTemplate
+                        if(trackerUrl) {
+                            tracking.trackingUrl = trackerUrl
                         }
                     }
                 }
@@ -86,14 +86,15 @@ export class ComOrderDetailService {
     }
 
     public async getTrackerUrlsByScac(scac: string) {
-        let trackingUrls: TrackingUrlDTO = this.cache.get(scac)
-        if(!trackingUrls){
+        let trackingUrl: string = this.cache.get(scac)
+        if(!trackingUrl){
             let query = {"scac": scac};
-            trackingUrls = await this.mongoRepo.readDocuments('scacTrackingUrls', query, [['createTS', -1]], {primaryUrl: 1, trackingUrl: 1, _id: 0});
-            if(trackingUrls){
-                this.cache.set(scac, trackingUrls, 43200)
+            const obj = await this.mongoRepo.readDocuments('scacTrackingUrls', query, [['createTS', -1]], {trackingUrl: 1, _id: 0});
+            if(obj && obj.trackingUrl){
+                trackingUrl = obj.trackingUrl
+                this.cache.set(scac, obj.trackingUrl, 43200)
             }
         }
-        return trackingUrls
+        return trackingUrl
     }
 }
