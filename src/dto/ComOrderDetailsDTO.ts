@@ -54,10 +54,5 @@ export class TrackingDetailDTO {
     public trackingNumber: string;
     public trackingType: string;
     public levelOfService: string;
-    public trackingUrls: TrackingUrlDTO;
-}
-
-export class TrackingUrlDTO {
-    public primaryUrl: string;
     public trackingUrl: string;
 }

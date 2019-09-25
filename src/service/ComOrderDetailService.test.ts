@@ -7,7 +7,7 @@ import { ComOrderDetailService } from './ComOrderDetailService';
 import { MongoRepo } from '../repo/MongoRepo';
 import { OvqDelegate } from '../delegate/OvqDelegate';
 import { ComOrderEventTranslator } from '../translator/ComOrderEventTranslator';
-import {ComOrderDetailsDTO, LineItemDTO, TrackingDetailDTO, TrackingUrlDTO} from '../dto/ComOrderDetailsDTO';
+import {ComOrderDetailsDTO, LineItemDTO, TrackingDetailDTO} from '../dto/ComOrderDetailsDTO';
 import { SystemError } from '../error/SystemError';
 import { BusinessError } from '../error/BusinessError';
 import { ErrorCode } from '../utils/error-codes-enum';
@@ -53,25 +53,19 @@ describe('Class: ComOrderDetailService', () => {
                                 {
                                     trackingNumber: '127FRE',
                                     scac: 'ABC',
-                                    trackingUrls: {
-                                        primaryUrl: 'http://something.com/abc',
-                                        trackingUrl: 'http://something.com/abc'
-                                    }
+                                    trackingUrl: 'http://something.com/abc'
                                 },
                                 {
                                     trackingNumber: '117FRE',
                                     scac: 'DEF',
-                                    trackingUrls: {
-                                        primaryUrl: 'http://something.com/def',
-                                        trackingUrl: 'http://something.com/def'
-                                    }
+                                    trackingUrl: 'http://something.com/def'
                                 }
                             ]
                         }
                     ]
                 };
-            const trackingUrl1 =   { primaryUrl: 'http://something.com/abc', trackingUrl: 'http://something.com/abc'};
-            const trackingUrl2 =   { primaryUrl: 'http://something.com/def', trackingUrl: 'http://something.com/def'};
+            const trackingUrl1 =   { trackingUrl: 'http://something.com/abc'};
+            const trackingUrl2 =   { trackingUrl: 'http://something.com/def'};
             before(async () => {
                 const mongoRepo: MongoRepo = new MongoRepo();
                 readDocumentsStub = stub(mongoRepo, 'readDocuments')
@@ -95,10 +89,8 @@ describe('Class: ComOrderDetailService', () => {
             it('should return updated object with tracking URLs', () => {
                 expect(orderDetail).excluding('trackingUrls').to.be.deep.eq(cachedOrder)
                 expect(orderDetail).to.be.deep.equal(result)
-                expect(orderDetail.lineItems[0].tracking[0].trackingUrls.primaryUrl).to.be.equal('http://something.com/abc')
-                expect(orderDetail.lineItems[0].tracking[0].trackingUrls.trackingUrl).to.be.equal('http://something.com/abc')
-                expect(orderDetail.lineItems[0].tracking[1].trackingUrls.primaryUrl).to.be.equal('http://something.com/def')
-                expect(orderDetail.lineItems[0].tracking[1].trackingUrls.trackingUrl).to.be.equal('http://something.com/def')
+                expect(orderDetail.lineItems[0].tracking[0].trackingUrl).to.be.equal('http://something.com/abc')
+                expect(orderDetail.lineItems[0].tracking[1].trackingUrl).to.be.equal('http://something.com/def')
             });
         });
         describe('Given a customerOrderNumber and Tracking Number, and Mongo does not have the order details, when the function is invoked, then it', () => {
@@ -381,12 +373,12 @@ describe('Function: getTrackerUrlsByScac', () => {
     let readDocumentsStub: SinonStub
     let getFromCacheStub: SinonStub
     let setToCacheStub: SinonStub
-    let trackingObj : TrackingUrlDTO
-    const expectedUrlObj = {primary_url : 'http://somedomain.com/ups',tracking_url : 'http://somedomain.com/ups'}; 
+    let trackingUrl : string
+    const urlObj = {trackingUrl : 'http://somedomain.com/ups'}; 
     describe('given the function is called and there is no cached object, then it', () => {
         before(async() => {
             readDocumentsStub = stub(mongoRepo, 'readDocuments')
-            readDocumentsStub.resolves(expectedUrlObj)
+            readDocumentsStub.resolves(urlObj)
             
             getFromCacheStub = stub(nodeCache, 'get')
             getFromCacheStub.callThrough()
@@ -395,7 +387,7 @@ describe('Function: getTrackerUrlsByScac', () => {
             setToCacheStub.callThrough()
             
             const comOrderDetailService: ComOrderDetailService = new ComOrderDetailService(mongoRepo, nodeCache, null, null);
-            trackingObj = await (comOrderDetailService as any).getTrackerUrlsByScac('UPS');
+            trackingUrl = await (comOrderDetailService as any).getTrackerUrlsByScac('UPS');
         });
         after(() => {
             readDocumentsStub.restore();
@@ -409,11 +401,11 @@ describe('Function: getTrackerUrlsByScac', () => {
         it('should save to cache', () => {
             expect(setToCacheStub.calledOnce).to.be.true
             expect(setToCacheStub.getCall(0).args[0]).to.be.deep.eq('UPS')
-            expect(setToCacheStub.getCall(0).args[1]).to.be.deep.eq(trackingObj)
+            expect(setToCacheStub.getCall(0).args[1]).to.be.deep.eq(trackingUrl)
             expect(setToCacheStub.getCall(0).args[2]).to.be.deep.eq(43200)
         });
         it('should return object', () => {
-            expect(trackingObj).to.be.eq(expectedUrlObj)
+            expect(trackingUrl).to.be.eq(urlObj.trackingUrl)
         });
     });
     describe('given the function is called and there is no cached object and no mongo object, then it', () => {
@@ -428,7 +420,7 @@ describe('Function: getTrackerUrlsByScac', () => {
             setToCacheStub.callThrough()
             
             const comOrderDetailService: ComOrderDetailService = new ComOrderDetailService(mongoRepo, nodeCache, null, null);
-            trackingObj = await (comOrderDetailService as any).getTrackerUrlsByScac('UPS');
+            trackingUrl = await (comOrderDetailService as any).getTrackerUrlsByScac('UPS');
         });
         after(() => {
             readDocumentsStub.restore();
@@ -445,16 +437,16 @@ describe('Function: getTrackerUrlsByScac', () => {
         it('should not save to cache', () => {
             expect(setToCacheStub.called).to.be.false
         });
-        it('should return object', () => {
-            expect(trackingObj).to.be.null
+        it('should not return object', () => {
+            expect(!trackingUrl).to.be.true
         });
     });
     describe('given the function is called and there is a cached object, then it', () => {
         before(async() => {
             readDocumentsStub = stub(mongoRepo, 'readDocuments')
-            readDocumentsStub.resolves(expectedUrlObj)
+            readDocumentsStub.resolves(urlObj)
             
-            nodeCache.set('UPS', expectedUrlObj, 1)
+            nodeCache.set('UPS', urlObj, 1)
             getFromCacheStub = stub(nodeCache, 'get')
             getFromCacheStub.callThrough()
             
@@ -462,7 +454,7 @@ describe('Function: getTrackerUrlsByScac', () => {
             setToCacheStub.callThrough()
             
             const comOrderDetailService: ComOrderDetailService = new ComOrderDetailService(mongoRepo, nodeCache, null, null);
-            trackingObj = await (comOrderDetailService as any).getTrackerUrlsByScac('UPS');
+            trackingUrl = await (comOrderDetailService as any).getTrackerUrlsByScac('UPS');
         });
         after(() => {
             readDocumentsStub.restore();
@@ -481,7 +473,7 @@ describe('Function: getTrackerUrlsByScac', () => {
             expect(setToCacheStub.notCalled).to.be.true
         });
         it('should return object', () => {
-            expect(trackingObj).to.be.deep.eq(expectedUrlObj)
+            expect(trackingUrl).to.be.deep.eq(urlObj)
         });
     });
 });
