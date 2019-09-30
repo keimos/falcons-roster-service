@@ -64,7 +64,7 @@ export class KafkaFactory {
      */
     public async createConsumerGroup(host: string, topicName: string): Promise<ConsumerGroup> {
         var consumer = new ConsumerGroup(
-            { kafkaHost: host, groupId: 'OrderDetailService', protocol: ['roundrobin']},
+            { kafkaHost: host, groupId: 'OrderDetailService', protocol: ['roundrobin'], fromOffset: 'latest', maxTickMessages: 50, fetchMaxBytes: 1048576},
             topicName
         );  
         return consumer;
